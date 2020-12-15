@@ -19,10 +19,19 @@ import java.sql.*;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The type Data export service.
+ */
 @Component
 public class DataExportService {
     @Autowired
     private MessageRepo messageRepo;
+
+    /**
+     * Gets defendants.
+     *
+     * @throws Exception the exception
+     */
     public void getDefendants() throws Exception {
         Workbook workbook = null;
         String fileName = "test.xlsx";

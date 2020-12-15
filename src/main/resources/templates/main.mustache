@@ -3,15 +3,15 @@
 <body>
 <div>
     <form method="post">
-        <input type="text" name="text" placeholder="Введите сообщение" />
-        <input type="text" name="tag" placeholder="Тэг">
-        <button type="submit">Добавить</button>
+        <input type="text" name="text" id="text" placeholder="Введите сообщение" />
+        <input type="text" name="tag" id="tag" placeholder="Тэг">
+        <button type="button" onclick="send()">Добавить</button>
     </form>
 </div>
 <div>Список сообщений</div>
-<form method="post" action="filter">
-    <input type="text" name="filter">
-    <button type="submit">Найти</button>
+<form method="post">
+    <input type="text" id="filter" name="filter">
+    <button type="button" onclick="send()">Найти</button>
 </form>
 {{#messages}}
     <div>
@@ -22,3 +22,30 @@
 {{/messages}}
 </body>
 </html>
+<script>
+    async function send() {
+        let formData = new FormData();
+        formData.append('text', document.getElementById("text").value);
+        formData.append('tag', document.getElementById("tag").value);
+        let object = {};
+        formData.forEach(function (value, key) {
+            object[key] = value;
+        });
+        let jsonString = JSON.stringify(object);
+        let response = await fetch('filter', {
+            method: 'POST',
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+            processData: false,  //To avoid making query String instead of JSON
+            body: jsonString
+        });
+        if (response.ok) {
+        } else {
+            console.log( response);
+            alert("Can't add feedback");
+        }
+    }
+</script>
