@@ -19,5 +19,5 @@ public class Wallet {
 //    private byte icon;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
-    private User user;
+    private Users user;
 }
