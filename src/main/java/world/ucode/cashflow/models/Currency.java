@@ -6,12 +6,11 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class User {
+public class Currency {
     @Id
-    @Column(name="userId")
+    @Column(name="currencyId")
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
-    private String login;
-    private String password;
-    private String email;
+    private String name;
+    private double ticker;
 }
