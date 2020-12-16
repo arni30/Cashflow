@@ -32,4 +32,8 @@ public class Message {
         this.text = text;
         this.tag = tag;
     }
+
+    public Message() {
+
+    }
 }

@@ -1,7 +1,10 @@
 package world.ucode.cashflow.repositories;
 
 import org.springframework.data.repository.CrudRepository;
-import world.ucode.cashflow.models.Message;
+import world.ucode.cashflow.models.Users;
 
-public interface UserRepo extends CrudRepository<Message, Long> {
+import java.util.List;
+
+public interface UserRepo extends CrudRepository<Users, Long> {
+    List<Users> findByLogin(String login);
 }
