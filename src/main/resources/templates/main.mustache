@@ -3,36 +3,35 @@
 <body>
 <div>
     <form method="post">
-        <input type="text" name="text" id="text" placeholder="Введите сообщение" />
-        <input type="text" name="tag" id="tag" placeholder="Тэг">
+        <input type="text" name="login" id="login" placeholder="Введите сообщение" />
+        <input type="text" name="password" id="password" placeholder="Тэг">
+        <input type="text" name="email" id="email" placeholder="Тэг">
         <button type="button" onclick="send()">Добавить</button>
     </form>
 </div>
 <div>Список сообщений</div>
-<form method="post">
-    <input type="text" id="filter" name="filter">
-    <button type="button" onclick="send()">Найти</button>
-</form>
-{{#messages}}
+{{#users}}
     <div>
         <b>{{id}}</b>
-        <span>{{text}}</span>
-        <i>{{tag}}</i>
+        <span>{{login}}</span>
+        <i>{{password}}</i>
+        <i>{{email}}</i>
     </div>
-{{/messages}}
+{{/users}}
 </body>
 </html>
 <script>
     async function send() {
         let formData = new FormData();
-        formData.append('text', document.getElementById("text").value);
-        formData.append('tag', document.getElementById("tag").value);
+        formData.append('login', document.getElementById("login").value);
+        formData.append('password', document.getElementById("password").value);
+        formData.append('email', document.getElementById("email").value);
         let object = {};
         formData.forEach(function (value, key) {
             object[key] = value;
         });
         let jsonString = JSON.stringify(object);
-        let response = await fetch('filter', {
+        let response = await fetch('sign_up', {
             method: 'POST',
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             headers: {
