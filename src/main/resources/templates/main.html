@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
-    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body>
 <div>
@@ -21,7 +21,7 @@
         <input type="text" name="password" id="password1" placeholder="Тэг">
         <input type="text" name="email" id="email1" placeholder="Тэг">
 <!--       <input type="text" id="_csrf1" th:value="${_csrf.token}" />-->
-        <button type="button" onclick="send('hallo')">Добавить</button>
+        <button type="button" onclick="send2('hallo')">Добавить</button>
     </form>
 </div>
 </body>
@@ -80,11 +80,14 @@
         console.log("asasasasas")
         const csrfToken = getCookie('CSRF-TOKEN');
         console.log(csrfToken)
+        let token = document.querySelector('meta[name="_csrf"]').content;
+        let header1 = document.querySelector('meta[name="_csrf_header"]').content;
+        console.log(header1)
+
         let formData = new FormData();
         formData.append('login', document.getElementById("login1").value);
         formData.append('password', document.getElementById("password1").value);
         formData.append('email', document.getElementById("email1").value);
-        formData.append('_csrf', document.getElementById("_csrf1").value);
         let object = {};
         formData.forEach(function (value, key) {
             object[key] = value;
@@ -94,13 +97,15 @@
             method: 'POST',
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
             },
             async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
             processData: false,  //To avoid making query String instead of JSON
             body: jsonString
         });
         if (response.ok) {
+            console.log(response.status)
         } else {
             console.log( response);
             alert("Can't add feedback");

@@ -16,6 +16,7 @@ public class HalloController {
     @PostMapping
     public void postHallo(@RequestBody Users user, HttpServletResponse response, HttpServletRequest request) throws IOException {
         response.setStatus(111);
+        System.out.println("zbs");
 
     }
     @GetMapping
