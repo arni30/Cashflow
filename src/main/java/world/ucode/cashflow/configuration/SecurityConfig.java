@@ -77,6 +77,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor;
+import org.springframework.web.servlet.support.RequestDataValueProcessor;
 import world.ucode.cashflow.service.UserDetailsServiceImpl;
 
 import java.security.AuthProvider;
@@ -87,17 +89,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().disable()
-                .csrf().disable();
+                .cors().disable();
+//                .csrf().disable();
+        http .csrf().ignoringAntMatchers("/sign_up").and().authorizeRequests().antMatchers("/", "/home", "/sign_up", "/main").permitAll();
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/sign_up", "/main").permitAll()
                 .and()
                 .formLogin()
                 .permitAll()
+                .defaultSuccessUrl("/sign_up")
                 .and()
                 .logout()
                 .permitAll();
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+                // Config for Logout Page
 //        http.authorizeRequests().antMatchers("/", "/home", "/sign_up", "/main").permitAll();
 //        http
 //                .cors().disable()
@@ -132,6 +138,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         return authProvider;
     }
+//    @Bean
+//    public RequestDataValueProcessor requestDataValueProcessor() {
+//        return new CsrfRequestDataValueProcessor();
+//    }
 
     @Autowired
     private DaoAuthenticationProvider authenticationProvider;
