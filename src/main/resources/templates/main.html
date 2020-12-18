@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta charset="utf-8">
+    <meta name="description" content="cashflow">
+    <meta name="keywords" content="HTML, CSS, JS, Java, ucode, unitfactory, cbl, cblworld">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>cashflow</title>
+    <link rel="shortcut icon" href="resources/go-green/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="resources/reset.css"/>
+    <link rel="stylesheet" href="resources/general.css"/>
+</head>
+
+<body>
+    <div class="backcolor"></div>
+    <div class="body-block shadow-large">
+
+        <section class="section1">
+            <a id="authorizedLogin">Authorized login</a>
+            <a class="abutton" href="${pageContext.request.contextPath}/logout">Sign out</a>
+        </section>
+        
+        <header class="section2">
+            <a href="main"><img id="logo" src="resources/img/logo.png"></a>
+            <div class="section3">
+                <a class="header-button" href="transactions">
+                    <img src="resources/go-green/dollar_sign.png">
+                    <span>Wallets</span>
+                </a>
+                <a class="header-button" href="wallets">
+                    <img src="resources/go-green/list.png">
+                    <span>Transactions</span>
+                </a>
+                <a class="header-button" href="statistics">
+                    <img src="resources/go-green/stats.png">
+                    <span>Statictics</span>
+                </a>
+            </div>
+        </header>
+
+<!-- <main class="page">
+    <aside class="filters">
+        <div class="sort">
+            <p>Sort:</p>
+            <select class="sort-select">
+                <option value="1">none</option>
+                <option value="2">cheap first</option>
+                <option value="3">expensive first</option>
+            </select>
+        </div>
+
+        <div>
+            <p>Category:</p>
+            <label class="filterbox">technics
+                <input type="checkbox" class="check-brand" value="technics">
+                <span class="checkmark"></span>
+            </label>
+            <label class="filterbox">furniture
+                <input type="checkbox" class="check-brand" value="furniture">
+                <span class="checkmark"></span>
+            </label>
+            <label class="filterbox">books
+                <input type="checkbox" class="check-brand" value="books">
+                <span class="checkmark"></span>
+            </label>
+            <label class="filterbox">clothes
+                <input type="checkbox" class="check-brand" value="clothes">
+                <span class="checkmark"></span>
+            </label>
+            <label class="filterbox">food
+                <input type="checkbox" class="check-brand" value="food">
+                <span class="checkmark"></span>
+            </label>
+            <label class="filterbox">others
+                <input type="checkbox" class="check-brand" value="others">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+
+    </aside>
+    <div class="container"></div>
+</main>
+</div> -->
+
+    </div>
+</body>
+
+<!-- <script type="text/javascript">
+    if (${lots}) {
+        products.items = ${lots};
+    }
+    let authorizedLogin = `<%= authorizedLogin%>`;
+    if (authorizedLogin !== 'null') {
+        setAuthorizedUser(authorizedLogin);
+    }
+</script> -->
+
+</html>
