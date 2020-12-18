@@ -4,7 +4,7 @@
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
 </head>
 <body>
 <div>
@@ -49,7 +49,7 @@
         // $(document).ajaxSend(function(e, xhr) {
         //     xhr.setRequestHeader(token);
         // });
-
+        let token = document.querySelector('meta[name="_csrf"]').content;
         let formData = new FormData();
         formData.append('login', document.getElementById("login").value);
         formData.append('password', document.getElementById("password").value);
@@ -64,7 +64,8 @@
             method: 'POST',
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
             },
             async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
             processData: false,  //To avoid making query String instead of JSON
@@ -81,8 +82,7 @@
         const csrfToken = getCookie('CSRF-TOKEN');
         console.log(csrfToken)
         let token = document.querySelector('meta[name="_csrf"]').content;
-        let header1 = document.querySelector('meta[name="_csrf_header"]').content;
-        console.log(header1)
+        // let header1 = document.querySelector('meta[name="_csrf_header"]').content;
 
         let formData = new FormData();
         formData.append('login', document.getElementById("login1").value);

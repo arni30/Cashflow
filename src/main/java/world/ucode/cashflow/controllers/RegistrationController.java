@@ -32,8 +32,6 @@ public class RegistrationController {
     }
     @GetMapping
     public String getSignUp(HttpServletRequest request) {
-        String string = request.getAttribute(CsrfToken.class.getName()).toString();
-        System.out.println(string);
         return "main";
     }
 }
