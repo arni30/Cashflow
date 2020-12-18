@@ -44,24 +44,25 @@ $(".toggle-password").click(function() {
 /**
  * check passwords match and prevents from submit if they are different
  */
-// let match = false;
-// function checkPass() {
-//     let password = $("#passwordSignUp").val();
-//     let confirmPassword = $("#confirmpassword").val();
-//     match = (password === confirmPassword);
-// }
-// $(document).ready(function () {
-//     $("#confirmpassword").keyup(checkPass);
-// });
-// function checkPasswordMatch() {
-//     if (match) {
-//         checkEmail();
-//     } else {
-//         $("#confirmpassword").val('');
-//         alert('Passwords do not match!');
-//         return;
-//     }
-// }
+let match = false;
+function checkPass() {
+    let password = $("#passwordSignUp").val();
+    let confirmPassword = $("#confirmpassword").val();
+    match = (password === confirmPassword);
+}
+$(document).ready(function () {
+    $("#confirmpassword").keyup(checkPass);
+});
+function checkPasswordMatch() {
+    if (match) {
+        // checkEmail();
+        return true;
+    } else {
+        $("#confirmpassword").val('Passwords do not match!');
+        // alert('Passwords do not match!');
+        return false;
+    }
+}
 
 async function sendAuthorizationRequest() {
     const formData = new FormData();

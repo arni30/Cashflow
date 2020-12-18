@@ -83,13 +83,16 @@
 
 <script type="text/javascript">
 
-   async function sendRegistration(url) {
+    async function sendRegistration(url) {
+        if (!checkPasswordMatch()) {
+            return;
+        }
+
         let token = document.querySelector('meta[name="_csrf"]').content;
         let formData = new FormData();
         formData.append('login', document.getElementById("login").value);
         formData.append('email', document.getElementById("email").value);
         formData.append('password', document.getElementById("password").value);
-        formData.append('confirmpassword', document.getElementById("confirmpassword").value);
         let object = {};
         formData.forEach(function (value, key) {
             object[key] = value;
