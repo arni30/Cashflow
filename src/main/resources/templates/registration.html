@@ -40,7 +40,7 @@
         <section class="section4">
         <main class="page">
             <div class="frame">
-                <form class="form-signup" id="formSignUp">
+                <form id="formSignUp" class="form-signup">
                 <!-- <input class="form-styling" style="display: none" type="text" placeholder="" value="signup"/> -->
                 <input class="form-styling" style="display: none" type="text" placeholder="" value="not verificated"/>
                 <label for="login">Login</label>
@@ -84,15 +84,23 @@
 <script type="text/javascript">
 
     async function sendRegistration(url) {
+        let login = document.querySelector('#login').value;
+        let password = document.querySelector('#password').value;
+        let email = document.querySelector('#email').value;
+
+        if (!login || !password || !email) {
+            alert('all fields must be filled!');
+            return;
+        }
         if (!checkPasswordMatch()) {
             return;
         }
 
         let token = document.querySelector('meta[name="_csrf"]').content;
         let formData = new FormData();
-        formData.append('login', document.getElementById("login").value);
-        formData.append('email', document.getElementById("email").value);
-        formData.append('password', document.getElementById("password").value);
+        formData.append('login', login);
+        formData.append('email', email);
+        formData.append('password', password);
         let object = {};
         formData.forEach(function (value, key) {
             object[key] = value;

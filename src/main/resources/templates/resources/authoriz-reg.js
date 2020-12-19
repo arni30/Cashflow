@@ -23,22 +23,13 @@ $(".toggle-password").click(function() {
 /**
  * shows email confirmation window
  */
-// function checkEmail() {
-//     let role = document.querySelector('#userRole').value;
-//     let balance = document.querySelector('#balance').value;
-//     let username = document.querySelector('#loginSignUp').value;
-//     let password = document.querySelector('#passwordSignUp').value;
-//     let cpassword = document.querySelector('#confirmpassword').value;
-//     let email = document.querySelector('#email').value;
-
-//     if (role && balance && username && password && cpassword && email) {
-//         document.querySelector('.nav').setAttribute('class', 'nav nav-up');
-//         document.querySelector('.form-signup-left')
-//             .setAttribute('class', 'form-signup-left form-signup-down');
-//         document.querySelector('.success').setAttribute('class', 'success success-left');
-//         document.querySelector('.frame').setAttribute('class', 'frame frame-short');
-//         document.querySelector('#check').setAttribute('class', 'checked');
-//     }
+// function showConfWindow() {
+    // document.querySelector('.nav').setAttribute('class', 'nav nav-up');
+    // document.querySelector('.form-signup-left')
+    //     .setAttribute('class', 'form-signup-left form-signup-down');
+    // document.querySelector('.success').setAttribute('class', 'success success-left');
+    // document.querySelector('.frame').setAttribute('class', 'frame frame-short');
+    // document.querySelector('#check').setAttribute('class', 'checked');
 // }
 
 /**
@@ -46,7 +37,7 @@ $(".toggle-password").click(function() {
  */
 let match = false;
 function checkPass() {
-    let password = $("#passwordSignUp").val();
+    let password = $("#password").val();
     let confirmPassword = $("#confirmpassword").val();
     match = (password === confirmPassword);
 }
@@ -55,30 +46,11 @@ $(document).ready(function () {
 });
 function checkPasswordMatch() {
     if (match) {
-        // checkEmail();
+        // showConfWindow();
         return true;
     } else {
         $("#confirmpassword").val('Passwords do not match!');
         // alert('Passwords do not match!');
         return false;
-    }
-}
-
-async function sendAuthorizationRequest() {
-    const formData = new FormData();
-    let login = document.getElementById("loginLogin").value;
-    let pass = document.getElementById("passwordLogin").value;
-    formData.append('login', login);
-    formData.append('password', pass);
-    let response = await fetch('authorization',{
-        method: 'POST',
-        body : formData,
-    });
-    if (response.ok) {
-        location.replace(response.url);
-    } else {
-        console.log( response);
-        alert("Wrong password or login not found");
-        location.reload();
     }
 }
