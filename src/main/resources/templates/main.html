@@ -113,7 +113,7 @@
 <!--    }-->
 <!--</script>-->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -132,28 +132,28 @@
 <body>
     <div class="backcolor"></div>
     <div class="body-block shadow-large">
-
+<!--        "${#authentication.getPrincipal().getUsername()}"-->
         <section class="section1">
-            <a id="authorizedLogin">Authorized login</a>
-            <a class="abutton" href="${pageContext.request.contextPath}/logout">Sign out</a>
+            <a id="authorizedLogin" sec:authorize="isAuthenticated()" sec:authentication="name"></a>
+            <a class="abutton" href="/logout">Sign out</a>
         </section>
 
         <header class="section2">
             <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
             <div class="section3">
-                <a class="header-button" href="transactions">
+                <a class="header-button" href="/wallets">
                     <img th:src="@{/resources/go-green/dollar_sign.png}">
                     <span>Wallets</span>
                 </a>
-                <a class="header-button" href="wallets">
+                <a class="header-button" href="/transaction">
                     <img th:src="@{/resources/go-green/list.png}">
                     <span>Transactions</span>
                 </a>
-                 <a class="header-button" href="transactions">
+                 <a class="header-button" href="/categories">
                     <img th:src="@{/resources/go-green/server.png}">
                     <span>Categories</span>
                 </a>
-                <a class="header-button" href="statistics">
+                <a class="header-button" href="/statistics">
                     <img th:src="@{/resources/go-green/stats.png}">
                     <span>Statictics</span>
                 </a>
@@ -207,14 +207,16 @@ AAAAAAAAAAAA
     </div>
 </body>
 
-<!-- <script type="text/javascript">
-    if (${lots}) {
-        products.items = ${lots};
-    }
-    let authorizedLogin = `<%= authorizedLogin%>`;
+<script type="text/javascript">
+    // let authorizedLogin = @{request.ge} ;
     if (authorizedLogin !== 'null') {
         setAuthorizedUser(authorizedLogin);
     }
-</script> -->
+    setAuthorizedUser = (user) => {
+        document.querySelector('#header-login-first').setAttribute('style', 'display: none;');
+        document.querySelector('#header-login-second').setAttribute('style', 'display: block;');
+        document.querySelector('#authorizedLogin').innerHTML = user;
+    }
+</script>
 
 </html>

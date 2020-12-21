@@ -101,8 +101,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .defaultSuccessUrl("/aaa")
                 .failureUrl("/pipec")
-//                .and()
-//                .logout()
+                .and()
+                .logout().logoutUrl("/logout")
+                .logoutSuccessUrl("/main")
                 .permitAll();
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
