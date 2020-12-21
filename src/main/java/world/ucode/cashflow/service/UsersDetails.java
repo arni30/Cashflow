@@ -27,13 +27,13 @@ public class UsersDetails implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return user.getLogin();
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
     @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    public String getUsername() {
+        return user.getLogin();
     }
 
     @Override

@@ -72,13 +72,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor;
-import org.springframework.web.servlet.support.RequestDataValueProcessor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import world.ucode.cashflow.service.UserDetailsServiceImpl;
 
 import java.security.AuthProvider;
@@ -92,34 +88,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors().disable();
 //                .csrf().disable();
-        http.authorizeRequests().antMatchers("/", "/home", "/sign_up", "/main").permitAll();
-        http
+        http.authorizeRequests().antMatchers("/", "/home", "/main").permitAll();
+        http.authorizeRequests().antMatchers("/sign_up").permitAll();
+        http.addFilterBefore(new JsonAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .and()
                 .formLogin()
-                .permitAll()
-                .defaultSuccessUrl("/sign_up")
-                .and()
-                .logout()
+                .loginProcessingUrl("/login").permitAll()
+                .loginPage("/authorization")
+                .usernameParameter("login")
+                .failureHandler(new AuthExceptions())
+                .passwordParameter("password")
+                .defaultSuccessUrl("/aaa")
+                .failureUrl("/pipec")
+//                .and()
+//                .logout()
                 .permitAll();
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
-                // Config for Logout Page
-//        http.authorizeRequests().antMatchers("/", "/home", "/sign_up", "/main").permitAll();
-//        http
-//                .cors().disable()
-//                .csrf().disable();
-//        http.authorizeRequests().and().formLogin()//
-//                // Submit URL of login page.
-//                .loginProcessingUrl("/login").permitAll()
-//                .failureUrl("/accessDenied")
-//                .defaultSuccessUrl("/aaa")
-//                .usernameParameter("login")
-//                .passwordParameter("password");
-//        http.sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//                // Config for Logout Page
-//                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/main");
     }
     @Bean
     public UserDetailsService userDetailsService() {
