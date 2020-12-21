@@ -20,7 +20,7 @@ public class RegistrationController {
     @Autowired
     private UserRepo userRepo;
     @PostMapping
-    public void postSignUp(@RequestBody Users user, HttpServletResponse response) throws IOException {
+    public String postSignUp(@RequestBody Users user, HttpServletResponse response) throws IOException {
         if (userRepo.findByLogin(user.getLogin()).isEmpty()) {
             user.setRoles(Collections.singleton(Role.USER));
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
@@ -29,11 +29,11 @@ public class RegistrationController {
         } else {
             response.sendError(111, "pipec");
         }
+        return "authorization";
     }
     @GetMapping
     public String getSignUp(HttpServletRequest request) {
-        System.out.println(request.getUserPrincipal().getName());
-        return "redirect:main";
+        return "registration";
     }
 } 
 

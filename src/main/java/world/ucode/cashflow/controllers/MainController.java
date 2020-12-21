@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
     @GetMapping
     public String getMain() {
-        System.out.println("hallo");
         return "main";
     }
 }

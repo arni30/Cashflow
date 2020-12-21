@@ -13,7 +13,7 @@
 	/*  padding-left: 37px;
 	padding-right: 37px;*/
 	padding-top: 55px;
-	margin-bottom: 30px
+	margin-bottom: 30px;
 	-webkit-transition: opacity .5s ease, -webkit-transform .5s ease;
 }
 
@@ -56,7 +56,6 @@
 }*/
 
 label {
-	font-weight: 300;
 	text-transform: uppercase;
 	text-align: center;
 	padding-left: 15px;
@@ -75,7 +74,7 @@ label {
 }
 .form-signin input:focus,
 .form-signup input:focus {
-    background: rgba(183, 201, 109);
+    background: rgba(183, 201, 109,.3);
     border: none;
     -webkit-transition: background .5s ease;
     transition: background .5s ease;
