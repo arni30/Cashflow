@@ -122,11 +122,11 @@
     <meta name="keywords" content="HTML, CSS, JS, Java, ucode, unitfactory, cbl, cblworld">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>cashflow</title>
-    <link rel="shortcut icon" href="resources/go-green/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../static/resources/go-green/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="resources/reset.css"/>
-    <link rel="stylesheet" href="resources/general.css"/>
+    <link rel="stylesheet" th:href="@{/resources/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/general.css}"/>
 </head>
 
 <body>
@@ -139,22 +139,22 @@
         </section>
 
         <header class="section2">
-            <a href="main"><img id="logo" src="resources/img/logo.png"></a>
+            <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
             <div class="section3">
                 <a class="header-button" href="transactions">
-                    <img src="resources/go-green/dollar_sign.png">
+                    <img th:src="@{/resources/go-green/dollar_sign.png}">
                     <span>Wallets</span>
                 </a>
                 <a class="header-button" href="wallets">
-                    <img src="resources/go-green/list.png">
+                    <img th:src="@{/resources/go-green/list.png}">
                     <span>Transactions</span>
                 </a>
                  <a class="header-button" href="transactions">
-                    <img src="resources/go-green/server.png">
+                    <img th:src="@{/resources/go-green/server.png}">
                     <span>Categories</span>
                 </a>
                 <a class="header-button" href="statistics">
-                    <img src="resources/go-green/stats.png">
+                    <img th:src="@{/resources/go-green/stats.png}">
                     <span>Statictics</span>
                 </a>
             </div>

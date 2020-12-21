@@ -32,6 +32,8 @@ public class RegistrationController {
     }
     @GetMapping
     public String getSignUp(HttpServletRequest request) {
-        return "main";
+        System.out.println(request.getUserPrincipal().getName());
+        return "redirect:main";
     }
-}
+} 
+
