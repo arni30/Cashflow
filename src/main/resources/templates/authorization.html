@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta charset="utf-8">
+    <meta name="description" content="cashflow">
+    <meta name="keywords" content="HTML, CSS, JS, Java, ucode, unitfactory, cbl, cblworld">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>cashflow</title>
+    <link rel="shortcut icon" href="../static/resources/go-green/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/resources/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/general.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/authoriz-reg.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="backcolor"></div>
+    <div class="body-block shadow-large">
+
+        <section class="section1"></section>
+
+        <header class="section2">
+            <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
+            <div class="section3">
+                <a class="header-button active">
+                    <img th:src="@{/resources/go-green/user_male.png}">
+                    <span>Authorization</span>
+                </a>
+                <a class="header-button" href="/sign_up">
+                    <img th:src="@{/resources/go-green/add_user.png}">
+                    <span>Registration</span>
+                </a>
+            </div>
+        </header>
+
+        <section class="section4">
+        <main class="page">
+            <div class="frame">
+                <form class="form-signin">
+                    <label for="login">Username</label>
+                    <input id="login" class="form-styling" type="text" required autofocus/>
+                    <label for="password">Password</label>
+                    <div>
+                        <input id="password" class="form-styling" type="password" autocomplete="on" required/>
+                        <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    </div>
+                    <input class="btn-signin" type="button" onclick="sendAuthorization('login')" value="Sign in">
+                </form>
+                
+                <div class="forgot">
+                    <a class="forgot-button" href="#">Forgot your password?</a>
+                    <form class="forgot-form hidden">
+                        <input id="emailRestorePass" class="form-styling" type="text" required placeholder="enter your login">
+                        <input class="btn-signin" style="width: 35%; float: none" type="button" onclick="sendRestorePassword('restore_password')" value="Restore">
+                    </form>
+                </div>
+            </div>
+        </main>
+        </section>
+
+    </div>
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script th:src="@{/resources/authoriz-reg.js}"></script>
+</body>
+
+<script type="text/javascript">
+
+    async function sendAuthorization(url) {
+        let login = document.getElementById("login").value;
+        let password = document.getElementById("password").value;
+
+        if (!logo || !password) {
+            alert('all fields must be filled!');
+            return;
+        } 
+        let token = document.querySelector('meta[name="_csrf"]').content;
+        let formData = new FormData();
+        formData.append('login', login);
+        formData.append('password', password);
+        let object = {};
+        formData.forEach(function (value, key) {
+            object[key] = value;
+        });
+        let jsonString = JSON.stringify(object);
+
+        await fetch(url, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN': token
+            },
+            async: true,
+            processData: false,
+            body: jsonString
+        }).then((response) => {
+            location.replace(response.url);
+            // return response.json();
+        });
+    }
+
+    async function sendRestorePassword(url) {
+        let token = document.querySelector('meta[name="_csrf"]').content;
+        let formData = new FormData();
+        formData.append('login', document.getElementById("login").value);
+        let object = {};
+        formData.forEach(function (value, key) {
+            object[key] = value;
+        });
+        let jsonString = JSON.stringify(object);
+
+        await fetch(url, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN': token
+            },
+            async: true,
+            processData: false,
+            body: jsonString
+        }).then((response) => {
+            console.log(response.url)
+            location.replace(response.url);
+            // return response.json();
+        }).then((data) => {
+            console.log(data);
+        }).catch((e) => {
+            console.log(e);
+            alert("Can't sendRestorePassword");
+        });
+    }
+
+</script>
+
+</html>

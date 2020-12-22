@@ -1,0 +1,132 @@
+.frame {
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 5px;
+	-webkit-transition: all .5s ease;
+	transition: all .5s ease;
+}
+
+.form-signin {
+	height: 300px;
+	font-weight: 300;
+	/*  padding-left: 37px;
+	padding-right: 37px;*/
+	padding-top: 55px;
+	margin-bottom: 30px;
+	-webkit-transition: opacity .5s ease, -webkit-transform .5s ease;
+}
+
+.form-signup {
+	height: 500px;
+	font-size: 16px;
+	font-weight: 300;
+	padding-top: 55px;
+	position: relative;
+	/*opacity: 0;*/
+	-webkit-transition: all .5s ease;
+	transition: all .5s ease;
+}
+/*
+.success {
+  width: 80%;
+  height: 150px;
+  text-align: center;
+  position: relative;
+  top: -990px;
+  left: 450px;
+  opacity: .0;
+  -webkit-transition: all .8s .4s ease;
+  transition: all .8s .4s ease;
+}
+
+.success-left {
+  -webkit-transform: translateX(-406px);
+          transform: translateX(-406px);
+  opacity: 1;
+}
+
+.successtext {
+  color: #ffffff;
+	font-size: 16px;
+	font-weight: 300;
+  margin-top: -35px;
+  padding-left: 37px;
+  padding-right: 37px;
+}*/
+
+label {
+	text-transform: uppercase;
+	text-align: center;
+	padding-left: 15px;
+	padding-bottom: 10px;
+	/*color: rgba(255,255,255,.7);*/
+	font-weight: 500;
+	display: block;
+}
+
+.form-signin input,
+.form-signup input {
+	background: rgba(183, 201, 109,.3);
+	font-weight: 500;
+    /*color: #ffffff;*/
+    /*font-size: 13px;*/
+}
+.form-signin input:focus,
+.form-signup input:focus {
+    background: rgba(183, 201, 109,.3);
+    border: none;
+    -webkit-transition: background .5s ease;
+    transition: background .5s ease;
+}
+
+.btn-signup,
+.btn-signin {
+	float: left;
+	font-weight: 700;
+	text-transform: uppercase;
+	text-align: center;
+	width: 100%;
+	height: 35px;
+	border: none;
+	border-radius: 20px;
+	margin-top: 23px;
+	background-color: #b7c96d !important;
+}
+
+.btn-signup:hover,
+.btn-signin:hover,
+.btn-signup:focus,
+.btn-signin:focus,
+.btn-signup:active,
+.btn-signin:active {
+	cursor: pointer;
+	/*background-color: #b7c96d;*/
+	color: white;
+	-webkit-transition: background-color .5s;
+	transition: background-color .5s;
+}
+.field-icon {
+  float: right;
+  margin-right: 15px;
+  margin-top: -45px;
+  position: relative;
+  /*color: black;*/
+}
+
+.forgot {
+	height: 100px;
+	width: 80%;
+	margin: 25px auto;
+	text-align: center;
+	font-weight: 400;
+	font-size: 13px;
+	text-decoration: none;
+}
+
+#emailRestorePass {
+	width: 62% !important;
+	display: inline;
+}
+
+

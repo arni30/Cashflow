@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta charset="utf-8">
+    <meta name="description" content="cashflow">
+    <meta name="keywords" content="HTML, CSS, JS, Java, ucode, unitfactory, cbl, cblworld">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>cashflow</title>
+    <link rel="shortcut icon" th:href="@{/resources/go-green/favicon.ico}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/resources/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/general.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/wallets.css}"/>
+
+
+    <!-- <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
+    <script th:src="@{/resources/wallets.js}"></script>
+</head>
+
+<body>
+    <div class="backcolor"></div>
+    <div class="body-block shadow-large">
+
+        <section class="section1">
+            <a id="authorizedLogin">Authorized login</a>
+            <a class="abutton" href="/logout">Sign out</a>
+        </section>
+        
+        <header class="section2">
+            <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
+            <div class="section3">
+                <a class="header-button active">
+                    <img th:src="@{/resources/go-green/dollar_sign.png}">
+                    <span>Wallets</span>
+                </a>
+                <a class="header-button" href="wallets">
+                    <img th:src="@{/resources/go-green/list.png}">
+                    <span>Transactions</span>
+                </a>
+                 <a class="header-button" href="transactions">
+                    <img th:src="@{/resources/go-green/server.png}">
+                    <span>Categories</span>
+                </a>
+                <a class="header-button" href="statistics">
+                    <img th:src="@{/resources/go-green/stats.png}">
+                    <span>Statictics</span>
+                </a>
+            </div>
+        </header>
+
+        <section class="section4">
+            <div class="page_width page_head">
+                <h2>Wallets</h2>
+                <div>
+                    <a class="button" onclick="wallets.openCreate()">Create</a>
+                    <a class="button" onclick="wallets.openUpdate()">Update</a>
+                    <a class="button" onclick="sendDeleteWallet()">Delete</a>
+                </div>
+            </div>
+            
+            <div id="wallets_block" class="page_width">
+                <!-- <input id="wallet1" type="radio" name="wallet">
+                <label for="wallet1">
+                    <div class="wallet_img">
+                        <img src="resources/img/logo.png">
+                    </div>
+                    <span>Кошелек</span>
+                    <span>1024,00</span>
+                    <span>uan</span>
+                </label> -->
+            </div>
+            <br><br><br>
+            <div class="page_width page_head">
+                <h2>Currency</h2>
+                <div>
+                    <a class="button" onclick="currency.openCreate()">Create</a>
+                    <a class="button" onclick="currency.openUpdate()">Update</a>
+                    <a class="button" onclick="sendDeleteCurrency()">Delete</a>
+                </div>
+            </div>
+            <div id="currency_block" class="page_width">
+                <!-- <input id="1" type="radio" name="currency">
+                <label for="1">
+                    <p class="header">uan</p>
+                    <p>$10 = 270 uan</p>
+                </label>
+                <input id="2" type="radio" name="currency">
+                <label for="2">
+                    <p>uan</p>
+                    <p>$10 = 270 uan</p>
+                </label> -->
+            </div>
+        </section>
+
+      
+    <div id="create_wallet" class="additional_window hidden">
+        <div class="additional_window_background"></div>
+        <div id="window" class="shadow-large">
+            <div class="window_header">Create wallet</div>
+            <form class="window_form">
+
+                <label for="addwallet_icon">Icon</label>
+                <input id="addwallet_icon" class="form-styling" type="file" value="icon"/>
+
+                <label for="addwallet_name">Name</label>
+                <input id="addwallet_name" class="form-styling" type="text"/>
+
+                <label for="addwallet_balance">Balance</label>
+                <input id="addwallet_balance" class="form-styling" type="number"
+                       min=".01" step=".01"/>
+
+                <label for="addwallet_currency">Currency</label>
+                <select id="addwallet_currency" class="form-styling"></select>
+
+                <input class="window_form_btn" type="button" value="Create wallet" onclick="sendCreateWallet()">
+                <a class="close" href="#" onclick="wallets.closeCreate()"></a>
+
+            </form>
+        </div>
+    </div>
+
+    <div id="update_wallet" class="additional_window hidden">
+        <div class="additional_window_background"></div>
+        <div id="window" class="shadow-large">
+            <div id="updatewallet_name_head" class="window_header">Update wallet</div>
+            <form class="window_form"> 
+                <span class="explain">Fill only those field you want to be changed</span>
+                <label for="updatewallet_icon">New icon</label>
+                <input id="updatewallet_icon" class="form-styling" type="file" value="icon"/>
+
+                <label for="updatewallet_name">New name</label>
+                <input id="updatewallet_name" class="form-styling" type="text"/>
+
+                <input class="window_form_btn" type="button" value="Update wallet" onclick="sendUpdateWallet()">
+                <a class="close" href="#" onclick="wallets.closeUpdate()"></a>
+
+            </form>
+        </div>
+    </div>
+
+    <div id="create_currency" class="additional_window hidden">
+        <div class="additional_window_background"></div>
+        <div id="window" class="shadow-large">
+            <div class="window_header">Create currency</div>
+            <form class="window_form">
+
+                <label for="addcurrency_name">Name</label>
+                <input id="addcurrency_name" class="form-styling" type="text"/>
+
+                <label for="addcurrency_ticker">Ticker (1 national currency / 1 USD)</label>
+                <input id="addcurrency_ticker" class="form-styling" type="number" min="0.01"/>
+
+                <input class="window_form_btn" type="button" value="Create currency" onclick="sendCreateCurrency()">
+                <a class="close" href="#" onclick="currency.closeCreate()"></a>
+
+            </form>
+        </div>
+    </div>
+
+    <div id="update_currency" class="additional_window hidden">
+        <div class="additional_window_background"></div>
+        <div id="window" class="shadow-large">
+            <div id="updatecurrency_name_head" class="window_header">Update currency</div>
+            <h2 id="updatecurrency_name_head"></h2>
+            <form class="window_form">
+                 <span class="explain">Fill only those field you want to be changed</span>
+
+                <label for="updatecurrency_name">New name</label>
+                <input id="updatecurrency_name" class="form-styling" type="text"/>
+
+                <label for="updatecurrency_ticker">New ticker (1 national currency / 1 USD)</label>
+                <input id="updatecurrency_ticker" class="form-styling" type="number" min="0.01" />
+
+                <input class="window_form_btn" type="button" value="Create currency" onclick="sendUpdateCurrency()">
+                <a class="close" href="#" onclick="currency.closeUpdate()"></a>
+
+            </form>
+        </div>
+    </div>
+
+    </div>
+</body>
+
+<script type="text/javascript">
+
+    async function sendCreateWallet() {
+        let name = document.querySelector('#addwallet_name').value;
+        let currency = document.querySelector('#addwallet_currency').value;
+        let balance = document.querySelector('#addwallet_balance').value;
+        // let icon = 
+
+        if (!name || !currency || balance < 0) {
+            alert('all fields must be filled!');
+            return;
+        } 
+        let token = document.querySelector('meta[name="_csrf"]').content;
+        let formData = new FormData();
+        formData.append('name', name);
+        formData.append('currency', currency);
+        formData.append('balance', balance);
+        // formData.append('icon', icon);
+        let object = {};
+        formData.forEach(function (value, key) {
+            object[key] = value;
+        });
+        let jsonString = JSON.stringify(object);
+
+        console.log(jsonString);
+
+        await fetch('create_wallet', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN': token
+            },
+            async: true,
+            processData: false,
+            body: jsonString
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data);   
+            location.reload();      
+        }).catch((e) => {
+            console.log(e);
+            alert("Can't sendCreateWallet");
+        });
+    } 
+    async function sendUpdateWallet() {
+        let item = document.querySelector('input[name=wallet]:checked');
+        let id = item.getAttribute('wallet_id');
+        let elem = wallets.items.find(element => element.id === Number.parseInt(id));
+
+        let name = document.querySelector('#updatewallet_name').value;
+        // let icon = 
+
+        if (!name) { // !name && !img to return
+            alert('Empty form!');
+            location.reload();
+            return;
+        }
+
+        let token = document.querySelector('meta[name="_csrf"]').content;
+        let formData = new FormData();
+        formData.append('id', elem.id);
+        formData.append('newName', name);
+        // formData.append('newIcon', icon);
+        let object = {};
+        formData.forEach(function (value, key) {
+            object[key] = value;
+        });
+        let jsonString = JSON.stringify(object);
+
+        console.log(jsonString);
+
+        await fetch('update_wallet', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN': token
+            },
+            async: true,
+            processData: false,
+            body: jsonString
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data);   
+            location.reload();      
+        }).catch((e) => {
+            console.log(e);
+            alert("Can't sendUpdateWallet");
+        });
+    }    
+    async function sendDeleteWallet() {
+        let item = document.querySelector('input[name=wallet]:checked');
+        if (item === null) return;
+        if (!confirm('Delete this wallet?')) return;
+
+        let id = item.getAttribute('wallet_id');
+        let elem = wallets.items.find(element => element.id === Number.parseInt(id));
+        // console.log(elem);
+        // wallets.items.splice(wallets.items.indexOf(elem), 1);
+        // wallets.showItems();
+
+        let token = document.querySelector('meta[name="_csrf"]').content;
+        let formData = new FormData();
+        formData.append('id', elem.id);
+        formData.append('name', elem.name);
+        let object = {};
+        formData.forEach(function (value, key) {
+            object[key] = value;
+        });
+        let jsonString = JSON.stringify(object);
+
+        await fetch('delete_wallet', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN': token
+            },
+            async: true,
+            processData: false,
+            body: jsonString
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data);
+            wallets.items.splice(wallets.items.indexOf(elem), 1);
+            wallets.showItems();          
+        }).catch((e) => {
+            console.log(e);
+            alert("Can't sendDeleteWallet");
+        });
+    }
+
+    async function sendCreateCurrency() {
+        let name = document.querySelector('#addcurrency_name').value;
+        let ticker = document.querySelector('#addcurrency_ticker').value;
+
+        if (!name || !ticker) {
+            alert('all fields must be filled!');
+            return;
+        } 
+        let token = document.querySelector('meta[name="_csrf"]').content;
+        let formData = new FormData();
+        formData.append('name', name);
+        formData.append('ticker', ticker);
+        let object = {};
+        formData.forEach(function (value, key) {
+            object[key] = value;
+        });
+        let jsonString = JSON.stringify(object);
+
+        console.log(jsonString);
+
+        await fetch('create_currency', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN': token
+            },
+            async: true,
+            processData: false,
+            body: jsonString
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data);  
+            location.reload();       
+        }).catch((e) => {
+            console.log(e);
+            alert("Can't sendCreateCurrency");
+        });
+    }
+    async function sendUpdateCurrency() {
+        let item = document.querySelector('input[name=currency]:checked');
+        let id = item.getAttribute('currency_id');
+        let elem = currency.items.find(element => element.id === Number.parseInt(id));
+
+        let name = document.querySelector('#updatecurrency_name').value;
+        let ticker = document.querySelector('#updatecurrency_ticker').value;
+
+        if (!name && !ticher) {
+            alert('Empty form!');
+            location.reload();
+            return;
+        }
+
+        let token = document.querySelector('meta[name="_csrf"]').content;
+        let formData = new FormData();
+        formData.append('id', elem.id);
+        formData.append('newName', name);
+        formData.append('newTicker', ticker);
+        let object = {};
+        formData.forEach(function (value, key) {
+            object[key] = value;
+        });
+        let jsonString = JSON.stringify(object);
+
+        console.log(jsonString);
+
+        await fetch('update_currency', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN': token
+            },
+            async: true,
+            processData: false,
+            body: jsonString
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data);
+            location.reload();
+        }).catch((e) => {
+            console.log(e);
+            alert("Can't sendUpdateWallet");
+        });
+    }
+    async function sendDeleteCurrency() {
+        let item = document.querySelector('input[name=currency]:checked');
+        if (item === null) return;
+        if (!confirm('Delete this currency?')) return;
+
+        let id = item.getAttribute('currency_id');
+        let elem = currency.items.find(element => element.id === Number.parseInt(id));
+        // console.log(elem);
+        // currency.items.splice(currency.items.indexOf(elem), 1);
+        // currency.showItems();
+
+        let token = document.querySelector('meta[name="_csrf"]').content;
+        let formData = new FormData();
+        formData.append('id', elem.id);
+        formData.append('name', elem.name);
+        let object = {};
+        formData.forEach(function (value, key) {
+            object[key] = value;
+        });
+        let jsonString = JSON.stringify(object);
+
+        await fetch('delete_currency', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN': token
+            },
+            async: true,
+            processData: false,
+            body: jsonString
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data);
+            currency.items.splice(currency.items.indexOf(elem), 1);
+            currency.showItems();          
+        }).catch((e) => {
+            console.log(e);
+            alert("Can't sendDeleteCurrency");
+        });
+    }
+</script>
+
+</html>
