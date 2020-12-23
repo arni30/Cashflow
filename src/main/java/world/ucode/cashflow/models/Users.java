@@ -17,6 +17,8 @@ public class Users {
     private String email;
     @Transient
     private String _csrf;
+    String token;
+    int validationStatus;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)

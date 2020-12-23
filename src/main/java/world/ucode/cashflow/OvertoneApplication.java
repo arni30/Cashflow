@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
 import springfox.boot.starter.autoconfigure.SpringfoxConfigurationProperties;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -16,6 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication
 @EnableSwagger2
+@ImportResource("classpath:beans.xml")
 @Import(SpringfoxConfigurationProperties.Swagger2Configuration.class)
 public class OvertoneApplication {
 

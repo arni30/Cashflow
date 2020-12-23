@@ -135,7 +135,7 @@
 <!--        "${#authentication.getPrincipal().getUsername()}"-->
         <section class="section1">
             <a id="authorizedLogin" sec:authorize="isAuthenticated()" sec:authentication="name"></a>
-            <a class="abutton" href="/logout">Sign out</a>
+            <a class="abutton" href="/logout" th:method="Post">Sign out</a>
         </section>
 
         <header class="section2">
@@ -203,20 +203,19 @@
     <div class="container"></div>
 </main>
 </div> -->
-AAAAAAAAAAAA
     </div>
 </body>
 
-<script type="text/javascript">
-    // let authorizedLogin = @{request.ge} ;
-    if (authorizedLogin !== 'null') {
-        setAuthorizedUser(authorizedLogin);
-    }
-    setAuthorizedUser = (user) => {
-        document.querySelector('#header-login-first').setAttribute('style', 'display: none;');
-        document.querySelector('#header-login-second').setAttribute('style', 'display: block;');
-        document.querySelector('#authorizedLogin').innerHTML = user;
-    }
-</script>
+<!--<script type="text/javascript">-->
+<!--    // let authorizedLogin = @{request.ge} ;-->
+<!--    if (authorizedLogin !== 'null') {-->
+<!--        setAuthorizedUser(authorizedLogin);-->
+<!--    }-->
+<!--    setAuthorizedUser = (user) => {-->
+<!--        document.querySelector('#header-login-first').setAttribute('style', 'display: none;');-->
+<!--        document.querySelector('#header-login-second').setAttribute('style', 'display: block;');-->
+<!--        document.querySelector('#authorizedLogin').innerHTML = user;-->
+<!--    }-->
+<!--</script>-->
 
 </html>

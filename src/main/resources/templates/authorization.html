@@ -55,7 +55,7 @@
                     <a class="forgot-button" href="#">Forgot your password?</a>
                     <form class="forgot-form hidden">
                         <input id="emailRestorePass" class="form-styling" type="text" required placeholder="enter your login">
-                        <input class="btn-signin" style="width: 35%; float: none" type="button" onclick="sendRestorePassword('restore_password')" value="Restore">
+                        <input class="btn-signin" style="width: 35%; float: none" type="button" onclick="sendRestorePassword('forgotPassword')" value="Restore">
                     </form>
                 </div>
             </div>
@@ -99,15 +99,21 @@
             processData: false,
             body: jsonString
         }).then((response) => {
+            console.log(response.url);
             location.replace(response.url);
             // return response.json();
+        }).then((data) => {
+            console.log(data);
+        }).catch((e) => {
+            console.log(e);
+            alert("Can't sendAuthorizationRequest");
         });
     }
 
     async function sendRestorePassword(url) {
         let token = document.querySelector('meta[name="_csrf"]').content;
         let formData = new FormData();
-        formData.append('login', document.getElementById("login").value);
+        formData.append('login', document.getElementById("emailRestorePass").value);
         let object = {};
         formData.forEach(function (value, key) {
             object[key] = value;
@@ -126,7 +132,7 @@
             body: jsonString
         }).then((response) => {
             console.log(response.url)
-            location.replace(response.url);
+            // location.replace(response.url);
             // return response.json();
         }).then((data) => {
             console.log(data);

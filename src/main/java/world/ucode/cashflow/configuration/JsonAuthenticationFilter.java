@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,16 +32,28 @@ public class JsonAuthenticationFilter   extends UsernamePasswordAuthenticationFi
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException
     {
+        Authentication authentication = null;
         if (!request.getMethod().equals("POST")) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
-
+        else if (request.getHeader("Content-Type").equals(MediaType.APPLICATION_JSON.toString())) {
         UsernamePasswordAuthenticationToken authRequest = getUsernamePasswordToken(request);
-
         // Allow subclasses to set the "details" property
         setDetails(request, authRequest);
         this.setAuthenticationManager(authenticationManager);
-        return this.getAuthenticationManager().authenticate(authRequest);
+//        try {
+            authentication = super.attemptAuthentication(request, response);
+//            response.sendRedirect("/");
+//        }
+//            catch (Exception e) {
+//            response.sendError(401,"INVALID LOGIN OR PASSWORD");
+//            response.sendRedirect("/error");
+//            }
+        } else {
+            authentication = super.attemptAuthentication(request, response);
+        }
+
+        return authentication;
     }
 
     private UsernamePasswordAuthenticationToken getUsernamePasswordToken(
