@@ -205,6 +205,17 @@
 </div> -->
     </div>
 </body>
+<script>
+    let response = await fetch("/");
+
+    if (response.ok) { // если HTTP-статус в диапазоне 200-299
+                       // получаем тело ответа (см. про этот метод ниже)
+        let json = await response.json();
+        console.log(response.url);
+    } else {
+        alert("Ошибка HTTP: " + response.status);
+    }
+</script>
 
 <!--<script type="text/javascript">-->
 <!--    // let authorizedLogin = @{request.ge} ;-->
