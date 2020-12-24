@@ -15,8 +15,6 @@ public class Users {
     private String login;
     private String password;
     private String email;
-    @Transient
-    private String _csrf;
     String token;
     int validationStatus;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

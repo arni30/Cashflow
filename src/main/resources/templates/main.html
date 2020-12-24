@@ -127,46 +127,38 @@
 
     <link rel="stylesheet" th:href="@{/resources/reset.css}"/>
     <link rel="stylesheet" th:href="@{/resources/general.css}"/>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
+    <div class="backcolor"></div>
+    <div class="body-block shadow-large">
+<!--        "${#authentication.getPrincipal().getUsername()}"-->
+        <section class="section1">
+            <a id="authorizedLogin" sec:authorize="isAuthenticated()" sec:authentication="name"></a>
+            <a class="abutton" href="/logout" th:method="Post">Sign out</a>
+        </section>
 
-
-
-<div class="jopa">
-
-</div>
-<!--    <div class="backcolor"></div>-->
-<!--    <div class="body-block shadow-large">-->
-<!--&lt;!&ndash;        "${#authentication.getPrincipal().getUsername()}"&ndash;&gt;-->
-<!--        <section class="section1">-->
-<!--            <a id="authorizedLogin" sec:authorize="isAuthenticated()" sec:authentication="name"></a>-->
-<!--            <a class="abutton" href="/logout" th:method="Post">Sign out</a>-->
-<!--        </section>-->
-
-<!--        <header class="section2">-->
-<!--            <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>-->
-<!--            <div class="section3">-->
-<!--                <a class="header-button" href="/wallets">-->
-<!--                    <img th:src="@{/resources/go-green/dollar_sign.png}">-->
-<!--                    <span>Wallets</span>-->
-<!--                </a>-->
-<!--                <a class="header-button" href="/transaction">-->
-<!--                    <img th:src="@{/resources/go-green/list.png}">-->
-<!--                    <span>Transactions</span>-->
-<!--                </a>-->
-<!--                 <a class="header-button" href="/categories">-->
-<!--                    <img th:src="@{/resources/go-green/server.png}">-->
-<!--                    <span>Categories</span>-->
-<!--                </a>-->
-<!--                <a class="header-button" href="/statistics">-->
-<!--                    <img th:src="@{/resources/go-green/stats.png}">-->
-<!--                    <span>Statictics</span>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--        </header>-->
+        <header class="section2">
+            <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
+            <div class="section3">
+                <a class="header-button" href="/wallets">
+                    <img th:src="@{/resources/go-green/dollar_sign.png}">
+                    <span>Wallets</span>
+                </a>
+                <a class="header-button" href="/transaction">
+                    <img th:src="@{/resources/go-green/list.png}">
+                    <span>Transactions</span>
+                </a>
+                 <a class="header-button" href="/categories">
+                    <img th:src="@{/resources/go-green/server.png}">
+                    <span>Categories</span>
+                </a>
+                <a class="header-button" href="/statistics">
+                    <img th:src="@{/resources/go-green/stats.png}">
+                    <span>Statictics</span>
+                </a>
+            </div>
+        </header>
 
 <!-- <main class="page">
     <aside class="filters">
@@ -213,7 +205,17 @@
 </div> -->
     </div>
 </body>
-<script src="../static/resources/jopa.js"></script>
+<script>
+    let response = await fetch("/");
+
+    if (response.ok) { // если HTTP-статус в диапазоне 200-299
+                       // получаем тело ответа (см. про этот метод ниже)
+        let json = await response.json();
+        console.log(response.url);
+    } else {
+        alert("Ошибка HTTP: " + response.status);
+    }
+</script>
 
 <!--<script type="text/javascript">-->
 <!--    // let authorizedLogin = @{request.ge} ;-->

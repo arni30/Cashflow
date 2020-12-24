@@ -13,8 +13,6 @@ import java.util.List;
 
 @Controller
 public class MainController {
-    @Autowired
-    WalletRepo walletRepo;
     @GetMapping
     public String getMain() {
         return "main";
