@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@RestController
+@Controller
+//@RequestMapping("main")
 public class MainController {
     @Autowired
     WalletRepo walletRepo;
     @GetMapping
-    public List<Wallet> getMain(HttpServletResponse response) throws IOException {
-        response.encodeRedirectURL("main");
-        return walletRepo.findByUser_Id(1);
+    public String getMain(HttpServletResponse response) throws IOException {
+//        response.sendRedirect("main");
+        return "main";
     }
 }
