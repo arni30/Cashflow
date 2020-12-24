@@ -20,7 +20,6 @@ public class MainControllerApi {
     WalletRepo walletRepo;
     @GetMapping
     public List<Wallet> getMain(HttpServletResponse response) throws IOException {
-        response.encodeRedirectURL("main");
         return walletRepo.findByUser_Id(1);
     }
 }
