@@ -28,7 +28,7 @@ public class RegistrationController {
     private UserRepo userRepo;
     @PostMapping
     public void postSignUp(@RequestBody Users user, HttpServletResponse response) throws IOException {
-        if (userRepo.findByLogin(user.getLogin()).isEmpty()) {
+        if (userRepo.findByLogin(user.getLogin()) == null) {
             user.setRoles(Collections.singleton(Role.USER));
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             user.setToken(token.getJWTToken(user.getLogin()));
