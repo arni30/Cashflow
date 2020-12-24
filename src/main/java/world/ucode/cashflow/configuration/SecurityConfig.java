@@ -101,7 +101,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        http.requiresChannel().anyRequest().requiresSecure();
         http
-                .cors().disable();
+                .cors().disable().csrf().ignoringAntMatchers("/api/wallets/createWallet");
 //                .csrf().disable();
         http.authorizeRequests().antMatchers("/", "/home", "/main").permitAll();
         http.authorizeRequests().antMatchers("/sign_up").permitAll();
