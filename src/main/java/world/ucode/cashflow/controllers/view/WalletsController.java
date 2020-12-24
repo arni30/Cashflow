@@ -1,4 +1,4 @@
-package world.ucode.cashflow.controllers;
+package world.ucode.cashflow.controllers.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -15,11 +15,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+
 @Controller
-@RequestMapping("/login")
-public class AuthorizationController {
-        @GetMapping
-        public String getLogin() {
-            return "authorization";
-        }
+@RequestMapping("/wallets")
+public class WalletsController {
+    @Autowired
+    private UserRepo userRepo;
+//    @PostMapping
+//    public String postWallets(@RequestBody Users user, HttpServletResponse response) throws IOException {
+//    }
+    @GetMapping
+    public String getWallets(HttpServletRequest request) {
+        return "wallets";
+    }
 }

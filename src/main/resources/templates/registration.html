@@ -118,7 +118,8 @@
             processData: false,
             body: jsonString
         }).then((response) => {
-            location.replace(response.url);
+            console.log(response.url)
+            // location.replace(response.url);
         })
     }
 </script>

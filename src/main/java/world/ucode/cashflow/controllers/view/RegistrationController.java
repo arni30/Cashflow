@@ -1,4 +1,4 @@
-package world.ucode.cashflow.controllers;
+package world.ucode.cashflow.controllers.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -27,7 +27,7 @@ public class RegistrationController {
     @Autowired
     private UserRepo userRepo;
     @PostMapping
-    public String postSignUp(@RequestBody Users user, HttpServletResponse response) throws IOException {
+    public void postSignUp(@RequestBody Users user, HttpServletResponse response) throws IOException {
         if (userRepo.findByLogin(user.getLogin()).isEmpty()) {
             user.setRoles(Collections.singleton(Role.USER));
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
@@ -39,22 +39,22 @@ public class RegistrationController {
         } else {
             response.sendError(111, "pipec");
         }
-        return "authorization";
+        response.encodeRedirectURL("authorization");
     }
     @GetMapping
     public String getSignUp(HttpServletRequest request) {
         return "registration";
     }
     @GetMapping("confirmation{token}")
-    public RedirectView confirmation(@RequestParam("token") String token){
+    public String confirmation(@RequestParam("token") String token){
         Users user = userRepo.findByToken(token).get(0);
         if (user != null) {
             System.out.println("hallo");
             user.setValidationStatus(1);
             userRepo.save(user);
-            return new RedirectView("authorization");
+            return "main";
         }
-        return new RedirectView("error");
+        return "error";
     }
 } 
 

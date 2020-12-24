@@ -30,6 +30,7 @@ public class MailSender {
         mailMessage.setText("To confirm your account, please click here : "
                 + "http://" + InetAddress.getLocalHost().getHostAddress() + ":8080/sign_up/confirmation/?token=" + user.getToken());
         mailSender.send(mailMessage);
+        System.out.println("Mail sended");
     }
     public void sendMailPassword(String login) throws UnknownHostException {
 //        SimpleMailMessage mailMessage = new SimpleMailMessage(templateMessage);

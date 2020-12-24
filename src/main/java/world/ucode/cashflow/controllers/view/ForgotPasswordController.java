@@ -1,4 +1,4 @@
-package world.ucode.cashflow.controllers;
+package world.ucode.cashflow.controllers.view;
 
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
