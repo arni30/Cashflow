@@ -22,7 +22,7 @@ public class WalletsControllerApi {
     @PostMapping("/createWallet")
     public void getMain(@RequestBody Wallet wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Users user = userRepo.findByLogin("1").get(0);
+            Users user = userRepo.findByLogin(request.getUserPrincipal().getName()).get(0);
             wallet.setUser(user);
             walletRepo.save(wallet);
         }
