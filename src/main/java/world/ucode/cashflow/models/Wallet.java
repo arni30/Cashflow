@@ -15,7 +15,7 @@ public class Wallet {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "currencyId", referencedColumnName = "currencyId")
     private Currency currency;
-    private double balance;
+    private Double balance;
 //    private byte icon;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", referencedColumnName = "userId")

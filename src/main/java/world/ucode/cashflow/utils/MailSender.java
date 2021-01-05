@@ -35,10 +35,10 @@ public class MailSender {
     public void sendMailPassword(String login) throws UnknownHostException {
 //        SimpleMailMessage mailMessage = new SimpleMailMessage(templateMessage);
         String newPassword = generatePassword();
-        List<Users> user = userService.findByLogin(login);
-        user.get(0).setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
-        userService.saveAll(user);
-        mailMessage.setTo(user.get(0).getEmail());
+        Users user = userService.findByLogin(login);
+        user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+        userService.save(user);
+        mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Forgot password");
         mailMessage.setText("Your new password is: "
                 + newPassword);

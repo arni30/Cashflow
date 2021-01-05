@@ -6,7 +6,7 @@ import world.ucode.cashflow.models.Users;
 import java.util.List;
 
 public interface UserRepo extends CrudRepository<Users, Long> {
-    List<Users> findByLogin(String login);
+    Users findByLogin(String login);
     Users findByLoginAndValidationStatus(String login, int status);
     List<Users> findByToken(String token);
 }

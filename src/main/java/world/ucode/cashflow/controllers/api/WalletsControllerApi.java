@@ -20,9 +20,9 @@ public class WalletsControllerApi {
     @Autowired
     private UserRepo userRepo;
     @PostMapping("/createWallet")
-    public void getMain(@RequestBody Wallet wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void postCreateWallet(@RequestBody Wallet wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Users user = userRepo.findByLogin(request.getUserPrincipal().getName()).get(0);
+            Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
             wallet.setUser(user);
             walletRepo.save(wallet);
         }
@@ -31,4 +31,19 @@ public class WalletsControllerApi {
             response.sendError(400, "Bad Request");
         }
     }
+    @PostMapping("/updateWallet")
+    public void postUpdateWallets(@RequestBody Wallet newWallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            Wallet wallet = walletRepo.findById(newWallet.getId());
+            wallet.setName(newWallet.getName() == null ? wallet.getName() : newWallet.getName());
+            wallet.setCurrency(newWallet.getCurrency() == null ? wallet.getCurrency() : newWallet.getCurrency());
+            wallet.setBalance(newWallet.getBalance() == null ? wallet.getBalance() : newWallet.getBalance());
+            walletRepo.save(wallet);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(400, "Bad Request");
+        }
+    }
+
 }
