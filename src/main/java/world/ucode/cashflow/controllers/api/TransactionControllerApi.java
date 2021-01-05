@@ -37,12 +37,12 @@ public class TransactionControllerApi {
     public void updateTransaction(@RequestBody Transaction newTransaction, HttpServletResponse response) throws IOException {
         try {
             Transaction transaction = transactionRepo.findById(newTransaction.getId());
-            transaction.setWallet(newTransaction.getWallet() == null ? newTransaction.getWallet() : transaction.getWallet());
-            transaction.setCategory(newTransaction.getCategory() == null ? newTransaction.getCategory() : transaction.getCategory());
-            transaction.setType(newTransaction.getType() == null ? newTransaction.getType() : transaction.getType());
-            transaction.setTag(newTransaction.getTag() == null ? newTransaction.getTag() : transaction.getTag());
-            transaction.setDate(newTransaction.getDate() == null ? newTransaction.getDate() : transaction.getDate());
-            transaction.setDescription(newTransaction.getDescription() == null ? newTransaction.getDescription() : transaction.getDescription());
+            transaction.setWallet(newTransaction.getWallet() == null ? transaction.getWallet() : newTransaction.getWallet());
+            transaction.setCategory(newTransaction.getCategory() == null ? transaction.getCategory() : newTransaction.getCategory());
+            transaction.setType(newTransaction.getType() == null ? transaction.getType() : newTransaction.getType());
+            transaction.setTag(newTransaction.getTag() == null ? transaction.getTag() : newTransaction.getTag());
+            transaction.setDate(newTransaction.getDate() == null ? transaction.getDate() : newTransaction.getDate());
+            transaction.setDescription(newTransaction.getDescription() == null ? transaction.getDescription() : newTransaction.getDescription());
             transactionRepo.save(transaction);
         }
         catch (Exception e) {
