@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -42,12 +43,12 @@ public class JsonAuthenticationFilter   extends UsernamePasswordAuthenticationFi
         setDetails(request, authRequest);
         this.setAuthenticationManager(authenticationManager);
 //        try {
-            authentication = super.attemptAuthentication(request, response);
+            authentication = this.getAuthenticationManager().authenticate(authRequest);
+//            authentication = this.getAuthenticationManager().authenticate(request);
 //            response.sendRedirect("/");
 //        }
 //            catch (Exception e) {
 //            response.sendError(401,"INVALID LOGIN OR PASSWORD");
-//            response.sendRedirect("/error");
 //            }
         } else {
             authentication = super.attemptAuthentication(request, response);
