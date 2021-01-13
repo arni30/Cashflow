@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import world.ucode.cashflow.models.Category;
+import world.ucode.cashflow.models.dao.Category;
 import world.ucode.cashflow.repositories.CategoryRepo;
 
 import javax.servlet.http.HttpServletResponse;

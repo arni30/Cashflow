@@ -5,10 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import world.ucode.cashflow.models.Currency;
-import world.ucode.cashflow.models.Tag;
+import world.ucode.cashflow.models.dao.Currency;
 import world.ucode.cashflow.repositories.CurrencyRepo;
-import world.ucode.cashflow.repositories.TagRepo;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

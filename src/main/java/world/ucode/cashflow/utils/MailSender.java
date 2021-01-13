@@ -6,12 +6,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
-import world.ucode.cashflow.models.Users;
+import world.ucode.cashflow.models.dao.Users;
 import world.ucode.cashflow.repositories.UserRepo;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.List;
 import java.util.Random;
 
 @Component

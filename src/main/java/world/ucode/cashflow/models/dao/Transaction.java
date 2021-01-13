@@ -1,4 +1,4 @@
-package world.ucode.cashflow.models;
+package world.ucode.cashflow.models.dao;
 
 import lombok.Data;
 

@@ -1,14 +1,11 @@
 package world.ucode.cashflow.controllers.view;
 
-import org.apache.xmlbeans.impl.common.NameUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 import world.ucode.cashflow.models.Role;
-import world.ucode.cashflow.models.Users;
+import world.ucode.cashflow.models.dao.Users;
 import world.ucode.cashflow.repositories.UserRepo;
 import world.ucode.cashflow.utils.MailSender;
 import world.ucode.cashflow.utils.Token;

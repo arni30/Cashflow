@@ -1,12 +1,9 @@
 package world.ucode.cashflow.repositories;
 
 import org.springframework.data.repository.CrudRepository;
-import world.ucode.cashflow.models.Transaction;
-import world.ucode.cashflow.models.Users;
-import world.ucode.cashflow.models.Wallet;
+import world.ucode.cashflow.models.dao.Transaction;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TransactionRepo extends CrudRepository<Transaction, Long> {
     List<Transaction> findByWallet_User_Id(int userId);

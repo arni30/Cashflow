@@ -104,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable().csrf().ignoringAntMatchers("/api/wallets/createWallet",
                                                              "/api/wallets/updateWallet",
                                                              "/api/transaction/create",
-                                                             "/api/transaction/delete");
+                                                             "/api/transaction/delete");//delete later! it is for unable csrf checking
 //                .csrf().disable();
         http.authorizeRequests().antMatchers("/", "/home", "/main").permitAll();
         http.authorizeRequests().antMatchers("/sign_up").permitAll();

@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import world.ucode.cashflow.models.Category;
-import world.ucode.cashflow.models.Tag;
-import world.ucode.cashflow.repositories.CategoryRepo;
+import world.ucode.cashflow.models.dao.Tag;
 import world.ucode.cashflow.repositories.TagRepo;
 
 import javax.servlet.http.HttpServletResponse;

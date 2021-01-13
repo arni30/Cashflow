@@ -3,7 +3,7 @@ package world.ucode.cashflow.service;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import world.ucode.cashflow.models.Users;
+import world.ucode.cashflow.models.dao.Users;
 
 import java.util.Arrays;
 import java.util.Collection;
