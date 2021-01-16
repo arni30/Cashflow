@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TransactionRepo extends CrudRepository<Transaction, Long> {
+    List<Transaction> findAll();
     List<Transaction> findByWallet_User_Id(int userId);
     List<Transaction> findByWallet_Id(int walletId);
     List<Transaction> findByCategory_Id(int categoryId);

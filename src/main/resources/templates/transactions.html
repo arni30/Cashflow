@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta charset="utf-8">
+    <meta name="description" content="cashflow">
+    <meta name="keywords" content="HTML, CSS, JS, Java, ucode, unitfactory, cbl, cblworld">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>cashflow</title>
+    <link rel="shortcut icon" th:href="@{/resources/go-green/favicon.ico}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/resources/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/general.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/wallets.css}"/>
+
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script th:src="@{/resources/general.js}"></script>
+    <script th:src="@{/resources/transactions.js}"></script>
+    <script th:src="@{/resources/transactions_requests.js}"></script>
+
+</head>
+
+<body>
+    <div class="backcolor"></div>
+    <div class="body-block shadow-large">
+
+        <section class="section1">
+            <a id="authorizedLogin">Authorized login</a>
+            <a class="abutton" href="/logout">Sign out</a>
+        </section>
+        
+        <header class="section2">
+            <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
+            <div class="section3">
+                <a class="header-button" href="wallets">
+                    <img th:src="@{/resources/go-green/dollar_sign.png} ">
+                    <span>Wallets</span>
+                </a>
+                <a class="header-button active">
+                    <img th:src="@{/resources/go-green/list.png}">
+                    <span>Transactions</span>
+                </a>
+                 <a class="header-button" href="categories">
+                    <img th:src="@{/resources/go-green/server.png}">
+                    <span>Categories</span>
+                </a>
+                <a class="header-button" href="statistics">
+                    <img th:src="@{/resources/go-green/stats.png}">
+                    <span>Statistics</span>
+                </a>
+                <a class="header-button" href="https://api.monobank.ua" target="_blank">
+                    <img th:src="@{/resources/go-green/stats.png}">
+                    <span>Mono</span>
+                </a>
+            </div>
+        </header>
+
+        <section class="section4">
+            <div class="page_width page_head">
+                <h2>Transactions</h2>
+                <div>
+<!--                    <a class="button" onclick="">Create</a>-->
+<!--                    <a class="button" onclick="">Update</a>-->
+<!--                    <a class="button" onclick="">Delete</a>-->
+                </div>
+            </div>
+            
+            <div id="transactions_block" class="page_width">
+                <div ng-app="get_form" ng-controller="GetController">
+                    <p data-ng-init="getItems()"></p>
+                    <table ng-model="items">
+                        <tr>
+                            <th>Id</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Tag</th>
+                            <th>Wallet</th>
+                        </tr>
+                        <tr ng-repeat="i in items" class="rows" checked=false>
+                            <td>{{i.id}}</td>
+                            <td>{{i.description}}</td>
+                            <td>{{i.type}}</td>
+                            <td>{{i.category.name}}</td>
+                            <td>{{i.tag.name}}</td>
+                            <td>{{i.wallet.name}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+      
+        <div id="create_transaction" class="additional_window hidden">
+            <div class="additional_window_background"></div>
+            <div class="window shadow-large">
+                <div class="window_header">Create transaction</div>
+                <form class="window_form">
+
+                    <label for="addtransaction_icon">Icon</label>
+                    <input id="addtransaction_icon" class="form-styling" type="file" value="icon"/>
+
+                    <label for="addtransaction_name">Name</label>
+                    <input id="addtransaction_name" class="form-styling" type="text"/>
+
+                    <label for="addtransaction_balance">Balance</label>
+                    <input id="addtransaction_balance" class="form-styling" type="number"
+                           min=".01" step=".01"/>
+
+                    <label for="addtransaction_currency">Currency</label>
+                    <select id="addtransaction_currency" class="form-styling"></select>
+
+                    <input class="window_form_btn" type="button" value="Create transaction" onclick="sendCreateTransaction()">
+                    <a class="close" href="#" onclick="transactions.closeCreate()"></a>
+
+                </form>
+            </div>
+        </div>
+
+        <div id="update_wallet" class="additional_window hidden">
+            <div class="additional_window_background"></div>
+            <div class="shadow-large">
+                <div id="updatewallet_name_head" class="window_header">Update wallet</div>
+                <form class="window_form">
+                    <span class="explain">Fill only those field you want to be changed</span>
+                    <label for="updatewallet_icon">New icon</label>
+                    <input id="updatewallet_icon" class="form-styling" type="file" value="icon"/>
+
+                    <label for="updatewallet_name">New name</label>
+                    <input id="updatewallet_name" class="form-styling" type="text"/>
+
+                    <input class="window_form_btn" type="button" value="Update wallet" onclick="sendUpdateTransaction()">
+                    <a class="close" href="#" onclick="wallets.closeUpdate()"></a>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script type="text/javascript">
+
+</script>
+
+</html>

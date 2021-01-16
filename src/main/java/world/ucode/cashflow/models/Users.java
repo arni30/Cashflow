@@ -21,4 +21,14 @@ public class Users {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    public Users() {}
+
+    public Users(Integer id, String login, String password, String email) {
+        this.id = id;
+        this.login = login;
+        this.password = password; // &&& hash
+        this.email = email;
+        this.validationStatus = 1;
+    }
 }

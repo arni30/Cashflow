@@ -16,16 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
-@Controller
-@RequestMapping("/wallets")
-public class WalletsController {
-    @Autowired
-    private UserRepo userRepo;
-//    @PostMapping
-//    public String postWallets(@RequestBody Users user, HttpServletResponse response) throws IOException {
+//@Controller
+//@RequestMapping("/wallets")
+//public class WalletsController {
+//    @Autowired
+//    private UserRepo userRepo;
+////    @PostMapping
+////    public String postWallets(@RequestBody Users user, HttpServletResponse response) throws IOException {
+////    }
+//    @GetMapping
+//    public String getWallets(HttpServletRequest request) {
+//        return "wallets";
 //    }
-    @GetMapping
-    public String getWallets(HttpServletRequest request) {
-        return "wallets";
-    }
-}
+//}

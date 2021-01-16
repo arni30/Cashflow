@@ -19,8 +19,15 @@ public class WalletsControllerApi {
     private WalletRepo walletRepo;
     @Autowired
     private UserRepo userRepo;
+
+    @GetMapping("/getWalletsAndCurrency")
+    public List<Wallet> getWalletsAndCurrency() {
+        return walletRepo.findAll();
+    }
     @PostMapping("/createWallet")
     public void postCreateWallet(@RequestBody Wallet wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println(request.getParameter("name"));
+        System.out.println("OLOLOLO\n\n\n\n\n");
         try {
             Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
             wallet.setUser(user);

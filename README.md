@@ -22,13 +22,14 @@ Ucode project: develop the app for financial accounting.
 
     2.1. You have to install PostgreSQL.
 
-    2.2. Run postgresql server: ```psql postgres```
+    2.2. Run postgresql server: ```????????```
 
-    2.3. Create user: ```CREATE USER root WITH PASSWORD 'qwerty'```
-    
-    2.4. Create database via terminal:
-        ```createdb
-        psql -f Cashflow/src/main/resources/create_db.sql```
+    2.3. Create user and databases: 
+        ``` psql postgres; 
+            CREATE USER root WITH PASSWORD 'qwerty';
+            CREATE DATABASE [your login];
+            CREATE DATABASE cashflow;
+            exit;```
 
 3. apply maven wrapper, if necessary: ```mvn -N io.takari:maven:wrapper```
 

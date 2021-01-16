@@ -2,20 +2,14 @@
 
 let wallets = {
   items: [
-    { id: 1, img: 'resources/img/logo.png', name: 'My great wallet',
-      balance: 1040.00,  currency: 'uan'
-    },
-    { id: 2, img: 'resources/img/logo.png', name: 'Wallet',
-      balance: 2040.00,  currency: 'uan'
-    },
     { id: 4, img: 'resources/img/logo.png', name: 'Wallet',
       balance: 540.00,  currency: 'uan'
     }
   ],
+
   openCreate: function() {
     document.querySelector('#create_wallet').setAttribute('class', 'additional_window');
   },
-  
   closeCreate: function() {
     document.querySelector('#create_wallet').setAttribute('class', 'additional_window hidden');
     let clear = document.querySelectorAll('#create_wallet form input');
@@ -24,14 +18,14 @@ let wallets = {
     }
   },
   openUpdate: function() {
-    let item = document.querySelector('input[name=wallet]:checked');
-    if (item === null) return;
-    let id = item.getAttribute('wallet_id');
+    let item = document.querySelector('.rows[checked="true"]');
+    if (item !== null && item.className !== "w rows ng-scope") return;
+    let id = item.getElementsByTagName("td")[0].innerHTML;
+
     let elem = wallets.items.find(element => element.id === Number.parseInt(id));
     document.querySelector('#updatewallet_name_head').innerHTML = 'Update ' + elem.name;
     document.querySelector('#update_wallet').setAttribute('class', 'additional_window');
   },
-  
   closeUpdate: function() {
     document.querySelector('#update_wallet').setAttribute('class', 'additional_window hidden');
     let clear = document.querySelectorAll('#update_wallet form input');
@@ -39,6 +33,7 @@ let wallets = {
       clear[i].value = '';
     }
   },
+
   showItems: function() {
     let elem = document.querySelector('#wallets_block');
 
@@ -66,7 +61,7 @@ let wallets = {
       div.className = 'wallet_img';
       {
         span = document.createElement('img');
-        span.setAttribute('src', item.img);
+        span.setAttribute('src', imgLoader(item.img));
         div.appendChild(span);
       }
       label.appendChild(div);
@@ -82,7 +77,7 @@ let wallets = {
 
       span = document.createElement('span');
       span.className = 'wallet_currency';
-      span.innerHTML = item.currency;
+      span.innerHTML = item.currency.name;
       label.appendChild(span);
     }
     elem.appendChild(label);
@@ -106,14 +101,14 @@ let currency = {
     }
   },
   openUpdate: function() {
-    let item = document.querySelector('input[name=currency]:checked');
-    if (item === null) return;
-    let id = item.getAttribute('currency_id');
+    let item = document.querySelector('.rows[checked="true"]');
+    if (item !== null && item.className !== "c rows ng-scope") return;
+    let id = item.getElementsByTagName("td")[0].innerHTML;
+
     let elem = currency.items.find(element => element.id === Number.parseInt(id));
     document.querySelector('#updatecurrency_name_head').innerHTML = 'Update ' + elem.name;
     document.querySelector('#update_currency').setAttribute('class', 'additional_window');
   },
-  
   closeUpdate: function() {
     document.querySelector('#update_currency').setAttribute('class', 'additional_window hidden');
     let clear = document.querySelectorAll('#update_currency form input');
@@ -121,7 +116,8 @@ let currency = {
       clear[i].value = '';
     }
   },
-  showItems: function() {
+
+  showItems: function () {
     let elem = document.querySelector('#currency_block');
     let addwallet_currency = document.querySelector('#addwallet_currency');
 
@@ -135,10 +131,10 @@ let currency = {
 
     for (let i in this.items) {
       this.showItem(elem, this.items[i]);
-      this.showAddwalletItem(addwallet_currency, this.items[i]);
+      this.showAddWalletItem(addwallet_currency, this.items[i]);
     }
   },
-  showAddwalletItem: function(elem, item) {
+  showAddWalletItem: function(elem, item) {
     let option = document.createElement('option');
     option.setAttribute('currency_id', item.id);
     option.innerHTML = item.name;
@@ -169,22 +165,15 @@ let currency = {
   }
 }
 
-let init = () => {
-  wallets.showItems();
-  currency.showItems();
-  // document.querySelector('.sort-select').onchange = view.sort;
-  // document.querySelectorAll('.check-brand')
-  //         .forEach(item => item.addEventListener('change', view.filters));
-
-  // if (document.querySelector('input[name=wallet]:checked')) {
-  //   document.querySelector('input[name=currency]:checked').checked = false;
-  // }
-  
+let currency_to_print = (items) => {
+  let res = items;
+  for (let i in items) {
+    res[i].ticker = '$100 = ' + 100 * items[i].ticker + ' ' + items[i].name.toUpperCase();
+  }
+  return res;
 }
 
-
-// $('input[type=radio]:checked').click(function(){
-//     $(this).attr('checked', false);
-// });
-
+let init = () => {
+  getSelector();
+}
 window.onload = init;
