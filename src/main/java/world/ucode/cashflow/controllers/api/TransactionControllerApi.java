@@ -19,7 +19,7 @@ public class TransactionControllerApi {
     @Autowired
     private TransactionRepo transactionRepo;
 
-    @GetMapping("/getTransactions")
+    @GetMapping("/get")
     public List<Transaction> getTransactions() {
         return transactionRepo.findAll();
     }

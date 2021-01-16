@@ -20,7 +20,7 @@ public class TagControllerApi {
     private TagRepo tagRepo;
 
     @PostMapping("/create")
-    public void createTransaction(@RequestBody Tag tag, HttpServletResponse response) throws IOException {
+    public void createTag(@RequestBody Tag tag, HttpServletResponse response) throws IOException {
         try {
             System.out.println("HALLO");
             tagRepo.save(tag);
@@ -32,12 +32,12 @@ public class TagControllerApi {
     }
 
     @PostMapping("/update")
-    public void updateTransaction(@RequestBody Tag newTag, HttpServletResponse response) throws IOException {
+    public void updateTag(@RequestBody Tag newTag, HttpServletResponse response) throws IOException {
         try {
             Tag tag = tagRepo.findById(newTag.getId());
-            tag.setName(newTag.getName() == null ? tag.getName() : newTag.getName());
+            tag.setName(newTag.getName().equals("") ? tag.getName() : newTag.getName());
 //            category.setIcon(newCategory.getIcon() == null ? category.getIcon() : newCategory.getIcon());
-            tag.setDescription(newTag.getDescription() == null ? tag.getDescription() : newTag.getDescription());
+            tag.setDescription(newTag.getDescription().equals("") ? tag.getDescription() : newTag.getDescription());
             tagRepo.save(tag);
         }
         catch (Exception e) {
@@ -47,7 +47,7 @@ public class TagControllerApi {
     }
 
     @PostMapping("/delete")
-    public void deleteTransaction(@RequestBody Tag tag, HttpServletResponse response) throws IOException {
+    public void deleteTag(@RequestBody Tag tag, HttpServletResponse response) throws IOException {
         try {
             tagRepo.delete(tag);
         }

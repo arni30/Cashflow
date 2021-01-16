@@ -1,19 +1,70 @@
 'use strict';
-let token = document.querySelector('meta[name="_csrf"]').content;
+
+let getCategoryId = () => {
+    let item = document.querySelector('.rows[checked="true"]');
+    if (item === null || item.className !== "c rows ng-scope") return;
+    return item.getElementsByTagName("td")[0].innerHTML;
+}
+
+let getTagId = () => {
+    let item = document.querySelector('.rows[checked="true"]');
+    if (item === null || item.className !== "t rows ng-scope") return;
+    return item.getElementsByTagName("td")[0].innerHTML;
+}
+
+let getJsonForSending = (elem, type, str) => {
+    let name = document.querySelector('#' + type + str + '_name').value;
+    let description = document.querySelector('#' + type + str + '_description').value;
+    // let icon =
+
+    if (!name && !description) { // !name && !img to return
+        alert('Empty form!');
+        return undefined;
+    }
+
+    let formData = new FormData();
+    if (elem !== null)
+        formData.append('id', elem.id);
+    formData.append('name', name);
+    formData.append('description', description);
+    // formData.append('newIcon', icon);
+
+    let jsonString = formToJson(formData);
+    console.log(jsonString);
+
+    return jsonString;
+}
+
+let getJsonForSendingDelete = (elem, str) => {
+    let formData = new FormData();
+    formData.append('id', elem.id);
+    formData.append('name', elem.name);
+    formData.append('description', elem.description);
+
+    let jsonString = formToJson(formData);
+    console.log(jsonString);
+
+    return jsonString;
+}
 
 angular.module("get_form", [])
     .controller("GetController", ["$scope", "$http", function ($scope, $http) {
         $scope.items = [];
+        $scope.items_tags = [];
         $scope.getItems = function () {
             $http({
                 method: "GET",
-                url: "api/category/getCategoriesAngTags",
+                url: "api/category/get",
                 headers: {"Content-Type": "application/json"}
             }).then(
                 function (data) {
                     console.log(data.data);
-                    $scope.items = data.data;
+
                     categories.items = data.data;
+                    // tags.items = ;
+                    
+                    $scope.items = data.data;
+                    $scope.items_tags = tags.items;
                 },
                 function (error) {
                     console.log("error")
@@ -22,125 +73,71 @@ angular.module("get_form", [])
         }
     }]);
 
-//
-// let sendCreateWallet = async () => {
-//   let name = document.querySelector('#addwallet_name').value;
-//   let currency = document.querySelector('#addwallet_currency').value;
-//   let balance = document.querySelector('#addwallet_balance').value;
-//   // let icon =
-//
-//   if (!name || !currency || balance < 0) {
-//     alert('all fields must be filled!');
-//     return;
-//   }
-//   let formData = new FormData();
-//   formData.append('name', name);
-//   formData.append('currency', currency);
-//   formData.append('balance', balance);
-//   // formData.append('icon', icon);
-//
-//   let jsonString = formToJson(formData);
-//   console.log(jsonString);
-//
-//   await fetch('api/wallets/createWallet', {
-//     method: 'POST',
-//     cache: 'no-cache',
-//     headers: {
-//       'Content-Type' : 'application/json',
-//       'X-CSRF-TOKEN': token
-//     },
-//     async: true,
-//     processData: false,
-//     body: jsonString
-//   }).then((response) => {
-//     return response.json();
-//   }).then((data) => {
-//     console.log(data);
-//     location.reload();
-//   }).catch((e) => {
-//     console.log(e);
-//     alert("Can't sendCreateWallet");
-//   });
-// }
-// let sendUpdateWallet = async () => {
-//   let item = document.querySelector('input[name=wallet]:checked');
-//   let id = item.getAttribute('wallet_id');
-//   let elem = wallets.items.find(element => element.id === Number.parseInt(id));
-//   let name = document.querySelector('#updatewallet_name').value;
-//   // let icon =
-//
-//   if (!name) { // !name && !img to return
-//     alert('Empty form!');
-//     location.reload();
-//     return;
-//   }
-//
-//   let formData = new FormData();
-//   formData.append('id', elem.id);
-//   formData.append('newName', name);
-//   // formData.append('newIcon', icon);
-//
-//   let jsonString = formToJson(formData);
-//   console.log(jsonString);
-//
-//   await fetch('update_wallet', {
-//     method: 'POST',
-//     cache: 'no-cache',
-//     headers: {
-//       'Content-Type' : 'application/json',
-//       'X-CSRF-TOKEN': token
-//     },
-//     async: true,
-//     processData: false,
-//     body: jsonString
-//   }).then((response) => {
-//     return response.json();
-//   }).then((data) => {
-//     console.log(data);
-//     location.reload();
-//   }).catch((e) => {
-//     console.log(e);
-//     alert("Can't sendUpdateWallet");
-//   });
-// }
-// let sendDeleteWallet = async () => {
-//   let item = document.querySelector('input[name=wallet]:checked');
-//   if (item === null) return;
-//   if (!confirm('Delete this wallet?')) return;
-//
-//   let id = item.getAttribute('wallet_id');
-//   let elem = wallets.items.find(element => element.id === Number.parseInt(id));
-//   // console.log(elem);
-//   // wallets.items.splice(wallets.items.indexOf(elem), 1);
-//   // wallets.showItems();
-//
-//   let token = document.querySelector('meta[name="_csrf"]').content;
-//   let formData = new FormData();
-//   formData.append('id', elem.id);
-//   formData.append('name', elem.name);
-//
-//   let jsonString = formToJson(formData);
-//   console.log(jsonString);
-//
-//   await fetch('api/delete_wallet', {
-//     method: 'POST',
-//     cache: 'no-cache',
-//     headers: {
-//       'Content-Type' : 'application/json',
-//       'X-CSRF-TOKEN': token
-//     },
-//     async: true,
-//     processData: false,
-//     body: jsonString
-//   }).then((response) => {
-//     return response.json();
-//   }).then((data) => {
-//     console.log(data);
-//     wallets.items.splice(wallets.items.indexOf(elem), 1);
-//     wallets.showItems();
-//   }).catch((e) => {
-//     console.log(e);
-//     alert("Can't sendDeleteWallet");
-//   });
-// }
+let sendCreateCategory = async () => {
 
+    let jsonString = getJsonForSending(null, 'add', 'category');
+    if (jsonString === undefined) return;
+
+    await send('api/category/create', jsonString, errorMsg);
+
+}
+
+let sendUpdateCategory = async () => {
+    let id = getCategoryId();
+    if (id === undefined) return;
+    let elem = categories.items.find(element => element.id === Number.parseInt(id));
+
+    let jsonString = getJsonForSending(elem, 'update', 'category');
+    if (jsonString === undefined) return;
+
+    await send('api/category/update', jsonString, errorMsg);
+
+}
+
+let sendDeleteCategory = async () => {
+    let id = getCategoryId();
+    if (id === undefined) return;
+    if (!confirm('Delete this category?')) return;
+    let elem = categories.items.find(element => element.id === Number.parseInt(id));
+
+    let jsonString = getJsonForSendingDelete(elem, 'category');
+
+    let errorMsg = 'You can\'t delete category when it uses in transactions. \n' +
+        'Delete corresponding transaction first.';
+    await send('api/category/delete', jsonString, errorMsg);
+
+}
+
+let sendCreateTag = async () => {
+    let jsonString = getJsonForSending(null, 'add', 'tag');
+    if (jsonString === undefined) return;
+
+    await send('api/tag/create', jsonString, errorMsg);
+
+}
+
+let sendUpdateTag = async () => {
+    let id = getTagId();
+    if (id === undefined) return;
+    let elem = tags.items.find(element => element.id === Number.parseInt(id));
+
+    let jsonString = getJsonForSending(elem, 'update', 'tag');
+    if (jsonString === undefined) return;
+
+    await send('api/tag/update', jsonString, errorMsg);
+
+}
+
+let sendDeleteTag = async () => {
+    let id = getTagId();
+    if (id === undefined) return;
+    if (!confirm('Delete this tag?')) return;
+    let elem = tags.items.find(element => element.id === Number.parseInt(id));
+
+    let jsonString = getJsonForSendingDelete(elem, 'tag');
+
+    let errorMsg = 'You can\'t delete tag when it uses in transactions. \n' +
+        'Delete corresponding transaction first.';
+    await send('api/tag/delete', jsonString, errorMsg);
+
+}

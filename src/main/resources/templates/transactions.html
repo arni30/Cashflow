@@ -13,8 +13,6 @@
 
     <link rel="stylesheet" th:href="@{/resources/reset.css}"/>
     <link rel="stylesheet" th:href="@{/resources/general.css}"/>
-    <link rel="stylesheet" th:href="@{/resources/wallets.css}"/>
-
 
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
@@ -63,9 +61,9 @@
             <div class="page_width page_head">
                 <h2>Transactions</h2>
                 <div>
-<!--                    <a class="button" onclick="">Create</a>-->
-<!--                    <a class="button" onclick="">Update</a>-->
-<!--                    <a class="button" onclick="">Delete</a>-->
+<!--                    <a class="button" onclick="transactions.openCreate()">Create</a>-->
+<!--                    <a class="button" onclick="transactions.openUpdate()">Update</a>-->
+                    <a class="button" onclick="sendDeleteTransaction()">Delete</a>
                 </div>
             </div>
             
@@ -101,18 +99,23 @@
                 <div class="window_header">Create transaction</div>
                 <form class="window_form">
 
-                    <label for="addtransaction_icon">Icon</label>
-                    <input id="addtransaction_icon" class="form-styling" type="file" value="icon"/>
+<!--                    <label for="addtransaction_icon">Icon</label>-->
+<!--                    <input id="addtransaction_icon" class="form-styling" type="file" value="icon"/>-->
 
-                    <label for="addtransaction_name">Name</label>
-                    <input id="addtransaction_name" class="form-styling" type="text"/>
+                    <label for="addtransaction_description">Description</label>
+                    <input id="addtransaction_description" class="form-styling" type="text"/>
 
-                    <label for="addtransaction_balance">Balance</label>
-                    <input id="addtransaction_balance" class="form-styling" type="number"
-                           min=".01" step=".01"/>
+                    <label for="addtransaction_type">Type</label>
+                    <input id="addtransaction_type" class="form-styling" type="text"/>
 
-                    <label for="addtransaction_currency">Currency</label>
-                    <select id="addtransaction_currency" class="form-styling"></select>
+                    <label for="addtransaction_category">Category</label>
+                    <select id="addtransaction_category" class="form-styling"></select>
+
+                    <label for="addtransaction_tag">Tag</label>
+                    <select id="addtransaction_tag" class="form-styling"></select>
+
+                    <label for="addtransaction_wallet">Wallet</label>
+                    <select id="addtransaction_wallet" class="form-styling"></select>
 
                     <input class="window_form_btn" type="button" value="Create transaction" onclick="sendCreateTransaction()">
                     <a class="close" href="#" onclick="transactions.closeCreate()"></a>
@@ -121,20 +124,33 @@
             </div>
         </div>
 
-        <div id="update_wallet" class="additional_window hidden">
+        <div id="update_transaction" class="additional_window hidden">
             <div class="additional_window_background"></div>
-            <div class="shadow-large">
-                <div id="updatewallet_name_head" class="window_header">Update wallet</div>
+            <div class="window shadow-large">
+                <div id="updatetransaction_name_head" class="window_header">Update transaction</div>
                 <form class="window_form">
                     <span class="explain">Fill only those field you want to be changed</span>
-                    <label for="updatewallet_icon">New icon</label>
-                    <input id="updatewallet_icon" class="form-styling" type="file" value="icon"/>
 
-                    <label for="updatewallet_name">New name</label>
-                    <input id="updatewallet_name" class="form-styling" type="text"/>
+<!--                    <label for="updatetransaction_icon">New icon</label>-->
+<!--                    <input id="updatetransaction_icon" class="form-styling" type="file" value="icon"/>-->
 
-                    <input class="window_form_btn" type="button" value="Update wallet" onclick="sendUpdateTransaction()">
-                    <a class="close" href="#" onclick="wallets.closeUpdate()"></a>
+                    <label for="updatetransaction_description">Description</label>
+                    <input id="updatetransaction_description" class="form-styling" type="text"/>
+
+                    <label for="updatetransaction_type">Type</label>
+                    <input id="updatetransaction_type" class="form-styling" type="text"/>
+
+                    <label for="updatetransaction_category">Category</label>
+                    <select id="updatetransaction_category" class="form-styling"></select>
+
+                    <label for="updatetransaction_tag">Tag</label>
+                    <select id="updatetransaction_tag" class="form-styling"></select>
+
+                    <label for="updatetransaction_wallet">Wallet</label>
+                    <select id="updatetransaction_wallet" class="form-styling"></select>
+
+                    <input class="window_form_btn" type="button" value="Update transaction" onclick="sendUpdateTransaction()">
+                    <a class="close" href="#" onclick="transactions.closeUpdate()"></a>
 
                 </form>
             </div>

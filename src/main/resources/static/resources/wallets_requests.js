@@ -1,41 +1,23 @@
 'use strict';
-let token = document.querySelector('meta[name="_csrf"]').content;
 
 let getWalletId = () => {
   let item = document.querySelector('.rows[checked="true"]');
-  if (item !== null && item.className !== "w rows ng-scope") return;
+  if (item === null || item.className !== "w rows ng-scope") return;
   return item.getElementsByTagName("td")[0].innerHTML;
 }
 
 let getCurrencyId = () => {
   let item = document.querySelector('.rows[checked="true"]');
-  if (item !== null && item.className !== "c rows ng-scope") return;
+  if (item === null || item.className !== "c rows ng-scope") return;
   return item.getElementsByTagName("td")[0].innerHTML;
 }
-
-// let getData = async () => {
-//   await fetch('api/wallets/getWallets', {
-//     method: 'GET',
-//     cache: 'no-cache',
-//     headers: {
-//       // 'Content-Type' : 'application/json',
-//       'X-CSRF-TOKEN': token
-//     },
-//     async: true,
-//     processData: false
-//   }).then((response) => {
-//     return response.json();
-//   }).then((data) => {
-//     console.log(data);
-//     wallets.items = data;
-//     wallets.showItems();
-//     currency.showItems();
-//     // location.reload();
-//   }).catch((e) => {
-//     console.log(e);
-//     alert("Can't GET");
-//   });
-// }
+let getAddWalletCurrency = () => {
+  let currency = document.querySelector('#addwallet_currency');
+  let arr = currency.getElementsByTagName("option");
+  for (let i in arr)
+    if (arr[i].value === currency.value)
+      return arr[i].getAttribute("currency_id");
+}
 
 angular.module("get_form", [])
     .controller("GetController", ["$scope", "$http", function ($scope, $http) {
@@ -44,7 +26,7 @@ angular.module("get_form", [])
       $scope.getItems = function () {
         $http({
           method: "GET",
-          url: "api/wallets/getWalletsAndCurrency",
+          url: "api/wallets/get",
           headers: {"Content-Type": "application/json"}
         }).then(
             function (data) {
@@ -52,10 +34,11 @@ angular.module("get_form", [])
               wallets.items = data.data;
               // currency.items =
               $scope.items = data.data;
-              $scope.items_currency = currency_to_print(currency.items);
+              $scope.items_currency = currency.items;
             },
             function (error) {
-              console.log("error")
+              console.log("error");
+              console.log(error);
             }
         );
       }
@@ -63,117 +46,70 @@ angular.module("get_form", [])
 
 let sendCreateWallet = async () => {
   let name = document.querySelector('#addwallet_name').value;
-  let currency = document.querySelector('#addwallet_currency').value;
+  let currency_id = getAddWalletCurrency();
   let balance = document.querySelector('#addwallet_balance').value;
   // let icon =
 
-  if (!name || !currency || balance < 0) {
+  if (!name || balance < 0) {
     alert('all fields must be filled!');
     return;
   }
 
   let formData = new FormData();
   formData.append('name', name);
-  formData.append('currency', currency);
+  formData.append('currency_id', currency_id);
   formData.append('balance', balance);
   // formData.append('icon', icon);
 
   let jsonString = formToJson(formData);
   console.log(jsonString);
 
-  await fetch('api/wallets/createWallet', {
-    method: 'POST',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type' : 'application/json',
-      'X-CSRF-TOKEN': token
-    },
-    async: true,
-    processData: false,
-    body: jsonString
-  }).then((response) => {
-    return response.json();
-  }).then((data) => {
-    console.log(data);
-    location.reload();
-  }).catch((e) => {
-    console.log(e);
-    alert("Can't sendCreateWallet");
-  });
-}
+  await send('api/wallets/create', jsonString, errorMsg);
 
+}
 let sendUpdateWallet = async () => {
-  let elem = wallets.items.find(element => element.id === Number.parseInt(getWalletId()));
+  let id = getWalletId();
+  if (id === undefined) return;
+  let elem = wallets.items.find(element => element.id === Number.parseInt(id));
   let name = document.querySelector('#updatewallet_name').value;
   // let icon =
 
   if (!name) { // !name && !img to return
     alert('Empty form!');
-    location.reload();
     return;
   }
 
   let formData = new FormData();
   formData.append('id', elem.id);
-  formData.append('newName', name);
+  formData.append('name', name);
   // formData.append('newIcon', icon);
 
   let jsonString = formToJson(formData);
   console.log(jsonString);
 
-  await fetch('update_wallet', {
-    method: 'POST',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type' : 'application/json',
-      'X-CSRF-TOKEN': token
-    },
-    async: true,
-    processData: false,
-    body: jsonString
-  }).then((response) => {
-    return response.json();
-  }).then((data) => {
-    console.log(data);
-    location.reload();
-  }).catch((e) => {
-    console.log(e);
-    alert("Can't sendUpdateWallet");
-  });
+  await send('api/wallets/update', jsonString, errorMsg);
+
 }
 let sendDeleteWallet = async () => {
+  let id = getWalletId();
+  if (id === undefined) return;
   if (!confirm('Delete this wallet?')) return;
-  let elem = wallets.items.find(element => element.id === Number.parseInt(getCurrencyId()));
-  // console.log(elem);
-  // wallets.items.splice(wallets.items.indexOf(elem), 1);
-  // wallets.showItems();
+  let elem = wallets.items.find(element => element.id === Number.parseInt(id));
 
   let formData = new FormData();
   formData.append('id', elem.id);
   formData.append('name', elem.name);
+  formData.append('balance', elem.balance);
+  formData.append('currency_id', elem.currency.id);
+  formData.append('user_id', elem.user.id);
 
   let jsonString = formToJson(formData);
   console.log(jsonString);
 
-  await fetch('api/delete_wallet', {
-    method: 'POST',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type' : 'application/json',
-      'X-CSRF-TOKEN': token
-    },
-    async: true,
-    processData: false,
-    body: jsonString
-  }).then((response) => {
-    return response.json();
-  }).then((data) => {
-    console.log(data);
-    location.reload();
-  }).catch((e) => {
-    console.log(e);
-    alert("Can't sendDeleteWallet");
-  });
+  let errorMsg = 'You can\'t delete wallet when it uses in transactions. \n' +
+      'Delete or change wallet in corresponding transaction first.';
+  await send('api/wallets/delete', jsonString, errorMsg);
+
 }
 
 let sendCreateCurrency = async () => {
@@ -184,108 +120,56 @@ let sendCreateCurrency = async () => {
     alert('all fields must be filled!');
     return;
   }
-  let token = document.querySelector('meta[name="_csrf"]').content;
+
   let formData = new FormData();
-  formData.append('name', name);
+  formData.append('name', name.toUpperCase());
   formData.append('ticker', ticker);
 
   let jsonString = formToJson(formData);
   console.log(jsonString);
 
-  await fetch('create_currency', {
-    method: 'POST',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type' : 'application/json',
-      'X-CSRF-TOKEN': token
-    },
-    async: true,
-    processData: false,
-    body: jsonString
-  }).then((response) => {
-    return response.json();
-  }).then((data) => {
-    console.log(data);
-    location.reload();
-  }).catch((e) => {
-    console.log(e);
-    alert("Can't sendCreateCurrency");
-  });
-}
+  await send('api/currency/create', jsonString, errorMsg);
 
+}
 let sendUpdateCurrency = async () => {
-  let elem = currency.items.find(element => element.id === Number.parseInt(getCurrencyId()));
+  let id = getCurrencyId();
+  if (id === undefined) return;
+  let elem = currency.items.find(element => element.id === Number.parseInt(id));
 
   let name = document.querySelector('#updatecurrency_name').value;
   let ticker = document.querySelector('#updatecurrency_ticker').value;
 
   if (!name && !ticker) {
     alert('Empty form!');
-    location.reload();
     return;
   }
 
-  let token = document.querySelector('meta[name="_csrf"]').content;
   let formData = new FormData();
   formData.append('id', elem.id);
-  formData.append('newName', name);
-  formData.append('newTicker', ticker);
+  formData.append('name', name.toUpperCase());
+  formData.append('ticker', ticker);
 
   let jsonString = formToJson(formData);
   console.log(jsonString);
 
-  await fetch('update_currency', {
-    method: 'POST',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type' : 'application/json',
-      'X-CSRF-TOKEN': token
-    },
-    async: true,
-    processData: false,
-    body: jsonString
-  }).then((response) => {
-    return response.json();
-  }).then((data) => {
-    console.log(data);
-    location.reload();
-  }).catch((e) => {
-    console.log(e);
-    alert("Can't sendUpdateWallet");
-  });
-}
+  await send('api/currency/update', jsonString, errorMsg);
 
+}
 let sendDeleteCurrency = async () => {
+  let id = getCurrencyId();
+  if (id === undefined) return;
   if (!confirm('Delete this currency?')) return;
-  let elem = currency.items.find(element => element.id === Number.parseInt(getCurrencyId()));
-  // console.log(elem);
-  // currency.items.splice(currency.items.indexOf(elem), 1);
-  // currency.showItems();
+  let elem = currency.items.find(element => element.id === Number.parseInt(id));
 
   let formData = new FormData();
   formData.append('id', elem.id);
   formData.append('name', elem.name);
+  formData.append('ticker', elem.ticker);
 
   let jsonString = formToJson(formData);
+  console.log(jsonString);
 
-  await fetch('delete_currency', {
-    method: 'POST',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type' : 'application/json',
-      'X-CSRF-TOKEN': token
-    },
-    async: true,
-    processData: false,
-    body: jsonString
-  }).then((response) => {
-    return response.json();
-  }).then((data) => {
-    console.log(data);
-    location.reload();
-  }).catch((e) => {
-    console.log(e);
-    alert("Can't sendDeleteCurrency");
-  });
+  await send('api/currency/delete', jsonString, errorMsg);
+
 }
 

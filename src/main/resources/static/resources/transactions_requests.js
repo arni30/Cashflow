@@ -1,5 +1,10 @@
 'use strict';
-let token = document.querySelector('meta[name="_csrf"]').content;
+
+let getTransactionId = () => {
+    let item = document.querySelector('.rows[checked="true"]');
+    if (item === null || item.className !== "rows ng-scope") return;
+    return item.getElementsByTagName("td")[0].innerHTML;
+}
 
 angular.module("get_form", [])
     .controller("GetController", ["$scope", "$http", function ($scope, $http) {
@@ -7,7 +12,7 @@ angular.module("get_form", [])
         $scope.getItems = function () {
             $http({
                 method: "GET",
-                url: "api/transaction/getTransactions",
+                url: "api/transaction/get",
                 headers: {"Content-Type": "application/json"}
             }).then(
                 function (data) {
@@ -23,125 +28,69 @@ angular.module("get_form", [])
         }
     }]);
 
-//
-// let sendCreateWallet = async () => {
-//   let name = document.querySelector('#addwallet_name').value;
-//   let currency = document.querySelector('#addwallet_currency').value;
-//   let balance = document.querySelector('#addwallet_balance').value;
-//   // let icon =
-//
-//   if (!name || !currency || balance < 0) {
-//     alert('all fields must be filled!');
-//     return;
-//   }
-//   let formData = new FormData();
-//   formData.append('name', name);
-//   formData.append('currency', currency);
-//   formData.append('balance', balance);
-//   // formData.append('icon', icon);
-//
-//   let jsonString = formToJson(formData);
-//   console.log(jsonString);
-//
-//   await fetch('api/wallets/createWallet', {
-//     method: 'POST',
-//     cache: 'no-cache',
-//     headers: {
-//       'Content-Type' : 'application/json',
-//       'X-CSRF-TOKEN': token
-//     },
-//     async: true,
-//     processData: false,
-//     body: jsonString
-//   }).then((response) => {
-//     return response.json();
-//   }).then((data) => {
-//     console.log(data);
-//     location.reload();
-//   }).catch((e) => {
-//     console.log(e);
-//     alert("Can't sendCreateWallet");
-//   });
-// }
-// let sendUpdateWallet = async () => {
-//   let item = document.querySelector('input[name=wallet]:checked');
-//   let id = item.getAttribute('wallet_id');
-//   let elem = wallets.items.find(element => element.id === Number.parseInt(id));
-//   let name = document.querySelector('#updatewallet_name').value;
-//   // let icon =
-//
-//   if (!name) { // !name && !img to return
-//     alert('Empty form!');
-//     location.reload();
-//     return;
-//   }
-//
-//   let formData = new FormData();
-//   formData.append('id', elem.id);
-//   formData.append('newName', name);
-//   // formData.append('newIcon', icon);
-//
-//   let jsonString = formToJson(formData);
-//   console.log(jsonString);
-//
-//   await fetch('update_wallet', {
-//     method: 'POST',
-//     cache: 'no-cache',
-//     headers: {
-//       'Content-Type' : 'application/json',
-//       'X-CSRF-TOKEN': token
-//     },
-//     async: true,
-//     processData: false,
-//     body: jsonString
-//   }).then((response) => {
-//     return response.json();
-//   }).then((data) => {
-//     console.log(data);
-//     location.reload();
-//   }).catch((e) => {
-//     console.log(e);
-//     alert("Can't sendUpdateWallet");
-//   });
-// }
-// let sendDeleteWallet = async () => {
-//   let item = document.querySelector('input[name=wallet]:checked');
-//   if (item === null) return;
-//   if (!confirm('Delete this wallet?')) return;
-//
-//   let id = item.getAttribute('wallet_id');
-//   let elem = wallets.items.find(element => element.id === Number.parseInt(id));
-//   // console.log(elem);
-//   // wallets.items.splice(wallets.items.indexOf(elem), 1);
-//   // wallets.showItems();
-//
-//   let token = document.querySelector('meta[name="_csrf"]').content;
-//   let formData = new FormData();
-//   formData.append('id', elem.id);
-//   formData.append('name', elem.name);
-//
-//   let jsonString = formToJson(formData);
-//   console.log(jsonString);
-//
-//   await fetch('api/delete_wallet', {
-//     method: 'POST',
-//     cache: 'no-cache',
-//     headers: {
-//       'Content-Type' : 'application/json',
-//       'X-CSRF-TOKEN': token
-//     },
-//     async: true,
-//     processData: false,
-//     body: jsonString
-//   }).then((response) => {
-//     return response.json();
-//   }).then((data) => {
-//     console.log(data);
-//     wallets.items.splice(wallets.items.indexOf(elem), 1);
-//     wallets.showItems();
-//   }).catch((e) => {
-//     console.log(e);
-//     alert("Can't sendDeleteWallet");
-//   });
-// }
+let sendCreateTransaction = async () => {
+    // let name = document.querySelector('#addtransaction_name').value;
+    // let currency_id = getAddWalletCurrency();
+    // let balance = document.querySelector('#addtransaction_balance').value;
+    // // let icon =
+    //
+    // if (!name || balance < 0) {
+    //     alert('all fields must be filled!');
+    //     return;
+    // }
+    //
+    // let formData = new FormData();
+    // formData.append('name', name);
+    // formData.append('currency_id', currency_id);
+    // formData.append('balance', balance);
+    // // formData.append('icon', icon);
+    //
+    // let jsonString = formToJson(formData);
+    // console.log(jsonString);
+    //
+    // await send('api/wallets/create', jsonString, errorMsg);
 
+}
+let sendUpdateTransaction = async () => {
+    // let id = getWalletId();
+    // if (id === undefined) return;
+    // let elem = wallets.items.find(element => element.id === Number.parseInt(id));
+    // let name = document.querySelector('#updatewallet_name').value;
+    // // let icon =
+    //
+    // if (!name) { // !name && !img to return
+    //     alert('Empty form!');
+    //     return;
+    // }
+    //
+    // let formData = new FormData();
+    // formData.append('id', elem.id);
+    // formData.append('name', name);
+    // // formData.append('newIcon', icon);
+    //
+    // let jsonString = formToJson(formData);
+    // console.log(jsonString);
+    //
+    // await send('api/wallets/update', jsonString, errorMsg);
+
+}
+let sendDeleteTransaction = async () => {
+    let id = getTransactionId();
+    if (id === undefined) return;
+    if (!confirm('Delete this transaction?')) return;
+    let elem = transactions.items.find(element => element.id === Number.parseInt(id));
+
+    let formData = new FormData();
+    formData.append('id', elem.id);
+    formData.append('name', elem.description);
+    formData.append('category_id', elem.category.id);
+    formData.append('tag_id', elem.tag.id);
+    formData.append('wallet_id', elem.wallet.id);
+
+    let jsonString = formToJson(formData);
+    console.log(jsonString);
+
+    let errorMsg = 'немає обробки запроса на сервері';
+    await send('api/transaction/delete', jsonString, errorMsg);
+
+}

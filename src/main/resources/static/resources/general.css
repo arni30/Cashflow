@@ -243,7 +243,6 @@ body * {
 	/*text-transform: uppercase;*/
 	padding-left: 15px;
 	padding-bottom: 10px;
-	font-weight: 500;
 	display: block;
 }
 .window_form input,
@@ -257,7 +256,7 @@ body * {
 .window_form input:focus,
 .window_form select:focus,
 .window_form select:focus {
-    background: rgba(183, 201, 109);
+    background: rgb(183, 201, 109);
     border: none;
     -webkit-transition: background .5s ease;
     transition: background .5s ease;
@@ -363,4 +362,14 @@ table, th, td {
 
 .selected_row {
 	background: #515d22;
+}
+
+.icon {
+	/*min-width: 30px;*/
+	/*max-width: 200px;*/
+	/*max-height: 200px;*/
+	width: 30px;
+	height: 30px;
+	/*border-radius: 15px;*/
+	/*width: 100%;*/
 }

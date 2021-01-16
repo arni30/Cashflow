@@ -35,3 +35,32 @@ let getSelector = () => {
         }));
 }
 
+let token = document.querySelector('meta[name="_csrf"]').content;
+let errorMsg = 'smth goes wrong on server side';
+
+let send = async (where, jsonString, errorMsg) => {
+    fetch(where, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN': token
+        },
+        async: true,
+        processData: false,
+        body: jsonString
+    }).then((response) => {
+        return response;
+    }).then((data) => {
+        console.log(data);
+        if (data.ok) {
+            location.reload();
+        } else {
+            alert(errorMsg);
+        }
+    }).catch((e) => {
+        console.log(e);
+        alert("cannot send");
+    });
+}
+
