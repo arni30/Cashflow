@@ -31,7 +31,7 @@
         </section>
         
         <header class="section2">
-            <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
+            <a href="/"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
             <div class="section3">
                 <a class="header-button active">
                     <img th:src="@{/resources/go-green/dollar_sign.png}">
@@ -70,13 +70,13 @@
             
             <div id="wallets_block" class="page_width">
                 <div>
-                    <table ng-model="items">
+                    <table id="wallet_table" ng-model="items">
                         <tr>
-                            <th>Id</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Balance</th>
-                            <th>Currency</th>
+                            <th columns="0" onclick="tableSort(this, 'wallet_table')">Id</th>
+                            <th columns="1" onclick="tableSort(this, 'wallet_table')">Image</th>
+                            <th columns="2" onclick="tableSort(this, 'wallet_table')">Name</th>
+                            <th columns="3" onclick="tableSort(this, 'wallet_table')">Balance</th>
+                            <th columns="4" onclick="tableSort(this, 'wallet_table')">Currency</th>
                         </tr>
                         <tr ng-repeat="i in items" class="w rows" checked=false>
                             <td class="w">{{i.id}}</td>
@@ -99,18 +99,18 @@
             </div>
             <div id="currency_block" class="page_width">
                 <div>
-                    <table ng-model="items_currency">
+                    <table id="currency_table" ng-model="items_currency">
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Ticker</th>
-<!--                            <th>Ticker explain</th>-->
+                            <th columns="0" onclick="tableSort(this, 'currency_table')">Id</th>
+                            <th columns="1" onclick="tableSort(this, 'currency_table')">Name</th>
+                            <th columns="2" onclick="tableSort(this, 'currency_table')">Ticker</th>
+                            <th columns="3" onclick="tableSort(this, 'currency_table')">Ticker explain</th>
                         </tr>
                         <tr ng-repeat="i in items_currency" class="c rows" checked=false>
                             <td>{{i.id}}</td>
                             <td>{{i.name}}</td>
                             <td>{{i.ticker}}</td>
-<!--                            <td>tickerExplain({{i.ticker}}, {{i.name}})</td>-->
+                            <td>$ 1 = {{i.ticker}} {{i.name}}</td>
                         </tr>
                     </table>
                 </div>

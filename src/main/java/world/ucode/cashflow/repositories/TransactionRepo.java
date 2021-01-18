@@ -16,5 +16,8 @@ public interface TransactionRepo extends CrudRepository<Transaction, Long> {
     List<Transaction> findByTag_Id(int tagId);
     Transaction findById(int id);
 
+    void deleteAllByWalletId(int walletId);
+//    void deleteTransactionByWallet_Id(int walletId);
+
 //    void update(Transaction transaction);
 }

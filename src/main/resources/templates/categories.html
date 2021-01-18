@@ -32,7 +32,7 @@
         </section>
         
         <header class="section2">
-            <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
+            <a href="/"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
             <div class="section3">
                 <a class="header-button" href="wallets">
                     <img th:src="@{/resources/go-green/dollar_sign.png} ">
@@ -70,11 +70,11 @@
             
             <div id="categories_block" class="page_width">
                 <div>
-                    <table ng-model="items">
+                    <table id="category_table" ng-model="items">
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Description</th>
+                            <th columns="0" onclick="tableSort(this, 'category_table')">Id</th>
+                            <th columns="1" onclick="tableSort(this, 'category_table')">Name</th>
+                            <th columns="2" onclick="tableSort(this, 'category_table')">Description</th>
                         </tr>
                         <tr ng-repeat="i in items" class="c rows" checked=false>
                             <td>{{i.id}}</td>
@@ -95,11 +95,11 @@
             </div>
             <div id="tags_block" class="page_width">
                 <div>
-                    <table ng-model="items_tags">
+                    <table id="tag_table" ng-model="items_tags">
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Description</th>
+                            <th columns="0" onclick="tableSort(this, 'tag_table')">Id</th>
+                            <th columns="1" onclick="tableSort(this, 'tag_table')">Name</th>
+                            <th columns="2" onclick="tableSort(this, 'tag_table')">Description</th>
                         </tr>
                         <tr ng-repeat="i in items_tags" class="t rows" checked=false>
                             <td>{{i.id}}</td>

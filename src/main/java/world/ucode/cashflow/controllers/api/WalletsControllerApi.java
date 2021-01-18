@@ -23,7 +23,7 @@ public class WalletsControllerApi {
 
     @GetMapping("/get")
     public List<Wallet> getWalletsAndCurrency() {
-        return walletRepo.findAll();
+        return walletRepo.findByUser_Id(2);
     }
     @PostMapping("/create")
     public void postCreateWallet(@RequestBody Wallet wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {

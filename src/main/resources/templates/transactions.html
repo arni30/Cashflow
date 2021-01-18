@@ -32,7 +32,7 @@
         </section>
         
         <header class="section2">
-            <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
+            <a href="/"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
             <div class="section3">
                 <a class="header-button" href="wallets">
                     <img th:src="@{/resources/go-green/dollar_sign.png} ">
@@ -70,14 +70,14 @@
             <div id="transactions_block" class="page_width">
                 <div ng-app="get_form" ng-controller="GetController">
                     <p data-ng-init="getItems()"></p>
-                    <table ng-model="items">
+                    <table id="table" ng-model="items">
                         <tr>
-                            <th>Id</th>
-                            <th>Description</th>
-                            <th>Type</th>
-                            <th>Category</th>
-                            <th>Tag</th>
-                            <th>Wallet</th>
+                            <th columns="0" onclick="tableSort(this, 'table')">Id</th>
+                            <th columns="1" onclick="tableSort(this, 'table')">Description</th>
+                            <th columns="2" onclick="tableSort(this, 'table')">Type</th>
+                            <th columns="3" onclick="tableSort(this, 'table')">Category</th>
+                            <th columns="4" onclick="tableSort(this, 'table')">Tag</th>
+                            <th columns="5" onclick="tableSort(this, 'table')">Wallet</th>
                         </tr>
                         <tr ng-repeat="i in items" class="rows" checked=false>
                             <td>{{i.id}}</td>
@@ -90,6 +90,14 @@
                     </table>
                 </div>
             </div>
+
+            <div class="page_width page_head">
+                <p>Export all transactions to CSV file</p>
+                <div>
+                    <a class="button" th:href="exportCSV">Export to CSV</a>
+                </div>
+            </div>
+
         </section>
 
       
@@ -101,6 +109,9 @@
 
 <!--                    <label for="addtransaction_icon">Icon</label>-->
 <!--                    <input id="addtransaction_icon" class="form-styling" type="file" value="icon"/>-->
+
+                    <label for="addtransaction_date">Date</label>
+                    <input id="addtransaction_date" type='date' min='1899-01-01' max='2021-01-01'></input>
 
                     <label for="addtransaction_description">Description</label>
                     <input id="addtransaction_description" class="form-styling" type="text"/>

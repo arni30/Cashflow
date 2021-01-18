@@ -127,6 +127,12 @@
 
     <link rel="stylesheet" th:href="@{/resources/reset.css}"/>
     <link rel="stylesheet" th:href="@{/resources/general.css}"/>
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script th:src="@{/resources/general.js}"></script>
+    <script th:src="@{/resources/main.js}"></script>
+    <script th:src="@{/resources/main_requests.js}"></script>
 </head>
 
 <body>
@@ -139,70 +145,81 @@
         </section>
 
         <header class="section2">
-            <a href="main"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
+            <a href="/"><img id="logo" th:src="@{/resources/img/logo.png}"></a>
             <div class="section3">
-                <a class="header-button" href="/wallets">
+                <a class="header-button" href="wallets">
                     <img th:src="@{/resources/go-green/dollar_sign.png}">
                     <span>Wallets</span>
                 </a>
-                <a class="header-button" href="/transaction">
+                <a class="header-button" href="transactions">
                     <img th:src="@{/resources/go-green/list.png}">
                     <span>Transactions</span>
                 </a>
-                 <a class="header-button" href="/categories">
+                 <a class="header-button" href="categories">
                     <img th:src="@{/resources/go-green/server.png}">
                     <span>Categories</span>
                 </a>
-                <a class="header-button" href="/statistics">
+                <a class="header-button" href="statistics">
                     <img th:src="@{/resources/go-green/stats.png}">
                     <span>Statistics</span>
+                </a>
+                <a class="header-button" href="https://api.monobank.ua" target="_blank">
+                    <img th:src="@{/resources/go-green/stats.png}">
+                    <span>Mono</span>
                 </a>
             </div>
         </header>
 
-<!-- <main class="page">
-    <aside class="filters">
-        <div class="sort">
-            <p>Sort:</p>
-            <select class="sort-select">
-                <option value="1">none</option>
-                <option value="2">cheap first</option>
-                <option value="3">expensive first</option>
-            </select>
-        </div>
+        <section class="section4">
+            <div class="page_width page_head">
+                <div>
+                    <h2><label for="select_wallet">Transactions by wallet</label></h2>
+                    <select id="select_wallet" class="form-styling" onchange="main.select_wallet_transaction(this)">
+                        <option wallet_id="0">All wallets</option>
+                    </select>
+                </div>
 
-        <div>
-            <p>Category:</p>
-            <label class="filterbox">technics
-                <input type="checkbox" class="check-brand" value="technics">
-                <span class="checkmark"></span>
-            </label>
-            <label class="filterbox">furniture
-                <input type="checkbox" class="check-brand" value="furniture">
-                <span class="checkmark"></span>
-            </label>
-            <label class="filterbox">books
-                <input type="checkbox" class="check-brand" value="books">
-                <span class="checkmark"></span>
-            </label>
-            <label class="filterbox">clothes
-                <input type="checkbox" class="check-brand" value="clothes">
-                <span class="checkmark"></span>
-            </label>
-            <label class="filterbox">food
-                <input type="checkbox" class="check-brand" value="food">
-                <span class="checkmark"></span>
-            </label>
-            <label class="filterbox">others
-                <input type="checkbox" class="check-brand" value="others">
-                <span class="checkmark"></span>
-            </label>
-        </div>
+                <div>
+                    <!--                    <a class="button" onclick="transactions.openCreate()">Create</a>-->
+                    <!--                    <a class="button" onclick="transactions.openUpdate()">Update</a>-->
+<!--                    <a class="button" onclick="sendDeleteTransactions()">Delete all transaction by wallet</a>-->
+                </div>
+            </div>
 
-    </aside>
-    <div class="container"></div>
-</main>
-</div> -->
+            <div id="transactions_block" class="page_width">
+                <div ng-app="get_form" ng-controller="GetController" data-ng-init="getItems()">
+                    <table id="table" ng-model="items_transactions">
+                        <tr>
+                            <th columns="0" onclick="tableSort(this, 'table')">Id</th>
+                            <th columns="1" onclick="tableSort(this, 'table')">Description</th>
+                            <th columns="2" onclick="tableSort(this, 'table')">Type</th>
+                            <th columns="3" onclick="tableSort(this, 'table')">Category</th>
+                            <th columns="4" onclick="tableSort(this, 'table')">Tag</th>
+                            <th columns="5" onclick="tableSort(this, 'table')">Wallet</th>
+                        </tr>
+                        <tbody id="transaction_table">
+                            <tr ng-repeat="i in items_transactions" class="rows" checked=false>
+                                <td>{{i.id}}</td>
+                                <td>{{i.description}}</td>
+                                <td>{{i.type}}</td>
+                                <td>{{i.category.name}}</td>
+                                <td>{{i.tag.name}}</td>
+                                <td>{{i.wallet.name}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="page_width page_head">
+                <p>Delete all transactions by wallet</p>
+                <div>
+                    <a class="button" onclick="sendDeleteAllTransactions()">Delete all</a>
+                </div>
+            </div>
+
+        </section>
+
     </div>
 </body>
 <script>

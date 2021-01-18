@@ -11,7 +11,14 @@ import world.ucode.cashflow.repositories.UserRepo;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -21,7 +28,8 @@ public class TransactionControllerApi {
 
     @GetMapping("/get")
     public List<Transaction> getTransactions() {
-        return transactionRepo.findAll();
+//        return transactionRepo.findByUser_Id(1);
+        return transactionRepo.findByWallet_User_Id(2);
     }
 
     @PostMapping("/create")
@@ -64,4 +72,16 @@ public class TransactionControllerApi {
             response.sendError(400, "Bad Request");
         }
     }
+
+    @PostMapping("/deleteAllByWallet")
+    public void deleteAllTransactionByWallet(@RequestBody Wallet wallet, HttpServletResponse response) throws IOException {
+        try {
+            transactionRepo.deleteAllByWalletId(wallet.getId());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(400, "Bad Request");
+        }
+    }
+
 }
