@@ -6,12 +6,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import world.ucode.cashflow.models.dao.Transaction;
+import world.ucode.cashflow.models.dao.Wallet;
 import world.ucode.cashflow.models.dto.TransactionDTO;
 import world.ucode.cashflow.repositories.*;
 import org.springframework.web.bind.annotation.*;
-import world.ucode.cashflow.models.Transaction;
-import world.ucode.cashflow.models.Users;
-import world.ucode.cashflow.models.Wallet;
 import world.ucode.cashflow.repositories.TransactionRepo;
 import world.ucode.cashflow.repositories.UserRepo;
 
