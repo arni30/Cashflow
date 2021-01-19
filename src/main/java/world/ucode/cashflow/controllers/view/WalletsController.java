@@ -8,16 +8,16 @@ import world.ucode.cashflow.repositories.UserRepo;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
-@RequestMapping("/wallets")
-public class WalletsController {
-    @Autowired
-    private UserRepo userRepo;
-//    @PostMapping
-//    public String postWallets(@RequestBody Users user, HttpServletResponse response) throws IOException {
+//@Controller
+//@RequestMapping("/wallets")
+//public class WalletsController {
+//    @Autowired
+//    private UserRepo userRepo;
+////    @PostMapping
+////    public String postWallets(@RequestBody Users user, HttpServletResponse response) throws IOException {
+////    }
+//    @GetMapping
+//    public String getWallets(HttpServletRequest request) {
+//        return "wallets";
 //    }
-    @GetMapping
-    public String getWallets(HttpServletRequest request) {
-        return "wallets";
-    }
-}
+//}

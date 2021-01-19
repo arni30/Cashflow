@@ -16,8 +16,9 @@ import java.util.List;
 public class MainControllerApi {
     @Autowired
     WalletRepo walletRepo;
-    @GetMapping
-    public List<Wallet> getMain(HttpServletResponse response) throws IOException {
-        return walletRepo.findByUser_Id(1);
+
+    @GetMapping("/get")
+    public List<Wallet> getMain() throws IOException {
+        return walletRepo.findByUser_Id(2);
     }
 }

@@ -17,6 +17,23 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
+/*input:-internal-autofill-selected {*/
+/*	background-color: rgba(183, 201, 109,.3) !important;*/
+/*}*/
+/*input:-webkit-autofill,*/
+/*input:-webkit-autofill:hover,*/
+/*input:-webkit-autofill:focus,*/
+/*textarea:-webkit-autofill,*/
+/*textarea:-webkit-autofill:hover,*/
+/*textarea:-webkit-autofill:focus,*/
+/*select:-webkit-autofill,*/
+/*select:-webkit-autofill:hover,*/
+/*select:-webkit-autofill:focus {*/
+/*	border: none;*/
+/*	!*-webkit-text-fill-color: green;*!*/
+/*	-webkit-box-shadow: 0 0 0px 1000px rgba(183, 201, 109,.3) inset;*/
+/*	!*transition: background-color 5000s ease-in-out 0s;*!*/
+/*}*/
 body {
 	font-family: "Montserrat", sans-serif;
 	font-weight: 400;
@@ -76,6 +93,7 @@ body * {
 .body-block {
 	position: absolute;
 	margin: 20px;
+	min-height: 50vh;
 	/*padding: 20px;*/
 	top: 0;
 	left: .7%;
@@ -125,6 +143,7 @@ body * {
 	font-weight: 700;
 	padding: 0 20px;
 	border-left: 1px solid #d8d8d8;
+	/*width: 180px;*/
 }
 .header-button > img {
 	height: 20px;
@@ -196,7 +215,7 @@ body * {
 	background: rgba(238, 238, 238, 0.6);
 	z-index: 1;
 }
-#window {
+.window {
 	width: 400px;
 	position: absolute;
 	top: 10%;
@@ -230,7 +249,7 @@ body * {
 .form-styling {
 	width: 100%;
 	height: 35px;
-	padding-left: 15px;
+	padding: 0 15px;
 	border: none;
 	border-radius: 20px;
 	margin-bottom: 20px;
@@ -241,7 +260,6 @@ body * {
 	/*text-transform: uppercase;*/
 	padding-left: 15px;
 	padding-bottom: 10px;
-	font-weight: 500;
 	display: block;
 }
 .window_form input,
@@ -252,13 +270,18 @@ body * {
     /*font-size: 13px;*/
 }
 .window_form input:focus,
-.window_form input:focus,
-.window_form select:focus,
-.window_form select:focus {
-    background: rgba(183, 201, 109);
+.window_form input:focus {
+    background: rgb(183, 201, 109);
     border: none;
     -webkit-transition: background .5s ease;
     transition: background .5s ease;
+}
+.window_form select:focus,
+.window_form select:focus {
+	background: rgba(183, 201, 109,.3);
+	border: none;
+	-webkit-transition: background .5s ease;
+	transition: background .5s ease;
 }
 .window_form input[type=file] {
 	padding-top: 5px;
@@ -339,5 +362,56 @@ body * {
 }
 
  /* -------------------------------------------------------- *
- * ------------------ HIDDEN ELEMENTS ---------------------- *
+ * ----------------------- TABLES -------------------------- *
  * -------------------------------------------------------- */
+
+table {
+	border-collapse: collapse;
+	text-align: center;
+	width: 100%;
+}
+
+/*thead {*/
+/*	border: 2px solid black;*/
+/*	background-color: black;*/
+/*	color: white;*/
+/*}*/
+
+table, th, td {
+	border: 2px solid #ccc;
+	padding: 10px;
+}
+
+th {
+	/*background: #74808a;*/
+	cursor: pointer;
+}
+
+
+.selected_row {
+	background: #515d22;
+}
+
+/* -------------------------------------------------------- *
+* -------------------- DIFFERENT -------------------------- *
+* -------------------------------------------------------- */
+.icon {
+	/*min-width: 30px;*/
+	/*max-width: 200px;*/
+	/*max-height: 200px;*/
+	width: 30px;
+	height: 30px;
+	/*border-radius: 15px;*/
+	/*width: 100%;*/
+}
+
+select {
+	/* reset */
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	cursor: pointer;
+}

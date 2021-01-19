@@ -20,7 +20,6 @@ public class CurrencyControllerApi {
     @PostMapping("/create")
     public void createTransaction(@RequestBody Currency currency, HttpServletResponse response) throws IOException {
         try {
-            System.out.println("HALLO");
             currencyRepo.save(currency);
         }
         catch (Exception e) {
@@ -33,7 +32,7 @@ public class CurrencyControllerApi {
     public void updateTransaction(@RequestBody Currency newCurrency, HttpServletResponse response) throws IOException {
         try {
             Currency currency = currencyRepo.findById(newCurrency.getId());
-            currency.setName(newCurrency.getName() == null ? currency.getName() : newCurrency.getName());
+            currency.setName(newCurrency.getName().equals("") ? currency.getName() : newCurrency.getName());
             currency.setTicker(newCurrency.getTicker() == 0 ? currency.getTicker() : newCurrency.getTicker());
             currencyRepo.save(currency);
         }
@@ -44,7 +43,7 @@ public class CurrencyControllerApi {
     }
 
     @PostMapping("/delete")
-    public void deleteTransaction(@RequestBody Currency currency, HttpServletResponse response) throws IOException {
+    public void deleteCurrency(@RequestBody Currency currency, HttpServletResponse response) throws IOException {
         try {
             currencyRepo.delete(currency);
         }
