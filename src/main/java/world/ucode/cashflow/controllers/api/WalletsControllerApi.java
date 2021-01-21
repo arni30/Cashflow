@@ -29,11 +29,15 @@ public class WalletsControllerApi {
         return walletRepo.findByUser_Id(2);
     }
     @PostMapping("/create")
-    public void postCreateWallet(@RequestBody Wallet wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void postCreateWallet(@RequestBody WalletDTO wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
-            wallet.setUser(user);
-            walletRepo.save(wallet);
+            System.out.println("CREATE WALLET");
+            Users user = userRepo.findByLogin("1");
+            Wallet newWallet = new Wallet(wallet);
+            System.out.println(currencyRepo.findById(wallet.getCurrencyId()).getName());
+            newWallet.setCurrency(currencyRepo.findById(wallet.getCurrencyId()));
+            newWallet.setUser(user);
+            walletRepo.save(newWallet);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -44,8 +48,8 @@ public class WalletsControllerApi {
     public void postUpdateWallets(@RequestBody WalletDTO newWallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             Wallet wallet = walletRepo.findById(newWallet.getId());
-            wallet.setName(newWallet.getName().equals("") ? wallet.getName() : newWallet.getName());
-            wallet.setCurrency(newWallet.getCurrencyId() == 0 ? wallet.getCurrency() : currencyRepo.findById(newWallet.getCurrencyId()));
+            wallet.setName(newWallet.getName() == null ? wallet.getName() : newWallet.getName());
+            wallet.setCurrency(newWallet.getCurrencyId() == null ? wallet.getCurrency() : currencyRepo.findById(newWallet.getCurrencyId()));
             wallet.setBalance(newWallet.getBalance() == null ? wallet.getBalance() : newWallet.getBalance());
             walletRepo.save(wallet);
         }
@@ -56,9 +60,9 @@ public class WalletsControllerApi {
     }
 
     @PostMapping("/delete")
-    public void deleteWallet(@RequestBody Wallet wallet, HttpServletResponse response) throws IOException {
+    public void deleteWallet(@RequestBody WalletDTO wallet, HttpServletResponse response) throws IOException {
         try {
-            walletRepo.delete(wallet);
+            walletRepo.delete(walletRepo.findById(wallet.getId()));
         }
         catch (Exception e) {
             e.printStackTrace();

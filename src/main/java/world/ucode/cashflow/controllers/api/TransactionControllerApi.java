@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import world.ucode.cashflow.models.dao.Transaction;
 import world.ucode.cashflow.models.dao.Wallet;
 import world.ucode.cashflow.models.dto.TransactionDTO;
+import world.ucode.cashflow.models.dto.WalletDTO;
 import world.ucode.cashflow.repositories.*;
 import org.springframework.web.bind.annotation.*;
 import world.ucode.cashflow.repositories.TransactionRepo;
@@ -43,10 +44,13 @@ public class TransactionControllerApi {
     }
 
     @PostMapping("/create")
-    public void createTransaction(@RequestBody Transaction transaction, HttpServletResponse response) throws IOException {
+    public void createTransaction(@RequestBody TransactionDTO transaction, HttpServletResponse response) throws IOException {
         try {
-            System.out.println("HALLO");
-            transactionRepo.save(transaction);
+            Transaction newTransaction = new Transaction(transaction);
+            newTransaction.setCategory(categoryRepo.findById(transaction.getCategoryId()));
+            newTransaction.setWallet(walletRepo.findById(transaction.getWalletId()));
+            newTransaction.setTag(tagRepo.findById(transaction.getTagId()));
+            transactionRepo.save(newTransaction);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -73,9 +77,9 @@ public class TransactionControllerApi {
     }
 
     @PostMapping("/delete")
-    public void deleteTransaction(@RequestBody Transaction transaction, HttpServletResponse response) throws IOException {
+    public void deleteTransaction(@RequestBody TransactionDTO transaction, HttpServletResponse response) throws IOException {
         try {
-            transactionRepo.delete(transaction);
+            transactionRepo.delete(transactionRepo.findById(transaction.getId()));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -84,7 +88,7 @@ public class TransactionControllerApi {
     }
 
     @PostMapping("/deleteAllByWallet")
-    public void deleteAllTransactionByWallet(@RequestBody Wallet wallet, HttpServletResponse response) throws IOException {
+    public void deleteAllTransactionByWallet(@RequestBody WalletDTO wallet, HttpServletResponse response) throws IOException {
         try {
             transactionRepo.deleteAllByWalletId(wallet.getId());
         }

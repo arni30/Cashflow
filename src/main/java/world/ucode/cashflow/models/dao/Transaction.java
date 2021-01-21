@@ -1,6 +1,7 @@
 package world.ucode.cashflow.models.dao;
 
 import lombok.Data;
+import world.ucode.cashflow.models.dto.TransactionDTO;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -24,4 +25,12 @@ public class Transaction {
     private Tag tag;
     private Timestamp date;
     private String description;
+
+    public Transaction() {}
+
+    public Transaction(TransactionDTO transactionDTO) {
+        this.type = transactionDTO.getType();
+        this.date = transactionDTO.getDate();
+        this.description = transactionDTO.getDescription();
+    }
 }

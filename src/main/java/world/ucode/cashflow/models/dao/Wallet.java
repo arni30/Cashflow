@@ -1,8 +1,11 @@
 package world.ucode.cashflow.models.dao;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import world.ucode.cashflow.models.dao.Currency;
 import world.ucode.cashflow.models.dao.Users;
+import world.ucode.cashflow.models.dto.WalletDTO;
+import world.ucode.cashflow.repositories.CurrencyRepo;
 
 import javax.persistence.*;
 
@@ -22,4 +25,11 @@ public class Wallet {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Users user;
+
+    public Wallet() {}
+
+    public Wallet(WalletDTO wallet) {
+        this.name = wallet.getName();
+        this.balance = wallet.getBalance();
+    }
 }

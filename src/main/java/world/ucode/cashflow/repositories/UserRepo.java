@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserRepo extends CrudRepository<Users, Long> {
     Users findByLogin(String login);
-    Users findById(int id);
+    Users findById(Integer id);
     Users findByLoginAndValidationStatus(String login, int status);
     List<Users> findByToken(String token);
 }
