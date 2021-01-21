@@ -32,7 +32,7 @@ public class WalletsControllerApi {
     public void postCreateWallet(@RequestBody WalletDTO wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             System.out.println("CREATE WALLET");
-            Users user = userRepo.findByLogin("1");
+            Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
             Wallet newWallet = new Wallet(wallet);
             System.out.println(currencyRepo.findById(wallet.getCurrencyId()).getName());
             newWallet.setCurrency(currencyRepo.findById(wallet.getCurrencyId()));
