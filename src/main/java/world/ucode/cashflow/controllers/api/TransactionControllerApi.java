@@ -36,6 +36,7 @@ public class TransactionControllerApi {
     public void createTransaction(@RequestBody Transaction transaction, HttpServletResponse response) throws IOException {
         try {
             System.out.println("HALLO");
+            System.out.println(transaction.toString());
             transactionRepo.save(transaction);
         }
         catch (Exception e) {
@@ -53,7 +54,7 @@ public class TransactionControllerApi {
             transaction.setType(newTransaction.getType() == null ? transaction.getType() : newTransaction.getType());
             transaction.setTag(newTransaction.getTag() == null ? transaction.getTag() : newTransaction.getTag());
             transaction.setDate(newTransaction.getDate() == null ? transaction.getDate() : newTransaction.getDate());
-            transaction.setDescription(newTransaction.getDescription() == null ? transaction.getDescription() : newTransaction.getDescription());
+            transaction.setDescription(newTransaction.getDescription().equals("") ? transaction.getDescription() : newTransaction.getDescription());
             transactionRepo.save(transaction);
         }
         catch (Exception e) {

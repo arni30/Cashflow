@@ -61,8 +61,8 @@
             <div class="page_width page_head">
                 <h2>Transactions</h2>
                 <div>
-<!--                    <a class="button" onclick="transactions.openCreate()">Create</a>-->
-<!--                    <a class="button" onclick="transactions.openUpdate()">Update</a>-->
+                    <a class="button" onclick="transactions.openCreate()">Create</a>
+                    <a class="button" onclick="transactions.openUpdate()">Update</a>
                     <a class="button" onclick="sendDeleteTransaction()">Delete</a>
                 </div>
             </div>
@@ -111,13 +111,13 @@
 <!--                    <input id="addtransaction_icon" class="form-styling" type="file" value="icon"/>-->
 
                     <label for="addtransaction_date">Date</label>
-                    <input id="addtransaction_date" type='date' min='1899-01-01' max='2021-01-01'></input>
+                    <input id="addtransaction_date" class="form-styling" type='date' min='1899-01-01' max='2021-01-01'></input>
 
                     <label for="addtransaction_description">Description</label>
                     <input id="addtransaction_description" class="form-styling" type="text"/>
 
                     <label for="addtransaction_type">Type</label>
-                    <input id="addtransaction_type" class="form-styling" type="text"/>
+                    <select id="addtransaction_type" class="form-styling"></select>
 
                     <label for="addtransaction_category">Category</label>
                     <select id="addtransaction_category" class="form-styling"></select>
@@ -145,11 +145,14 @@
 <!--                    <label for="updatetransaction_icon">New icon</label>-->
 <!--                    <input id="updatetransaction_icon" class="form-styling" type="file" value="icon"/>-->
 
+                    <label for="updatetransaction_date">Date</label>
+                    <input id="updatetransaction_date" class="form-styling" type='date' min='1899-01-01' max='2021-01-01'></input>
+
                     <label for="updatetransaction_description">Description</label>
                     <input id="updatetransaction_description" class="form-styling" type="text"/>
 
                     <label for="updatetransaction_type">Type</label>
-                    <input id="updatetransaction_type" class="form-styling" type="text"/>
+                    <select id="updatetransaction_type" class="form-styling"></select>
 
                     <label for="updatetransaction_category">Category</label>
                     <select id="updatetransaction_category" class="form-styling"></select>

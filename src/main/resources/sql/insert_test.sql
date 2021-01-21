@@ -1,3 +1,8 @@
+
+-- INSERT
+-- INTO users(user_id, email, login, password, validation_status)
+-- VALUES (default, 'ubayforever0@gmail.com', 'Bilbo Baggins', 'burglar', 1);
+
 INSERT INTO users VALUES (1, 'ubayforever0@gmail.com', 'Bilbo Baggins', 'burglar', null, 1);
 INSERT INTO users VALUES (2, 'trogalska2208@gmail.com', 'tr', null, null, 1);
 
@@ -39,3 +44,4 @@ INSERT INTO transaction VALUES (4, pg_stat_get_snapshot_timestamp(), 'clothes', 
 INSERT INTO transaction VALUES (5, pg_stat_get_snapshot_timestamp(), 'salary for november', 'income', 7, 7, 1);
 INSERT INTO transaction VALUES (6, pg_stat_get_snapshot_timestamp(), 'need $500 more for Maldives', 'income', 7, 8, 2);
 INSERT INTO transaction VALUES (7, pg_stat_get_snapshot_timestamp(), 'salary for december', 'income', 7, 7, 1);
+
