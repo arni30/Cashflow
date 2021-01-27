@@ -2,14 +2,9 @@ package world.ucode.cashflow;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import springfox.boot.starter.autoconfigure.SpringfoxConfigurationProperties;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -19,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @ImportResource("classpath:beans.xml")
 @Import(SpringfoxConfigurationProperties.Swagger2Configuration.class)
-public class OvertoneApplication {
+public class CashflowApplication {
 
 	/**
 	 * The entry point of application.
@@ -27,6 +22,6 @@ public class OvertoneApplication {
 	 * @param args the input arguments
 	 */
 	public static void main(String[] args) {
-		SpringApplication.run(OvertoneApplication.class, args);
+		SpringApplication.run(CashflowApplication.class, args);
 	}
 }

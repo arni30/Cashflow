@@ -1,14 +1,18 @@
 package world.ucode.cashflow.controllers.api;
 
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import world.ucode.cashflow.models.dao.Currency;
+import world.ucode.cashflow.models.dao.Users;
 import world.ucode.cashflow.repositories.CurrencyRepo;
+import world.ucode.cashflow.repositories.UserRepo;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.io.IOException;
 
 @RestController
@@ -16,6 +20,30 @@ import java.io.IOException;
 public class CurrencyControllerApi {
     @Autowired
     private CurrencyRepo currencyRepo;
+    @Autowired
+    private UserRepo userRepo;
+    @GetMapping("/get")
+    public void getAllCurrencies(HttpServletRequest request) {
+        Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
+        Iterable<Currency> currencies = currencyRepo.findAll();
+        for (Currency currency:currencies) {
+            System.out.println(currency.getId());
+            System.out.println(currency.getName());
+            System.out.println(currency.getTicker());
+        }
+//        getMonoCurrencies();
+
+    }
+//    private static void getMonoCurrencies()
+//    {
+////        final String uri = "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5";
+//        final String uri = "https://api.monobank.ua/bank/currency";
+//
+//        RestTemplate restTemplate = new RestTemplate();
+//        String result = restTemplate.getForObject(uri, String.class);
+//
+//        System.out.println(result);
+//    }
 
     @PostMapping("/create")
     public void createTransaction(@RequestBody Currency currency, HttpServletResponse response) throws IOException {

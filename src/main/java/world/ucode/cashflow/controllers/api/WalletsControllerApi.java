@@ -25,8 +25,9 @@ public class WalletsControllerApi {
     private CurrencyRepo currencyRepo;
 
     @GetMapping("/get")
-    public List<Wallet> getWalletsAndCurrency() {
-        return walletRepo.findByUser_Id(2);
+    public List<Wallet> getWalletsAndCurrency(HttpServletRequest request) {
+        Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
+        return walletRepo.findByUser_Id(user.getId());
     }
     @PostMapping("/create")
     public void postCreateWallet(@RequestBody WalletDTO wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -34,6 +35,8 @@ public class WalletsControllerApi {
             System.out.println("CREATE WALLET");
             Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
             Wallet newWallet = new Wallet(wallet);
+            wallet.setCurrencyId(1);
+            System.out.println(wallet.getCurrencyId());
             System.out.println(currencyRepo.findById(wallet.getCurrencyId()).getName());
             newWallet.setCurrency(currencyRepo.findById(wallet.getCurrencyId()));
             newWallet.setUser(user);
