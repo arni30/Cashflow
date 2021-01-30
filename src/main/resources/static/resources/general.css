@@ -255,6 +255,18 @@ body * {
 	margin-bottom: 20px;
 	background: rgba(183, 201, 109,.3);
 }
+.stat-styling {
+	width: 190px;
+	display: inline-block;
+	text-align: center;
+	height: 35px;
+	padding: 0 10px;
+	border: none;
+	border-radius: 20px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	background: rgba(183, 201, 109,.3);
+}
 .window_form label {
 	font-weight: 300;
 	/*text-transform: uppercase;*/
@@ -385,6 +397,9 @@ table, th, td {
 th {
 	/*background: #74808a;*/
 	cursor: pointer;
+}
+td {
+	cursor: default;
 }
 
 

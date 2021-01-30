@@ -1,11 +1,5 @@
 'use strict';
 
-let getTransactionId = () => {
-    let item = document.querySelector('.rows[checked="true"]');
-    if (item === null || item.className !== "rows ng-scope") return;
-    return item.getElementsByTagName("td")[0].innerHTML;
-}
-
 angular.module("get_form", [])
     .controller("GetController", ["$scope", "$http", function ($scope, $http) {
         $scope.items = [];
@@ -13,7 +7,10 @@ angular.module("get_form", [])
             $http({
                 method: "GET",
                 url: "api/transaction/get",
-                headers: {"Content-Type": "application/json"}
+                headers: {
+                    "Content-Type": "application/json",
+                    'X-CSRF-TOKEN': token
+                }
             }).then(
                 function (data) {
                     console.log(data.data);
@@ -29,53 +26,21 @@ angular.module("get_form", [])
     }]);
 
 let sendCreateTransaction = async () => {
-    // let name = document.querySelector('#addtransaction_name').value;
-    // let currency_id = getAddWalletCurrency();
-    // let balance = document.querySelector('#addtransaction_balance').value;
-    // // let icon =
-    //
-    // if (!name || balance < 0) {
-    //     alert('all fields must be filled!');
-    //     return;
-    // }
-    //
-    // let formData = new FormData();
-    // formData.append('name', name);
-    // formData.append('currency_id', currency_id);
-    // formData.append('balance', balance);
-    // // formData.append('icon', icon);
-    //
-    // let jsonString = formToJson(formData);
-    // console.log(jsonString);
-    //
-    // await send('api/wallets/create', jsonString, errorMsg);
+    let jsonString = getJsonForSendingTransaction('#addtransaction', null);
+    if (jsonString === undefined) return;
+    await send('api/transaction/create', jsonString, errorMsg);
 
 }
 let sendUpdateTransaction = async () => {
-    // let id = getWalletId();
-    // if (id === undefined) return;
-    // let elem = wallets.items.find(element => element.id === Number.parseInt(id));
-    // let name = document.querySelector('#updatewallet_name').value;
-    // // let icon =
-    //
-    // if (!name) { // !name && !img to return
-    //     alert('Empty form!');
-    //     return;
-    // }
-    //
-    // let formData = new FormData();
-    // formData.append('id', elem.id);
-    // formData.append('name', name);
-    // // formData.append('newIcon', icon);
-    //
-    // let jsonString = formToJson(formData);
-    // console.log(jsonString);
-    //
-    // await send('api/wallets/update', jsonString, errorMsg);
+    let id = getSelectedRowId('rows ng-scope');
+    if (id === undefined) return;
+    let elem = transactions.items.find(element => element.id === Number.parseInt(id));
+    let jsonString = getJsonForSendingTransaction('#updatetransaction', elem.id);
+    await send('api/transaction/update', jsonString, errorMsg);
 
 }
 let sendDeleteTransaction = async () => {
-    let id = getTransactionId();
+    let id = getSelectedRowId('rows ng-scope');
     if (id === undefined) return;
     if (!confirm('Delete this transaction?')) return;
     let elem = transactions.items.find(element => element.id === Number.parseInt(id));
@@ -90,7 +55,37 @@ let sendDeleteTransaction = async () => {
     let jsonString = formToJson(formData);
     console.log(jsonString);
 
-    let errorMsg = 'немає обробки запроса на сервері';
     await send('api/transaction/delete', jsonString, errorMsg);
 
+}
+
+let getJsonForSendingTransaction = (elem, elemId) => {
+    let date = document.querySelector(elem+'_date').value;
+    let description = document.querySelector(elem+'_description').value;
+    let type = document.querySelector(elem+'_type').value;
+    // let type = getSelectedOptionId(elem+'_type');  // value or id???
+    let category_id = getSelectedOptionId(elem+'_category');
+    let tag_id = getSelectedOptionId(elem+'_tag');
+    let wallet_id = getSelectedOptionId(elem+'_wallet');
+
+    if (elemId === null) {
+        if (!description || !date) {
+            alert('all fields must be filled!');
+            return undefined;
+        }
+    }
+
+    let transaction = {}
+    transaction.description = description;
+    transaction.type = type;
+    transaction.category = getObjectById(Number.parseInt(category_id), tmp.categories);
+    transaction.tag = getObjectById(Number.parseInt(tag_id), tmp.tags);
+    transaction.wallet = getObjectById(Number.parseInt(wallet_id), tmp.wallets);
+    transaction.date = date;
+    if (elemId !== null) {
+        transaction.id = elemId;
+    }
+    console.log(transaction);
+
+    return JSON.stringify(transaction);
 }

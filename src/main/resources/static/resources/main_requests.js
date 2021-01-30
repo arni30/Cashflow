@@ -8,7 +8,10 @@ angular.module("get_form", [])
             $http({
                 method: "GET",
                 url: "api/get",
-                headers: {"Content-Type": "application/json"}
+                headers: {
+                    "Content-Type": "application/json",
+                    'X-CSRF-TOKEN': token
+                }
             }).then(
                 function (data) {
                     console.log(data.data);

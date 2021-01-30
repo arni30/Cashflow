@@ -25,8 +25,8 @@ public class Users {
 
     public Users() {}
 
-    public Users(Integer id, String login, String password, String email) {
-        this.id = id;
+    public Users(String email, String login, String password) {
+//        this.id = id;
         this.login = login;
         this.password = password; // &&& hash
         this.email = email;

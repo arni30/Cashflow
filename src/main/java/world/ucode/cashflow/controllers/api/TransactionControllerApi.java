@@ -67,7 +67,7 @@ public class TransactionControllerApi {
             transaction.setType(newTransaction.getType() == null ? transaction.getType() : newTransaction.getType());
             transaction.setTag(newTransaction.getTagId() == 0 ? transaction.getTag() : tagRepo.findById(newTransaction.getTagId()));
             transaction.setDate(newTransaction.getDate() == null ? transaction.getDate() : newTransaction.getDate());
-            transaction.setDescription(newTransaction.getDescription() == null ? transaction.getDescription() : newTransaction.getDescription());
+            transaction.setDescription(newTransaction.getDescription().equals("") ? transaction.getDescription() : newTransaction.getDescription());
             transactionRepo.save(transaction);
         }
         catch (Exception e) {

@@ -1,5 +1,34 @@
 'use strict';
 
+let tmp = {
+    wallets: [
+        { id: 1, name: 'my wallet', balance: 1020, currency: { id: 1, name: 'UAN'} },
+        { id: 2, name: 'dollars', balance: 20, currency: { id: 2, name: 'USD'} }
+    ],
+    currency: [
+        { id: 1, name: 'UAN', ticker: 30 },
+        { id: 2, name: 'USD', ticker: 1 },
+        { id: 3, name: 'EUR', ticker: 0.8 },
+        { id: 4, name: 'TROLO', ticker: 12 }
+    ],
+    transactions: [],
+    categories: [
+        {id: 1, name: "auchan", description: "supermarket"},
+        {id: 2, name: "spain", description: "vacation"},
+        {id: 7, name: "work", description: "salary"},
+    ],
+    tags: [
+        {id: 1, name: "apple", description: "food"},
+        {id: 2, name: "tickets", description: "404 bus"},
+        {id: 3, name: "clothes", description: "t-shirt"}
+    ],
+
+    type: [
+        { id: 1, name: 'income'},
+        { id: 2, name: 'expense'},
+    ]
+}
+
 let formToJson = (formData) => {
     let object = {};
     formData.forEach(function (value, key) {
@@ -96,3 +125,32 @@ let tableSort = (item, table) => {
     }
 }
 
+let addItemsToSelect = (tag, source) => {
+    let elem = document.querySelector(tag);
+    for (let i in source) {
+        let option = document.createElement('option');
+        option.setAttribute('id', source[i].id);
+        option.innerHTML = source[i].name;
+        elem.appendChild(option);
+    }
+}
+let getSelectedOptionId = (tag) => {
+    let elem = document.querySelector(tag);
+    let arr = elem.getElementsByTagName("option");
+    for (let i in arr)
+        if (arr[i].value === elem.value)
+            return arr[i].getAttribute("id");
+}
+let getSelectedRowId = (className) => {
+    let item = document.querySelector('.rows[checked="true"]');
+    if (item === null || item.className !== className) return;
+    return item.getElementsByTagName("td")[0].innerHTML;
+}
+
+let getObjectById = (id, array) => {
+    for (let i in array) {
+        if (id === array[i].id) {
+            return array[i];
+        }
+    }
+}

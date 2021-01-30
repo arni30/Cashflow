@@ -141,6 +141,8 @@
 <!--        "${#authentication.getPrincipal().getUsername()}"-->
         <section class="section1">
             <a id="authorizedLogin" sec:authorize="isAuthenticated()" sec:authentication="name"></a>
+            <a class="abutton" href="/login">Sign in</a>
+            <a class="abutton" href="/registration">Sign up</a>
             <a class="abutton" href="/logout" th:method="Post">Sign out</a>
         </section>
 

@@ -1,7 +1,7 @@
 'use strict';
 
 let categories = {
-  items: [{id: 0, name: "###", description: "###"}],
+  items: [],
 
   openCreate: function() {
     document.querySelector('#create_category').setAttribute('class', 'additional_window');
@@ -30,12 +30,7 @@ let categories = {
 }
 
 let tags = {
-  items: [
-      {id: 1, name: "asan", description: "supermarket"},
-      {id: 2, name: "spain", description: "vacation"},
-      {id: 7, name: "work", description: "salary"},
-      ],
-
+  items: [],
   openCreate: function() {
     document.querySelector('#create_tag').setAttribute('class', 'additional_window');
   },

@@ -74,14 +74,14 @@
                     <table id="wallet_table" ng-model="items">
                         <tr>
                             <th columns="0" onclick="tableSort(this, 'wallet_table')">Id</th>
-                            <th columns="1" onclick="tableSort(this, 'wallet_table')">Image</th>
+<!--                            <th columns="1" onclick="tableSort(this, 'wallet_table')">Image</th>-->
                             <th columns="2" onclick="tableSort(this, 'wallet_table')">Name</th>
                             <th columns="3" onclick="tableSort(this, 'wallet_table')">Balance</th>
                             <th columns="4" onclick="tableSort(this, 'wallet_table')">Currency</th>
                         </tr>
                         <tr ng-repeat="i in items" class="w rows" checked=false>
                             <td class="w">{{i.id}}</td>
-                            <td><img class="icon" th:src="@{/resources/img/no-img.png}" alt="img"></td>
+<!--                            <td><img class="icon" th:src="@{/resources/img/no-img.png}" alt="img"></td>-->
                             <td>{{i.name}}</td>
                             <td>{{i.balance}}</td>
                             <td>{{i.currency.name}}</td>

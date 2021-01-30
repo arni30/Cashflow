@@ -4,10 +4,10 @@ let transactions = {
   items: [],
 
   openCreate: function() {
-    // let addWallet_currency = document.querySelector('#addtransaction_currency');
-    // for (let i in transactions.items) {
-    //   this.showAddWalletItem(addWallet_currency, currency.items[i]);
-    // }
+    addItemsToSelect('#addtransaction_type', tmp.type);
+    addItemsToSelect('#addtransaction_category', tmp.categories);
+    addItemsToSelect('#addtransaction_tag', tmp.tags);
+    addItemsToSelect('#addtransaction_wallet', tmp.wallets);
     document.querySelector('#create_transaction').setAttribute('class', 'additional_window');
   },
   closeCreate: function() {
@@ -18,10 +18,14 @@ let transactions = {
     }
   },
   openUpdate: function() {
-    let id = getTransactionId();
+    let id = getSelectedOptionId('rows ng-scope');
     if (id === undefined) return;
     let elem = transactions.items.find(element => element.id === Number.parseInt(id));
     document.querySelector('#updatetransaction_name_head').innerHTML = 'Update ' + elem.name;
+    addItemsToSelect('#updatetransaction_type', tmp.type);
+    addItemsToSelect('#updatetransaction_category', tmp.categories);
+    addItemsToSelect('#updatetransaction_tag', tmp.tags);
+    addItemsToSelect('#updatetransaction_wallet', tmp.wallets);
     document.querySelector('#update_transaction').setAttribute('class', 'additional_window');
   },
   closeUpdate: function() {
@@ -30,12 +34,6 @@ let transactions = {
     for (let i = 0; i < 2; i++) {
       clear[i].value = '';
     }
-  },
-  showAddTransactionItem: function(elem, item) {
-    let option = document.createElement('option');
-    option.setAttribute('currency_id', item.id);
-    option.innerHTML = item.name;
-    elem.appendChild(option);
   }
 
 }

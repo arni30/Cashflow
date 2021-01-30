@@ -1,23 +1,23 @@
 'use strict';
 
-let getWalletId = () => {
-  let item = document.querySelector('.rows[checked="true"]');
-  if (item === null || item.className !== "w rows ng-scope") return;
-  return item.getElementsByTagName("td")[0].innerHTML;
-}
-
-let getCurrencyId = () => {
-  let item = document.querySelector('.rows[checked="true"]');
-  if (item === null || item.className !== "c rows ng-scope") return;
-  return item.getElementsByTagName("td")[0].innerHTML;
-}
-let getAddWalletCurrency = () => {
-  let currency = document.querySelector('#addwallet_currency');
-  let arr = currency.getElementsByTagName("option");
-  for (let i in arr)
-    if (arr[i].value === currency.value)
-      return arr[i].getAttribute("currency_id");
-}
+// let getWalletId = () => {
+//   let item = document.querySelector('.rows[checked="true"]');
+//   if (item === null || item.className !== "w rows ng-scope") return;
+//   return item.getElementsByTagName("td")[0].innerHTML;
+// }
+//
+// let getCurrencyId = () => {
+//   let item = document.querySelector('.rows[checked="true"]');
+//   if (item === null || item.className !== "c rows ng-scope") return;
+//   return item.getElementsByTagName("td")[0].innerHTML;
+// }
+// let getAddWalletCurrency = () => {
+//   let currency = document.querySelector('#addwallet_currency');
+//   let arr = currency.getElementsByTagName("option");
+//   for (let i in arr)
+//     if (arr[i].value === currency.value)
+//       return arr[i].getAttribute("currency_id");
+// }
 
 angular.module("get_form", [])
     .controller("GetController", ["$scope", "$http", function ($scope, $http) {
@@ -27,14 +27,17 @@ angular.module("get_form", [])
         $http({
           method: "GET",
           url: "api/wallets/get",
-          headers: {"Content-Type": "application/json"}
+          headers: {
+            "Content-Type": "application/json",
+            'X-CSRF-TOKEN': token
+          }
         }).then(
             function (data) {
               console.log(data.data);
-              wallets.items = data.data;
-              // currency.items =
-              $scope.items = data.data;
-              $scope.items_currency = currency.items;
+              wallets.items = data.data.wallets;
+              currency.items = data.data.currencies;
+              $scope.items = data.data.wallets;
+              $scope.items_currency = data.data.currencies;
             },
             function (error) {
               console.log("error");
@@ -46,7 +49,7 @@ angular.module("get_form", [])
 
 let sendCreateWallet = async () => {
   let name = document.querySelector('#addwallet_name').value;
-  let currency_id = getAddWalletCurrency();
+  let currency_id = getSelectedOptionId('#addwallet_currency');
   let balance = document.querySelector('#addwallet_balance').value;
   // let icon =
 
@@ -55,20 +58,19 @@ let sendCreateWallet = async () => {
     return;
   }
 
-  let formData = new FormData();
-  formData.append('name', name);
-  formData.append('currency_id', currency_id);
-  formData.append('balance', balance);
-  // formData.append('icon', icon);
+  let wallet = {}
+  wallet.name = name;
+  wallet.currency = getObjectById(Number.parseInt(currency_id), tmp.currency);
+  wallet.balance = balance;
 
-  let jsonString = formToJson(formData);
+  let jsonString = JSON.stringify(wallet);
   console.log(jsonString);
 
   await send('api/wallets/create', jsonString, errorMsg);
 
 }
 let sendUpdateWallet = async () => {
-  let id = getWalletId();
+  let id = getSelectedRowId("w rows ng-scope");
   if (id === undefined) return;
   let elem = wallets.items.find(element => element.id === Number.parseInt(id));
   let name = document.querySelector('#updatewallet_name').value;
@@ -91,7 +93,7 @@ let sendUpdateWallet = async () => {
 
 }
 let sendDeleteWallet = async () => {
-  let id = getWalletId();
+  let id = getSelectedRowId("w rows ng-scope");
   if (id === undefined) return;
   if (!confirm('Delete this wallet?')) return;
   let elem = wallets.items.find(element => element.id === Number.parseInt(id));
@@ -132,7 +134,7 @@ let sendCreateCurrency = async () => {
 
 }
 let sendUpdateCurrency = async () => {
-  let id = getCurrencyId();
+  let id = getSelectedRowId("c rows ng-scope");
   if (id === undefined) return;
   let elem = currency.items.find(element => element.id === Number.parseInt(id));
 
@@ -156,7 +158,7 @@ let sendUpdateCurrency = async () => {
 
 }
 let sendDeleteCurrency = async () => {
-  let id = getCurrencyId();
+  let id = getSelectedRowId("c rows ng-scope");
   if (id === undefined) return;
   if (!confirm('Delete this currency?')) return;
   let elem = currency.items.find(element => element.id === Number.parseInt(id));

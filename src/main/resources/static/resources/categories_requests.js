@@ -23,8 +23,9 @@ let getJsonForSending = (elem, type, str) => {
     }
 
     let formData = new FormData();
-    if (elem !== null)
+    if (elem !== null) {
         formData.append('id', elem.id);
+    }
     formData.append('name', name);
     formData.append('description', description);
     // formData.append('newIcon', icon);
@@ -55,16 +56,18 @@ angular.module("get_form", [])
             $http({
                 method: "GET",
                 url: "api/category/get",
-                headers: {"Content-Type": "application/json"}
+                headers: {
+                    "Content-Type": "application/json",
+                    'X-CSRF-TOKEN': token
+                }
             }).then(
                 function (data) {
                     console.log(data.data);
 
                     categories.items = data.data;
-                    // tags.items = ;
-                    
+                    tags.items = tmp.tags;
                     $scope.items = data.data;
-                    $scope.items_tags = tags.items;
+                    $scope.items_tags = tmp.tags;
                 },
                 function (error) {
                     console.log("error")

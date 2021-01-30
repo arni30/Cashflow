@@ -1,0 +1,7 @@
+application:
+  users:
+    - ['ubayforever0@gmail.com', 'Bilbo Baggins', 'burglar']
+    - ['trogalska2208@gmail.com', 'tr', 'pass']
+  wallets:
+    - []
+

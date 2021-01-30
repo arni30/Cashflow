@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import world.ucode.cashflow.models.dao.Users;
 import world.ucode.cashflow.models.dao.Wallet;
+import world.ucode.cashflow.models.dto.WalletCurrencyDTO;
 import world.ucode.cashflow.models.dto.WalletDTO;
 import world.ucode.cashflow.repositories.CurrencyRepo;
 import world.ucode.cashflow.repositories.UserRepo;
@@ -25,9 +26,14 @@ public class WalletsControllerApi {
     private CurrencyRepo currencyRepo;
 
     @GetMapping("/get")
-    public List<Wallet> getWalletsAndCurrency(HttpServletRequest request) {
+    public WalletCurrencyDTO getWalletsAndCurrency(HttpServletRequest request) {
         Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
-        return walletRepo.findByUser_Id(user.getId());
+
+        WalletCurrencyDTO dto = new WalletCurrencyDTO();
+        dto.setWallets(walletRepo.findByUser_Id(user.getId()));
+        dto.setCurrencies(currencyRepo.findAll());
+
+        return dto;
     }
     @PostMapping("/create")
     public void postCreateWallet(@RequestBody WalletDTO wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {

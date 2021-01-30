@@ -4,10 +4,7 @@ let wallets = {
   items: [],
 
   openCreate: function() {
-    let addWallet_currency = document.querySelector('#addwallet_currency');
-    for (let i in currency.items) {
-      this.showAddWalletItem(addWallet_currency, currency.items[i]);
-    }
+    addItemsToSelect('#addwallet_currency', currency.items);
     document.querySelector('#create_wallet').setAttribute('class', 'additional_window');
   },
   closeCreate: function() {
@@ -18,7 +15,7 @@ let wallets = {
     }
   },
   openUpdate: function() {
-    let id = getWalletId();
+    let id = getSelectedRowId("w rows ng-scope");
     if (id === undefined) return;
     let elem = wallets.items.find(element => element.id === Number.parseInt(id));
     document.querySelector('#updatewallet_name_head').innerHTML = 'Update ' + elem.name;
@@ -31,22 +28,11 @@ let wallets = {
       clear[i].value = '';
     }
   },
-  showAddWalletItem: function(elem, item) {
-    let option = document.createElement('option');
-    option.setAttribute('currency_id', item.id);
-    option.innerHTML = item.name;
-    elem.appendChild(option);
-  }
 
 }
 
 let currency = {
-  items: [
-    { id: 1, name: 'UAN', ticker: 30 },
-    { id: 2, name: 'USD', ticker: 1 },
-    { id: 3, name: 'EUR', ticker: 0.8 },
-    { id: 4, name: 'TROLO', ticker: 12 }
-  ],
+  items: [],
   openCreate: function() {
     document.querySelector('#create_currency').setAttribute('class', 'additional_window');
   },
@@ -58,7 +44,7 @@ let currency = {
     }
   },
   openUpdate: function() {
-    let id = getCurrencyId();
+    let id = getSelectedRowId("c rows ng-scope");
     if (id === undefined) return;
     let elem = currency.items.find(element => element.id === Number.parseInt(id));
     document.querySelector('#updatecurrency_name_head').innerHTML = 'Update ' + elem.name;
@@ -72,10 +58,6 @@ let currency = {
     }
   }
 
-}
-
-let tickerExplain = (ticker, name) => {
-  return '$100 = ' + 100 * ticker + ' ' + name;
 }
 
 let init = () => {
