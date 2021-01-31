@@ -14,14 +14,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class MainControllerApi {
-    private final WalletRepo walletRepo;
-    @Autowired
-    public MainControllerApi(WalletRepo walletRepo) {
-        this.walletRepo = walletRepo;
-    }
-
-    @GetMapping("/get")
-    public List<Wallet> getMain() throws IOException {
-        return walletRepo.findByUser_Id(2);
-    }
+//    private final WalletRepo walletRepo;
+//    @Autowired
+//    public MainControllerApi(WalletRepo walletRepo) {
+//        this.walletRepo = walletRepo;
+//    }
+//
+//    @GetMapping("/get")
+//    public List<Wallet> getMain() throws IOException {
+//        return walletRepo.findByUser_Id(2);
+//    }
 }

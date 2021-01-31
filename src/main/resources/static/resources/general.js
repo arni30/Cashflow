@@ -83,7 +83,7 @@ let send = async (where, jsonString, errorMsg) => {
     }).then((data) => {
         console.log(data);
         if (data.ok) {
-            // location.reload();
+            location.reload();
         } else {
             alert(errorMsg);
         }

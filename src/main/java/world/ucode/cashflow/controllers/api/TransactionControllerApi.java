@@ -123,10 +123,12 @@ public class TransactionControllerApi {
     }
 
     @PostMapping("/delete")
+    @Transactional
     public void deleteTransaction(@RequestBody TransactionDTO transaction, HttpServletResponse response) throws IOException {
         try {
+            log.info("Delete one transaction");
             changeWalletBalanceOnDelete(transaction);
-            transactionRepo.delete(transactionRepo.findById(transaction.getId()));
+            transactionRepo.deleteById(transaction.getId().longValue());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -135,9 +137,13 @@ public class TransactionControllerApi {
     }
 
     @PostMapping("/deleteAllByWallet")
+    @Transactional
     public void deleteAllTransactionByWallet(@RequestBody WalletDTO wallet, HttpServletResponse response) throws IOException {
         try {
-            transactionRepo.deleteAllByWalletId(wallet.getId());
+            log.info("Delete all transactions with their wallet");
+            log.info(wallet.toString());
+            transactionRepo.deleteTransactionsByWallet_Id(wallet.getId());
+            walletRepo.deleteById(wallet.getId());
         }
         catch (Exception e) {
             e.printStackTrace();

@@ -64,6 +64,7 @@ let main = {
 
 let init = () => {
   // getSelector();
+    console.log(main.wallets);
     main.showAddWalletItem();
     // object.addEventListener("change", myScript);
 }

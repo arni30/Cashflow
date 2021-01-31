@@ -11,5 +11,6 @@ public interface WalletRepo extends CrudRepository<Wallet, Long> {
     List<Wallet> findByCurrency_Id(int currencyId);
     List<Wallet> findByUser_Id(int userId);
     Optional<Wallet> findById(Integer id);
+    void deleteById(int id);
 //    Optional<Wallet> findByName(String name);
 }

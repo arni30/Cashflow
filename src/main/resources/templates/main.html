@@ -142,7 +142,7 @@
         <section class="section1">
             <a id="authorizedLogin" sec:authorize="isAuthenticated()" sec:authentication="name"></a>
             <a class="abutton" href="/login">Sign in</a>
-            <a class="abutton" href="/registration">Sign up</a>
+            <a class="abutton" href="/sign_up">Sign up</a>
             <a class="abutton" href="/logout" th:method="Post">Sign out</a>
         </section>
 
@@ -214,7 +214,7 @@
             </div>
 
             <div class="page_width page_head">
-                <p>Delete all transactions by wallet</p>
+                <p>Delete all transactions by wallet with wallet as well</p>
                 <div>
                     <a class="button" onclick="sendDeleteAllTransactions()">Delete all</a>
                 </div>

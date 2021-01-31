@@ -3,8 +3,8 @@
 -- INTO users(user_id, email, login, password, validation_status)
 -- VALUES (default, 'ubayforever0@gmail.com', 'Bilbo Baggins', 'burglar', 1);
 
-INSERT INTO users VALUES (1, 'ubayforever0@gmail.com', 'Bilbo Baggins', 'burglar', null, 1);
-INSERT INTO users VALUES (2, 'trogalska2208@gmail.com', 'tr', null, null, 1);
+-- INSERT INTO users VALUES (1, 'ubayforever0@gmail.com', 'Bilbo Baggins', 'burglar', null, 1);
+-- INSERT INTO users VALUES (2, 'trogalska2208@gmail.com', 'tr', null, null, 1);
 
 -- non dependent tables
 
