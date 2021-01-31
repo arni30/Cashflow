@@ -15,8 +15,12 @@ angular.module("get_form", [])
                 function (data) {
                     console.log(data.data);
 
-                    transactions.items = data.data;
-                    $scope.items = data.data;
+                    transactions.items = data.data.transactions;
+                    $scope.items = data.data.transactions;
+
+                    transactions.wallets = data.data.wallets;
+                    transactions.categories = data.data.categories;
+                    transactions.tags = data.data.tags;
                 },
                 function (error) {
                     console.log("error")
@@ -47,10 +51,11 @@ let sendDeleteTransaction = async () => {
 
     let formData = new FormData();
     formData.append('id', elem.id);
-    formData.append('name', elem.description);
-    formData.append('category_id', elem.category.id);
-    formData.append('tag_id', elem.tag.id);
-    formData.append('wallet_id', elem.wallet.id);
+    formData.append('type', elem.type);
+    formData.append('description', elem.description);
+    formData.append('categoryId', elem.category.id);
+    formData.append('tagId', elem.tag.id);
+    formData.append('walletId', elem.wallet.id);
 
     let jsonString = formToJson(formData);
     console.log(jsonString);
@@ -63,10 +68,15 @@ let getJsonForSendingTransaction = (elem, elemId) => {
     let date = document.querySelector(elem+'_date').value;
     let description = document.querySelector(elem+'_description').value;
     let type = document.querySelector(elem+'_type').value;
-    // let type = getSelectedOptionId(elem+'_type');  // value or id???
     let category_id = getSelectedOptionId(elem+'_category');
     let tag_id = getSelectedOptionId(elem+'_tag');
-    let wallet_id = getSelectedOptionId(elem+'_wallet');
+    let wallet_id;
+
+    if (elem === '#updatetransaction') {
+        wallet_id = '0';
+    } else {
+        wallet_id = getSelectedOptionId(elem+'_wallet');
+    }
 
     if (elemId === null) {
         if (!description || !date) {
@@ -78,9 +88,15 @@ let getJsonForSendingTransaction = (elem, elemId) => {
     let transaction = {}
     transaction.description = description;
     transaction.type = type;
-    transaction.category = getObjectById(Number.parseInt(category_id), tmp.categories);
-    transaction.tag = getObjectById(Number.parseInt(tag_id), tmp.tags);
-    transaction.wallet = getObjectById(Number.parseInt(wallet_id), tmp.wallets);
+
+    transaction.categoryId = Number.parseInt(category_id);
+    transaction.tagId = Number.parseInt(tag_id);
+    transaction.walletId = Number.parseInt(wallet_id);
+
+    // transaction.category = getObjectById(Number.parseInt(category_id), transaction.categories);
+    // transaction.tag = getObjectById(Number.parseInt(tag_id), transaction.tags);
+    // transaction.wallet = getObjectById(Number.parseInt(wallet_id), transaction.wallets);
+
     transaction.date = date;
     if (elemId !== null) {
         transaction.id = elemId;

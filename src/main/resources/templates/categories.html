@@ -100,11 +100,13 @@
                             <th columns="0" onclick="tableSort(this, 'tag_table')">Id</th>
                             <th columns="1" onclick="tableSort(this, 'tag_table')">Name</th>
                             <th columns="2" onclick="tableSort(this, 'tag_table')">Description</th>
+                            <th columns="3" onclick="tableSort(this, 'tag_table')">Price, $</th>
                         </tr>
                         <tr ng-repeat="i in items_tags" class="t rows" checked=false>
                             <td>{{i.id}}</td>
                             <td>{{i.name}}</td>
                             <td>{{i.description}}</td>
+                            <td>{{i.price}}</td>
                         </tr>
                     </table>
                 </div>
@@ -172,6 +174,10 @@
                 <label for="addtag_description">Description</label>
                 <input id="addtag_description" class="form-styling" type="text"/>
 
+                <label for="addtag_price">Price (in US dollars, $)</label>
+                <input id="addtag_price" class="form-styling" type="number"
+                       min=".01" step=".01"/>
+
                 <input class="window_form_btn" type="button" value="Create tag" onclick="sendCreateTag()">
                 <a class="close" href="#" onclick="tags.closeCreate()"></a>
 
@@ -194,6 +200,10 @@
 
                 <label for="updatetag_description">Description</label>
                 <input id="updatetag_description" class="form-styling" type="text"/>
+
+                <label for="updatetag_price">Price</label>
+                <input id="updatetag_price" class="form-styling" type="number"
+                       min=".01" step=".01"/>
 
                 <input class="window_form_btn" type="button" value="Update tag" onclick="sendUpdateTag()">
                 <a class="close" href="#" onclick="tags.closeUpdate()"></a>

@@ -1,5 +1,6 @@
 package world.ucode.cashflow.controllers.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import world.ucode.cashflow.models.dao.Users;
@@ -14,16 +15,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/wallets")
 public class WalletsControllerApi {
+    private final WalletRepo walletRepo;
+    private final UserRepo userRepo;
+    private final CurrencyRepo currencyRepo;
     @Autowired
-    private WalletRepo walletRepo;
-    @Autowired
-    private UserRepo userRepo;
-    @Autowired
-    private CurrencyRepo currencyRepo;
+    public WalletsControllerApi(WalletRepo walletRepo,
+                                UserRepo userRepo,
+                                CurrencyRepo currencyRepo) {
+        this.walletRepo = walletRepo;
+        this.currencyRepo = currencyRepo;
+        this.userRepo = userRepo;
+    }
 
     @GetMapping("/get")
     public WalletCurrencyDTO getWalletsAndCurrency(HttpServletRequest request) {
@@ -38,14 +47,15 @@ public class WalletsControllerApi {
     @PostMapping("/create")
     public void postCreateWallet(@RequestBody WalletDTO wallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            System.out.println("CREATE WALLET");
-            Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
-            Wallet newWallet = new Wallet(wallet);
-            wallet.setCurrencyId(1);
-            System.out.println(wallet.getCurrencyId());
-            System.out.println(currencyRepo.findById(wallet.getCurrencyId()).getName());
-            newWallet.setCurrency(currencyRepo.findById(wallet.getCurrencyId()));
-            newWallet.setUser(user);
+            log.info("CREATE WALLET");
+
+            Wallet newWallet = Wallet.builder()
+                    .name(wallet.getName())
+                    .currency(currencyRepo.findById(wallet.getCurrencyId()))
+                    .balance(wallet.getBalance())
+                    .user(userRepo.findByLogin(request.getUserPrincipal().getName()))
+                    .build();
+
             walletRepo.save(newWallet);
         }
         catch (Exception e) {
@@ -56,10 +66,12 @@ public class WalletsControllerApi {
     @PostMapping("/update")
     public void postUpdateWallets(@RequestBody WalletDTO newWallet, HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Wallet wallet = walletRepo.findById(newWallet.getId());
-            wallet.setName(newWallet.getName() == null ? wallet.getName() : newWallet.getName());
-            wallet.setCurrency(newWallet.getCurrencyId() == null ? wallet.getCurrency() : currencyRepo.findById(newWallet.getCurrencyId()));
-            wallet.setBalance(newWallet.getBalance() == null ? wallet.getBalance() : newWallet.getBalance());
+            log.info("UPDATE WALLET");
+
+            Wallet wallet = walletRepo.findById(newWallet.getId())
+                    .orElseThrow(NoSuchElementException::new);
+            wallet.setName(newWallet.getName().equals("") ? wallet.getName() : newWallet.getName());
+
             walletRepo.save(wallet);
         }
         catch (Exception e) {
@@ -71,7 +83,12 @@ public class WalletsControllerApi {
     @PostMapping("/delete")
     public void deleteWallet(@RequestBody WalletDTO wallet, HttpServletResponse response) throws IOException {
         try {
-            walletRepo.delete(walletRepo.findById(wallet.getId()));
+            log.info("DELETE WALLET");
+
+            walletRepo.delete(
+                    walletRepo.findById(wallet.getId())
+                    .orElseThrow(NoSuchElementException::new)
+            );
         }
         catch (Exception e) {
             e.printStackTrace();

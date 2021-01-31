@@ -7,21 +7,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import world.ucode.cashflow.models.dao.Category;
 import org.springframework.web.bind.annotation.*;
+import world.ucode.cashflow.models.dao.Users;
+import world.ucode.cashflow.models.dto.CategoriesTagsDTO;
+import world.ucode.cashflow.models.dto.WalletCurrencyDTO;
 import world.ucode.cashflow.repositories.CategoryRepo;
+import world.ucode.cashflow.repositories.TagRepo;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/category")
 public class CategoryControllerApi {
+    private final CategoryRepo categoryRepo;
+    private final TagRepo tagRepo;
     @Autowired
-    private CategoryRepo categoryRepo;
+    public CategoryControllerApi(CategoryRepo categoryRepo,
+                                 TagRepo tagRepo) {
+        this.categoryRepo = categoryRepo;
+        this.tagRepo = tagRepo;
+    }
 
     @GetMapping("/get")
-    public List<Category> getCategoriesAngTags() {
-        return categoryRepo.findAll();
+    public CategoriesTagsDTO getCategoriesAngTags() {
+        CategoriesTagsDTO dto = new CategoriesTagsDTO();
+
+        dto.setCategories(categoryRepo.findAll());
+        dto.setTags(tagRepo.findAll());
+
+        return dto;
     }
 
     @PostMapping("/create")

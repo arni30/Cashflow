@@ -1,5 +1,6 @@
 package world.ucode.cashflow.controllers.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import world.ucode.cashflow.repositories.TagRepo;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/tag")
 public class TagControllerApi {
@@ -20,7 +22,7 @@ public class TagControllerApi {
     @PostMapping("/create")
     public void createTag(@RequestBody Tag tag, HttpServletResponse response) throws IOException {
         try {
-            System.out.println("HALLO");
+            log.info("CREATE TAG");
             tagRepo.save(tag);
         }
         catch (Exception e) {
@@ -36,6 +38,7 @@ public class TagControllerApi {
             tag.setName(newTag.getName().equals("") ? tag.getName() : newTag.getName());
 //            category.setIcon(newCategory.getIcon() == null ? category.getIcon() : newCategory.getIcon());
             tag.setDescription(newTag.getDescription().equals("") ? tag.getDescription() : newTag.getDescription());
+            tag.setPrice(newTag.getPrice() == null ? tag.getPrice() : newTag.getPrice());
             tagRepo.save(tag);
         }
         catch (Exception e) {

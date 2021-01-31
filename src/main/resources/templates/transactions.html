@@ -77,7 +77,8 @@
                             <th columns="2" onclick="tableSort(this, 'table')">Type</th>
                             <th columns="3" onclick="tableSort(this, 'table')">Category</th>
                             <th columns="4" onclick="tableSort(this, 'table')">Tag</th>
-                            <th columns="5" onclick="tableSort(this, 'table')">Wallet</th>
+                            <th columns="5" onclick="tableSort(this, 'table')">Price, $</th>
+                            <th columns="6" onclick="tableSort(this, 'table')">Wallet</th>
                         </tr>
                         <tr ng-repeat="i in items" class="rows" checked=false>
                             <td>{{i.id}}</td>
@@ -85,6 +86,7 @@
                             <td>{{i.type}}</td>
                             <td>{{i.category.name}}</td>
                             <td>{{i.tag.name}}</td>
+                            <td>{{i.tag.price}}</td>
                             <td>{{i.wallet.name}}</td>
                         </tr>
                     </table>
@@ -111,7 +113,10 @@
 <!--                    <input id="addtransaction_icon" class="form-styling" type="file" value="icon"/>-->
 
                     <label for="addtransaction_date">Date</label>
-                    <input id="addtransaction_date" class="form-styling" type='date' min='1899-01-01' max='2021-01-01'></input>
+                    <input id="addtransaction_date" class="form-styling" type='date' min='1899-01-01'/>
+                    <script>
+                        document.getElementById('addtransaction_date').max = new Date().toISOString().split("T")[0];
+                    </script>
 
                     <label for="addtransaction_description">Description</label>
                     <input id="addtransaction_description" class="form-styling" type="text"/>
@@ -146,7 +151,10 @@
 <!--                    <input id="updatetransaction_icon" class="form-styling" type="file" value="icon"/>-->
 
                     <label for="updatetransaction_date">Date</label>
-                    <input id="updatetransaction_date" class="form-styling" type='date' min='1899-01-01' max='2021-01-01'></input>
+                    <input id="updatetransaction_date" class="form-styling" type='date' min='1899-01-01'/>
+                    <script>
+                        document.getElementById('updatetransaction_date').max = new Date().toISOString().split("T")[0];
+                    </script>
 
                     <label for="updatetransaction_description">Description</label>
                     <input id="updatetransaction_description" class="form-styling" type="text"/>
@@ -160,8 +168,8 @@
                     <label for="updatetransaction_tag">Tag</label>
                     <select id="updatetransaction_tag" class="form-styling"></select>
 
-                    <label for="updatetransaction_wallet">Wallet</label>
-                    <select id="updatetransaction_wallet" class="form-styling"></select>
+<!--                    <label for="updatetransaction_wallet">Wallet</label>-->
+<!--                    <select id="updatetransaction_wallet" class="form-styling"></select>-->
 
                     <input class="window_form_btn" type="button" value="Update transaction" onclick="sendUpdateTransaction()">
                     <a class="close" href="#" onclick="transactions.closeUpdate()"></a>

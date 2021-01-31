@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 public class TransactionDTO {
     private Integer id;
     private Integer walletId;
-    private String type; //(expenses or income)
+    private String type; //(expense or income)
     private Integer categoryId;
     private Integer tagId;
     private Timestamp date;

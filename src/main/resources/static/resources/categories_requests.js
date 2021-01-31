@@ -15,9 +15,10 @@ let getTagId = () => {
 let getJsonForSending = (elem, type, str) => {
     let name = document.querySelector('#' + type + str + '_name').value;
     let description = document.querySelector('#' + type + str + '_description').value;
+    let price = document.querySelector('#' + type + str + '_price').value;
     // let icon =
 
-    if (!name && !description) { // !name && !img to return
+    if (!name && !description && !price) { // !name && !img to return
         alert('Empty form!');
         return undefined;
     }
@@ -28,6 +29,7 @@ let getJsonForSending = (elem, type, str) => {
     }
     formData.append('name', name);
     formData.append('description', description);
+    formData.append('price', price);
     // formData.append('newIcon', icon);
 
     let jsonString = formToJson(formData);
@@ -64,10 +66,10 @@ angular.module("get_form", [])
                 function (data) {
                     console.log(data.data);
 
-                    categories.items = data.data;
-                    tags.items = tmp.tags;
-                    $scope.items = data.data;
-                    $scope.items_tags = tmp.tags;
+                    categories.items = data.data.categories;
+                    tags.items = data.data.tags;
+                    $scope.items = data.data.categories;
+                    $scope.items_tags = data.data.tags;
                 },
                 function (error) {
                     console.log("error")

@@ -14,8 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class MainControllerApi {
+    private final WalletRepo walletRepo;
     @Autowired
-    WalletRepo walletRepo;
+    public MainControllerApi(WalletRepo walletRepo) {
+        this.walletRepo = walletRepo;
+    }
 
     @GetMapping("/get")
     public List<Wallet> getMain() throws IOException {
