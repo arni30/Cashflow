@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import world.ucode.cashflow.models.Users;
+import world.ucode.cashflow.models.dao.Users;
 import world.ucode.cashflow.repositories.UserRepo;
 
 public class UserDetailsServiceImpl implements UserDetailsService {

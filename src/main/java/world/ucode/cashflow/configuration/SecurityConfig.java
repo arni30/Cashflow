@@ -101,13 +101,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        http.requiresChannel().anyRequest().requiresSecure();
         http
-                .cors().disable().csrf().ignoringAntMatchers("/api/wallets/createWallet",
-                                                             "/api/wallets/updateWallet",
+                .cors().disable().csrf().ignoringAntMatchers("/api/wallets/create","/swagger-ui/",
+                                                             "/api/wallets/update",
                                                              "/api/transaction/create",
-                                                             "/api/transaction/delete");
+                                                             "/api/transaction/delete");//delete later! it is for unable csrf checking
 //                .csrf().disable();
-        http.authorizeRequests().antMatchers("/", "/home", "/main").permitAll();
-        http.authorizeRequests().antMatchers("/sign_up").permitAll();
+        http.authorizeRequests().antMatchers("/login", "/sign_up").permitAll();
+//        http.authorizeRequests().antMatchers().permitAll()
+//        ;
+        http
+//                .antMatcher("/swagger-ui/")
+                .authorizeRequests()
+//                .anyRequest().hasAnyRole("SWAGGER")
+                .and()
+                .httpBasic();
         http.addFilterAt(new JsonAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
           http      .authorizeRequests()
                 .and()

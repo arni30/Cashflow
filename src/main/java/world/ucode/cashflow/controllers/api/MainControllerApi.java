@@ -1,12 +1,10 @@
 package world.ucode.cashflow.controllers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import world.ucode.cashflow.models.Wallet;
+import world.ucode.cashflow.models.dao.Wallet;
 import world.ucode.cashflow.repositories.WalletRepo;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,11 +14,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class MainControllerApi {
-    @Autowired
-    WalletRepo walletRepo;
-
-    @GetMapping("/get")
-    public List<Wallet> getMain() throws IOException {
-        return walletRepo.findByUser_Id(2);
-    }
+//    private final WalletRepo walletRepo;
+//    @Autowired
+//    public MainControllerApi(WalletRepo walletRepo) {
+//        this.walletRepo = walletRepo;
+//    }
+//
+//    @GetMapping("/get")
+//    public List<Wallet> getMain() throws IOException {
+//        return walletRepo.findByUser_Id(2);
+//    }
 }

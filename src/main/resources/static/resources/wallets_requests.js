@@ -34,11 +34,10 @@ angular.module("get_form", [])
         }).then(
             function (data) {
               console.log(data.data);
-
-              wallets.items = data.data;
-              currency.items = tmp.currency;
-              $scope.items = data.data;
-              $scope.items_currency = tmp.currency;
+              wallets.items = data.data.wallets;
+              currency.items = data.data.currencies;
+              $scope.items = data.data.wallets;
+              $scope.items_currency = data.data.currencies;
             },
             function (error) {
               console.log("error");
@@ -60,8 +59,10 @@ let sendCreateWallet = async () => {
   }
 
   let wallet = {}
+  wallet.id = 0;
   wallet.name = name;
-  wallet.currency = getObjectById(Number.parseInt(currency_id), tmp.currency);
+  // wallet.currency = getObjectById(Number.parseInt(currency_id), tmp.currency);
+  wallet.currencyId = currency_id;
   wallet.balance = balance;
 
   let jsonString = JSON.stringify(wallet);
@@ -82,12 +83,13 @@ let sendUpdateWallet = async () => {
     return;
   }
 
-  let formData = new FormData();
-  formData.append('id', elem.id);
-  formData.append('name', name);
-  // formData.append('newIcon', icon);
+  let wallet = {}
+  wallet.id = elem.id;
+  wallet.name = name;
+  wallet.currencyId = 0;
+  wallet.balance = 0;
 
-  let jsonString = formToJson(formData);
+  let jsonString = JSON.stringify(wallet);
   console.log(jsonString);
 
   await send('api/wallets/update', jsonString, errorMsg);
@@ -99,14 +101,20 @@ let sendDeleteWallet = async () => {
   if (!confirm('Delete this wallet?')) return;
   let elem = wallets.items.find(element => element.id === Number.parseInt(id));
 
-  let formData = new FormData();
-  formData.append('id', elem.id);
-  formData.append('name', elem.name);
-  formData.append('balance', elem.balance);
-  formData.append('currency_id', elem.currency.id);
-  formData.append('user_id', elem.user.id);
+  // let formData = new FormData();
+  // formData.append('id', elem.id);
+  // formData.append('name', elem.name);
+  // formData.append('balance', elem.balance);
+  // formData.append('currency_id', elem.currency.id);
+  // formData.append('user_id', elem.user.id);
 
-  let jsonString = formToJson(formData);
+  let wallet = {}
+  wallet.id = elem.id;
+  wallet.name = '';
+  wallet.currencyId = 0;
+  wallet.balance = 0;
+
+  let jsonString = JSON.stringify(wallet);
   console.log(jsonString);
 
   let errorMsg = 'You can\'t delete wallet when it uses in transactions. \n' +

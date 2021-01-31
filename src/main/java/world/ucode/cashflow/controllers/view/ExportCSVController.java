@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
-import world.ucode.cashflow.models.Transaction;
+import world.ucode.cashflow.models.dao.Transaction;
 import world.ucode.cashflow.repositories.TransactionRepo;
 
 import javax.servlet.http.HttpServletResponse;

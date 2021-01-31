@@ -83,7 +83,7 @@ let send = async (where, jsonString, errorMsg) => {
     }).then((data) => {
         console.log(data);
         if (data.ok) {
-            // location.reload();
+            location.reload();
         } else {
             alert(errorMsg);
         }
@@ -108,10 +108,10 @@ let tableSort = (item, table) => {
             shouldSwitch = false;
             row1 = rows[i].getElementsByTagName('td')[n].innerHTML.toLowerCase();
             row2 = rows[i + 1].getElementsByTagName('td')[n].innerHTML.toLowerCase();
-            if ((direction === 'asc' && row1 > row2) ||
-                (direction === 'desc' && row1 < row2)) {
-                    shouldSwitch = true;
-                    break;
+            if ((direction === 'asc' && tableSortComparator(row1, row2)) ||
+                (direction === 'desc' && tableSortComparator(row2, row1))) {
+                shouldSwitch = true;
+                break;
             }
         }
         if (shouldSwitch) {
@@ -123,6 +123,21 @@ let tableSort = (item, table) => {
             switching = true;
         }
     }
+}
+
+let tableSortComparator = (row1, row2) => {
+    let num1 = Number.parseFloat(row1);
+    let num2 = Number.parseFloat(row2);
+
+    if (isFloatOrInteger(num1) && isFloatOrInteger(num2)) {
+        return num1 > num2;
+    }
+    return row1 > row2;
+}
+
+function isFloatOrInteger(n) {
+    return n === +n;
+    // && (n !== (n|0) || n === (n|0));
 }
 
 let addItemsToSelect = (tag, source) => {

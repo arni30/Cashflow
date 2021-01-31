@@ -15,7 +15,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
-import world.ucode.cashflow.models.Users;
+import world.ucode.cashflow.models.dao.Users;
 import world.ucode.cashflow.repositories.UserRepo;
 
 import javax.sql.DataSource;

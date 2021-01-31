@@ -2,8 +2,7 @@ package world.ucode.cashflow.controllers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import world.ucode.cashflow.models.Transaction;
-import world.ucode.cashflow.models.Wallet;
+import world.ucode.cashflow.models.dao.Transaction;
 import world.ucode.cashflow.repositories.TransactionRepo;
 
 import javax.servlet.http.HttpServletRequest;

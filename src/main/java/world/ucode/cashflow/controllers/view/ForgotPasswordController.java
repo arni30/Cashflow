@@ -1,10 +1,9 @@
 package world.ucode.cashflow.controllers.view;
 
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import world.ucode.cashflow.models.Users;
+import world.ucode.cashflow.models.dao.Users;
 import world.ucode.cashflow.utils.MailSender;
 
 import java.net.UnknownHostException;

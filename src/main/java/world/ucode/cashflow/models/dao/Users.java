@@ -1,6 +1,7 @@
-package world.ucode.cashflow.models;
+package world.ucode.cashflow.models.dao;
 
 import lombok.Data;
+import world.ucode.cashflow.models.Role;
 
 import javax.persistence.*;
 import java.util.Set;

@@ -3,11 +3,19 @@
 let transactions = {
   items: [],
 
+  wallets: [],
+  categories: [],
+  tags: [],
+  type: [
+    { id: 1, name: 'income'},
+    { id: 2, name: 'expense'},
+  ],
+
   openCreate: function() {
-    addItemsToSelect('#addtransaction_type', tmp.type);
-    addItemsToSelect('#addtransaction_category', tmp.categories);
-    addItemsToSelect('#addtransaction_tag', tmp.tags);
-    addItemsToSelect('#addtransaction_wallet', tmp.wallets);
+    addItemsToSelect('#addtransaction_type', this.type);
+    addItemsToSelect('#addtransaction_category', this.categories);
+    addItemsToSelect('#addtransaction_tag', this.tags);
+    addItemsToSelect('#addtransaction_wallet', this.wallets);
     document.querySelector('#create_transaction').setAttribute('class', 'additional_window');
   },
   closeCreate: function() {
@@ -18,14 +26,14 @@ let transactions = {
     }
   },
   openUpdate: function() {
-    let id = getSelectedOptionId('rows ng-scope');
+    let id = getSelectedRowId('rows ng-scope');
     if (id === undefined) return;
     let elem = transactions.items.find(element => element.id === Number.parseInt(id));
     document.querySelector('#updatetransaction_name_head').innerHTML = 'Update ' + elem.name;
-    addItemsToSelect('#updatetransaction_type', tmp.type);
-    addItemsToSelect('#updatetransaction_category', tmp.categories);
-    addItemsToSelect('#updatetransaction_tag', tmp.tags);
-    addItemsToSelect('#updatetransaction_wallet', tmp.wallets);
+    addItemsToSelect('#updatetransaction_type', this.type);
+    addItemsToSelect('#updatetransaction_category', this.categories);
+    addItemsToSelect('#updatetransaction_tag', this.tags);
+    // addItemsToSelect('#updatetransaction_wallet', this.wallets);
     document.querySelector('#update_transaction').setAttribute('class', 'additional_window');
   },
   closeUpdate: function() {
