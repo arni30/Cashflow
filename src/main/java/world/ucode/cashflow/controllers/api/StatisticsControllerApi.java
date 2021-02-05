@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+// TODO delete or move all here, statistics get from transaction
+
 @RestController
 @RequestMapping("/api/stat")
 public class StatisticsControllerApi {

@@ -94,6 +94,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.security.AuthProvider;
 
+// TODO закрыть все
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

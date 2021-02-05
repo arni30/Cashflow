@@ -1,117 +1,3 @@
-
-<!--<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
-
-<!--<head>-->
-<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--    &lt;!&ndash; default header name is X-CSRF-TOKEN &ndash;&gt;-->
-<!--&lt;!&ndash;    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>&ndash;&gt;-->
-<!--</head>-->
-<!--<body>-->
-<!--<div>-->
-<!--    <form method="post">-->
-<!--        <input type="text" name="login" id="login" placeholder="Введите сообщение" />-->
-<!--        <input type="text" name="password" id="password" placeholder="Тэг">-->
-<!--        <input type="text" name="email" id="email" placeholder="Тэг">-->
-<!--        <button type="button" onclick="send('sign_up')">Добавить</button>-->
-<!--    </form>-->
-<!--</div>-->
-<!--<div>-->
-<!--    <form>-->
-<!--        <input type="text" name="login" id="login1" placeholder="Введите сообщение" />-->
-<!--        <input type="text" name="password" id="password1" placeholder="Тэг">-->
-<!--        <input type="text" name="email" id="email1" placeholder="Тэг">-->
-<!--&lt;!&ndash;       <input type="text" id="_csrf1" th:value="${_csrf.token}" />&ndash;&gt;-->
-<!--        <button type="button" onclick="send2('hallo')">Добавить</button>-->
-<!--    </form>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
-<!--<script>-->
-<!--    function getCookie(name) {-->
-<!--        if (!document.cookie) {-->
-<!--            return null;-->
-<!--        }-->
-
-<!--        const xsrfCookies = document.cookie.split(';')-->
-<!--            .map(c => c.trim())-->
-<!--            .filter(c => c.startsWith(name + '='));-->
-
-<!--        if (xsrfCookies.length === 0) {-->
-<!--            return null;-->
-<!--        }-->
-<!--        return decodeURIComponent(xsrfCookies[0].split('=')[1]);-->
-<!--    }-->
-
-<!--    async function send(url) {-->
-<!--        // var token = $("meta[name='_csrf']").attr("content");-->
-<!--        // // var header = $("meta[name='_csrf_header']").attr("content");-->
-<!--        //-->
-<!--        // $(document).ajaxSend(function(e, xhr) {-->
-<!--        //     xhr.setRequestHeader(token);-->
-<!--        // });-->
-<!--        let token = document.querySelector('meta[name="_csrf"]').content;-->
-<!--        let formData = new FormData();-->
-<!--        formData.append('login', document.getElementById("login").value);-->
-<!--        formData.append('password', document.getElementById("password").value);-->
-<!--        formData.append('email', document.getElementById("email").value);-->
-<!--        // formData.append('_csrf', document.getElementById("_csrf").value);-->
-<!--        let object = {};-->
-<!--        formData.forEach(function (value, key) {-->
-<!--            object[key] = value;-->
-<!--        });-->
-<!--        let jsonString = JSON.stringify(object);-->
-<!--        let response = await fetch(url, {-->
-<!--            method: 'POST',-->
-<!--            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached-->
-<!--            headers: {-->
-<!--                'Content-Type': 'application/json',-->
-<!--                'X-CSRF-TOKEN': token-->
-<!--            },-->
-<!--            async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation-->
-<!--            processData: false,  //To avoid making query String instead of JSON-->
-<!--            body: jsonString-->
-<!--        });-->
-<!--        if (response.ok) {-->
-<!--        } else {-->
-<!--            console.log( response);-->
-<!--            alert("Can't add feedback");-->
-<!--        }-->
-<!--    }-->
-<!--    async function send2(url) {-->
-<!--        console.log("asasasasas")-->
-<!--        const csrfToken = getCookie('CSRF-TOKEN');-->
-<!--        console.log(csrfToken)-->
-<!--        let token = document.querySelector('meta[name="_csrf"]').content;-->
-<!--        // let header1 = document.querySelector('meta[name="_csrf_header"]').content;-->
-
-<!--        let formData = new FormData();-->
-<!--        formData.append('login', document.getElementById("login1").value);-->
-<!--        formData.append('password', document.getElementById("password1").value);-->
-<!--        formData.append('email', document.getElementById("email1").value);-->
-<!--        let object = {};-->
-<!--        formData.forEach(function (value, key) {-->
-<!--            object[key] = value;-->
-<!--        });-->
-<!--        let jsonString = JSON.stringify(object);-->
-<!--        let response = await fetch(url, {-->
-<!--            method: 'POST',-->
-<!--            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached-->
-<!--            headers: {-->
-<!--                'Content-Type': 'application/json',-->
-<!--                'X-CSRF-TOKEN': token-->
-<!--            },-->
-<!--            async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation-->
-<!--            processData: false,  //To avoid making query String instead of JSON-->
-<!--            body: jsonString-->
-<!--        });-->
-<!--        if (response.ok) {-->
-<!--            console.log(response.status)-->
-<!--        } else {-->
-<!--            console.log( response);-->
-<!--            alert("Can't add feedback");-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
@@ -131,8 +17,8 @@
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script th:src="@{/resources/general.js}"></script>
-    <script th:src="@{/resources/main.js}"></script>
     <script th:src="@{/resources/main_requests.js}"></script>
+    <script th:src="@{/resources/main.js}"></script>
 </head>
 
 <body>

@@ -25,15 +25,16 @@ let transactions = {
       clear[i].value = '';
     }
   },
-  openUpdate: function() {
-    let id = getSelectedRowId('rows ng-scope');
-    if (id === undefined) return;
+  openUpdate: function(event) {
+    let id = event.getAttribute('tid');
     let elem = transactions.items.find(element => element.id === Number.parseInt(id));
     document.querySelector('#updatetransaction_name_head').innerHTML = 'Update ' + elem.name;
     addItemsToSelect('#updatetransaction_type', this.type);
     addItemsToSelect('#updatetransaction_category', this.categories);
     addItemsToSelect('#updatetransaction_tag', this.tags);
     // addItemsToSelect('#updatetransaction_wallet', this.wallets);
+    document.querySelector('#updateButton')
+        .setAttribute('onclick', 'sendUpdateTransaction(' + id + ')')
     document.querySelector('#update_transaction').setAttribute('class', 'additional_window');
   },
   closeUpdate: function() {
@@ -47,6 +48,6 @@ let transactions = {
 }
 
 let init = () => {
-  getSelector();
+  // getSelector();
 }
 window.onload = init;

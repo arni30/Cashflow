@@ -13,10 +13,6 @@
 
     <link rel="stylesheet" th:href="@{/resources/reset.css}"/>
     <link rel="stylesheet" th:href="@{/resources/general.css}"/>
-<!--    <link rel="stylesheet" th:href="@{/resources/wallets.css}"/>-->
-
-
-    <!-- <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
 
 </head>
 
@@ -55,14 +51,14 @@
             </div>
         </header>
 
-        <section class="section4">
+        <section class="section4" ng-app="get_form" ng-controller="GetController">
 
             <div class="page_width page_head">
-                <h2>Statistics for last 30 days</h2>
+                <h2>Statistics</h2>
             </div>
 
             <div id="stat_block" class="page_width">
-                <div ng-app="post_form" ng-controller="PostController">
+                <div>
                     <p data-ng-init="getItems()"></p>
                     <table id="table" ng-model="items">
                         <tr>
@@ -72,6 +68,7 @@
                             <th columns="3" onclick="tableSort(this, 'table')">Category</th>
                             <th columns="4" onclick="tableSort(this, 'table')">Tag</th>
                             <th columns="5" onclick="tableSort(this, 'table')">Wallet</th>
+                            <th columns="6" onclick="tableSort(this, 'table')">Price</th>
                         </tr>
                         <tr ng-repeat="i in items" class="rows" checked=false>
                             <td>{{i.id}}</td>
@@ -80,34 +77,35 @@
                             <td>{{i.category.name}}</td>
                             <td>{{i.tag.name}}</td>
                             <td>{{i.wallet.name}}</td>
+                            <td>{{i.tag.price}}</td>
                         </tr>
                     </table>
                 </div>
             </div>
 
             <div class="page_width page_head">
-                <p>Get custom statistics</p>
+                <p>Get custom statistic</p>
                 <div>
-                    <a class="button" th:href="exportCSV">Apply filters</a>
+                    <a class="button">Apply filters</a>
                 </div>
             </div>
 
             <div class="page_width page_head">
                 <div>
                     <!--                    <label for="addtransaction_wallet">By wallet: </label>-->
-                    <select id="addtransaction_wallet" class="stat-styling" onchange="main.select_wallet_transaction(this)">
-                        <option wallet_id="0">all wallets</option>
+                    <select id="addtransaction_wallet" class="stat-styling">
+                        <option value="0">by wallets</option>
                     </select>
 
-                    <!--                    <label for="addtransaction_category">By category: </label>-->
-                    <select id="addtransaction_category" class="stat-styling">
-                        <option wallet_id="0">all categories</option>
-                    </select>
+<!--                    &lt;!&ndash;                    <label for="addtransaction_category">By category: </label>&ndash;&gt;-->
+<!--                    <select id="addtransaction_category" class="stat-styling">-->
+<!--                        <option wallet_id="0">by categories</option>-->
+<!--                    </select>-->
 
-                    <!--                    <label for="addtransaction_tag">By tag: </label>-->
-                    <select id="addtransaction_tag" class="stat-styling">
-                        <option wallet_id="0">all tags</option>
-                    </select>
+<!--                    &lt;!&ndash;                    <label for="addtransaction_tag">By tag: </label>&ndash;&gt;-->
+<!--                    <select id="addtransaction_tag" class="stat-styling">-->
+<!--                        <option wallet_id="0">by tags</option>-->
+<!--                    </select>-->
                 </div>
                 <div>
                     <label for="select_startTime">start date: </label>
@@ -118,18 +116,13 @@
 
                     <script>
                         let today = new Date().toISOString().split("T")[0];
-                        let date = document.getElementById('select_startTime');
+                        let date = document.getElementById('select_endTime');
                         date.max = date.value = today;
 
                         let now = new Date()
                         today = new Date(now.setDate(now.getDate() - 30)).toISOString().split("T")[0];
-                        date = document.getElementById('select_endTime');
+                        date = document.getElementById('select_startTime');
                         date.max = date.value = today;
-
-                        // let now = new Date()
-                        // console.log('Today: ' + now.toUTCString())
-                        // let next30days = new Date(now.setDate(now.getDate() + 30))
-                        // console.log('Next 30th day: ' + next30days.toUTCString())
                     </script>
 
                 </div>
@@ -140,7 +133,6 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script th:src="@{/resources/general.js}"></script>
-    <!--    <script th:src="@{/resources/transactions.js}"></script>-->
     <script th:src="@{/resources/stat_requests.js}"></script>
 </body>
 

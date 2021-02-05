@@ -12,6 +12,7 @@ import world.ucode.cashflow.models.dao.Transaction;
 import world.ucode.cashflow.models.dao.Users;
 import world.ucode.cashflow.models.dao.Wallet;
 import world.ucode.cashflow.models.dto.GeneralDTO;
+import world.ucode.cashflow.models.dto.StatisticDTO;
 import world.ucode.cashflow.models.dto.TransactionDTO;
 import world.ucode.cashflow.models.dto.WalletDTO;
 import world.ucode.cashflow.repositories.*;
@@ -23,15 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.DateFormat;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import org.supercsv.io.CsvBeanWriter;
-import org.supercsv.io.ICsvBeanWriter;
-import org.supercsv.prefs.CsvPreference;
 
 @Slf4j
 @RestController
@@ -71,6 +69,60 @@ public class TransactionControllerApi {
         dto.setTags(tagRepo.findAll());
 
         return dto;
+    }
+
+    @GetMapping("/get30")
+    public StatisticDTO getTransactionsForLast30Days
+            (HttpServletRequest request, HttpServletResponse response,
+             @RequestParam (value = "walletId") Integer walletId,
+             @RequestParam (value = "startDate") String startDate,
+             @RequestParam (value = "endDate") String endDate) throws IOException {
+
+        Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
+
+        StatisticDTO dto = new StatisticDTO();
+
+        List<Transaction> transactions = null;
+        try {
+            log.error(walletId.toString() + '_' + startDate + '_' + endDate);
+//            log.error(String.valueOf(stringToMillis(startDate)));
+//            log.error(String.valueOf(stringToMillis(endDate)));
+
+            transactions = transactionRepo.findByWallet_User_IdAndDateBetween(
+                    user.getId(),
+                    new Timestamp(stringToMillis(startDate)),
+                    new Timestamp(stringToMillis(endDate) + 24 * 60 * 60 * 1000));
+
+        } catch (Exception e) {
+            log.info("Cannot get transactions, incorrect date");
+            e.printStackTrace();
+            response.sendError(400, "Bad Request");
+        }
+
+        // TODO сделать выборку по кошельку
+
+        // TODO сделать заполнение класса Тотал и отображение на фронте
+
+//        Timestamp today = new Timestamp(System.currentTimeMillis());
+//        long days = 30;
+//        long old = System.currentTimeMillis() - days * 24 * 60 * 60 * 1000;
+//        Timestamp thirtyDaysBefore = new Timestamp(old);
+//        log.warn(String.valueOf(System.currentTimeMillis()));
+//        log.warn(String.valueOf(old));
+
+        dto.setTransactions(transactions);
+        dto.setWallets(walletRepo.findByUser_Id(user.getId()));
+//        dto.setCurrencies(currencyRepo.findAll());
+//        dto.setCategories(categoryRepo.findAll());
+//        dto.setTags(tagRepo.findAll());
+
+        return dto;
+    }
+
+    private long stringToMillis(String income) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = simpleDateFormat.parse(income);
+        return date.getTime();
     }
 
     @PostMapping("/create")
@@ -128,7 +180,7 @@ public class TransactionControllerApi {
         try {
             log.info("Delete one transaction");
             changeWalletBalanceOnDelete(transaction);
-            transactionRepo.deleteById(transaction.getId().longValue());
+            transactionRepo.deleteById(transaction.getId());
         }
         catch (Exception e) {
             e.printStackTrace();

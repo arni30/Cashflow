@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+// TODO delete or move all here, main gets from transaction
+
 @RestController
 @RequestMapping("/api")
 public class MainControllerApi {

@@ -36,6 +36,8 @@ public class LoadDatabase {
 
     private List<List<String>> users;
 
+    // TODO минимальная инициализация из файла
+
     @Bean
     CommandLineRunner initDatabase() {
         if (users == null) {

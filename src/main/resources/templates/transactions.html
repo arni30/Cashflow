@@ -62,8 +62,8 @@
                 <h2>Transactions</h2>
                 <div>
                     <a class="button" onclick="transactions.openCreate()">Create</a>
-                    <a class="button" onclick="transactions.openUpdate()">Update</a>
-                    <a class="button" onclick="sendDeleteTransaction()">Delete</a>
+<!--                    <a class="button" onclick="transactions.openUpdate()">Update</a>-->
+<!--                    <a class="button" onclick="sendDeleteTransaction()">Delete</a>-->
                 </div>
             </div>
             
@@ -79,6 +79,7 @@
                             <th columns="4" onclick="tableSort(this, 'table')">Tag</th>
                             <th columns="5" onclick="tableSort(this, 'table')">Price, $</th>
                             <th columns="6" onclick="tableSort(this, 'table')">Wallet</th>
+                            <th columns="7">Action</th>
                         </tr>
                         <tr ng-repeat="i in items" class="rows" checked=false>
                             <td>{{i.id}}</td>
@@ -88,6 +89,10 @@
                             <td>{{i.tag.name}}</td>
                             <td>{{i.tag.price}}</td>
                             <td>{{i.wallet.name}}</td>
+                            <td>
+                                <a tid="{{i.id}}" class="button" onclick="transactions.openUpdate(this)">Update</a>
+                                <a tid="{{i.id}}" class="button" onclick="sendDeleteTransaction(this)">Delete</a>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -171,7 +176,8 @@
 <!--                    <label for="updatetransaction_wallet">Wallet</label>-->
 <!--                    <select id="updatetransaction_wallet" class="form-styling"></select>-->
 
-                    <input class="window_form_btn" type="button" value="Update transaction" onclick="sendUpdateTransaction()">
+                    <input id="updateButton" class="window_form_btn" type="button"
+                           value="Update transaction" onclick="sendUpdateTransaction()">
                     <a class="close" href="#" onclick="transactions.closeUpdate()"></a>
 
                 </form>

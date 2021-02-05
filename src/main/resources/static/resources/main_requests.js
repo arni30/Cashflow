@@ -36,7 +36,7 @@ let sendDeleteAllTransactions = async () => {
         alert('invalid wallet');
         return;
     }
-    if (!confirm('Delete all transaction in this wallet?')) return;
+    if (!confirm('Delete all transaction with this wallet?')) return;
 
     let elem = main.wallets[0];
     for (let i in main.wallets) {

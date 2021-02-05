@@ -35,18 +35,14 @@ let sendCreateTransaction = async () => {
     await send('api/transaction/create', jsonString, errorMsg);
 
 }
-let sendUpdateTransaction = async () => {
-    let id = getSelectedRowId('rows ng-scope');
-    if (id === undefined) return;
-    let elem = transactions.items.find(element => element.id === Number.parseInt(id));
-    let jsonString = getJsonForSendingTransaction('#updatetransaction', elem.id);
+let sendUpdateTransaction = async (id) => {
+    let jsonString = getJsonForSendingTransaction('#updatetransaction', id);
     await send('api/transaction/update', jsonString, errorMsg);
 
 }
-let sendDeleteTransaction = async () => {
-    let id = getSelectedRowId('rows ng-scope');
-    if (id === undefined) return;
-    if (!confirm('Delete this transaction?')) return;
+let sendDeleteTransaction = async (event) => {
+
+    let id = event.getAttribute('tid');
     let elem = transactions.items.find(element => element.id === Number.parseInt(id));
 
     let formData = new FormData();
