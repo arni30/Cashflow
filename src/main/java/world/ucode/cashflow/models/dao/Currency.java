@@ -1,10 +1,16 @@
 package world.ucode.cashflow.models.dao;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Setter
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+
 @Entity
 public class Currency {
     @Id

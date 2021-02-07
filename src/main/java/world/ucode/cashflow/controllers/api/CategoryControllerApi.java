@@ -1,5 +1,6 @@
 package world.ucode.cashflow.controllers.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import world.ucode.cashflow.repositories.TagRepo;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/category")
 public class CategoryControllerApi {
@@ -40,8 +42,8 @@ public class CategoryControllerApi {
 
     @PostMapping("/create")
     public void createCategory(@RequestBody Category category, HttpServletResponse response) throws IOException {
+        log.info("CREATE CATEGORY");
         try {
-            System.out.println("HALLO");
             categoryRepo.save(category);
         }
         catch (Exception e) {
@@ -52,6 +54,7 @@ public class CategoryControllerApi {
 
     @PostMapping("/update")
     public void updateCategory(@RequestBody Category newCategory, HttpServletResponse response) throws IOException {
+        log.info("UPDATE CATEGORY");
         try {
             Category category = categoryRepo.findById(newCategory.getId());
             category.setName(newCategory.getName().equals("") ? category.getName() : newCategory.getName());
@@ -67,6 +70,7 @@ public class CategoryControllerApi {
 
     @PostMapping("/delete")
     public void deleteCategory(@RequestBody Category category, HttpServletResponse response) throws IOException {
+        log.info("DELETE CATEGORY");
         try {
             categoryRepo.delete(category);
         }

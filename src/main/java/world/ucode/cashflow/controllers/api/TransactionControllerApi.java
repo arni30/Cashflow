@@ -56,6 +56,9 @@ public class TransactionControllerApi {
         this.tagRepo = tagRepo;
     }
 
+    // TODO add to front date for transaction + json format date
+    // TODO get info about 1 wallet from main
+
     @GetMapping("/get")
     public GeneralDTO getTransactions(HttpServletRequest request) {
         Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
@@ -69,60 +72,6 @@ public class TransactionControllerApi {
         dto.setTags(tagRepo.findAll());
 
         return dto;
-    }
-
-    @GetMapping("/get30")
-    public StatisticDTO getTransactionsForLast30Days
-            (HttpServletRequest request, HttpServletResponse response,
-             @RequestParam (value = "walletId") Integer walletId,
-             @RequestParam (value = "startDate") String startDate,
-             @RequestParam (value = "endDate") String endDate) throws IOException {
-
-        Users user = userRepo.findByLogin(request.getUserPrincipal().getName());
-
-        StatisticDTO dto = new StatisticDTO();
-
-        List<Transaction> transactions = null;
-        try {
-            log.error(walletId.toString() + '_' + startDate + '_' + endDate);
-//            log.error(String.valueOf(stringToMillis(startDate)));
-//            log.error(String.valueOf(stringToMillis(endDate)));
-
-            transactions = transactionRepo.findByWallet_User_IdAndDateBetween(
-                    user.getId(),
-                    new Timestamp(stringToMillis(startDate)),
-                    new Timestamp(stringToMillis(endDate) + 24 * 60 * 60 * 1000));
-
-        } catch (Exception e) {
-            log.info("Cannot get transactions, incorrect date");
-            e.printStackTrace();
-            response.sendError(400, "Bad Request");
-        }
-
-        // TODO сделать выборку по кошельку
-
-        // TODO сделать заполнение класса Тотал и отображение на фронте
-
-//        Timestamp today = new Timestamp(System.currentTimeMillis());
-//        long days = 30;
-//        long old = System.currentTimeMillis() - days * 24 * 60 * 60 * 1000;
-//        Timestamp thirtyDaysBefore = new Timestamp(old);
-//        log.warn(String.valueOf(System.currentTimeMillis()));
-//        log.warn(String.valueOf(old));
-
-        dto.setTransactions(transactions);
-        dto.setWallets(walletRepo.findByUser_Id(user.getId()));
-//        dto.setCurrencies(currencyRepo.findAll());
-//        dto.setCategories(categoryRepo.findAll());
-//        dto.setTags(tagRepo.findAll());
-
-        return dto;
-    }
-
-    private long stringToMillis(String income) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = simpleDateFormat.parse(income);
-        return date.getTime();
     }
 
     @PostMapping("/create")

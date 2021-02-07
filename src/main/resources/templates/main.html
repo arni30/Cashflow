@@ -58,13 +58,24 @@
             </div>
         </header>
 
-        <section class="section4">
+        <section class="section4" ng-app="get_form" ng-controller="GetController" data-ng-init="getItems()">
             <div class="page_width page_head">
-                <div>
+                <div ng-model="items_wallets">
                     <h2><label for="select_wallet">Transactions by wallet</label></h2>
                     <select id="select_wallet" class="form-styling" onchange="main.select_wallet_transaction(this)">
+                        <option>Filter by wallet</option>
                         <option wallet_id="0">All wallets</option>
+<!--                        <option ng-repeat="i in items_wallets" value="{{i.id}}">{{i.name}}</option>-->
                     </select>
+<!--                    <script type="text/javascript">-->
+<!--                        $(document).ready(function() {-->
+<!--                            $("#select_wallet").change(function () {-->
+<!--                                categoryId = $('#categories_filter').val();-->
+<!--                                pageNo = 1;-->
+<!--                                replace();-->
+<!--                            });-->
+<!--                        });-->
+<!--                    </script>-->
                 </div>
 
                 <div>
@@ -75,7 +86,7 @@
             </div>
 
             <div id="transactions_block" class="page_width">
-                <div ng-app="get_form" ng-controller="GetController" data-ng-init="getItems()">
+                <div>
                     <table id="table" ng-model="items_transactions">
                         <tr>
                             <th columns="0" onclick="tableSort(this, 'table')">Id</th>
@@ -83,7 +94,8 @@
                             <th columns="2" onclick="tableSort(this, 'table')">Type</th>
                             <th columns="3" onclick="tableSort(this, 'table')">Category</th>
                             <th columns="4" onclick="tableSort(this, 'table')">Tag</th>
-                            <th columns="5" onclick="tableSort(this, 'table')">Wallet</th>
+                            <th columns="5" onclick="tableSort(this, 'table')">Price, $</th>
+                            <th columns="6" onclick="tableSort(this, 'table')">Wallet</th>
                         </tr>
                         <tbody id="transaction_table">
                             <tr ng-repeat="i in items_transactions" class="rows" checked=false>
@@ -92,6 +104,7 @@
                                 <td>{{i.type}}</td>
                                 <td>{{i.category.name}}</td>
                                 <td>{{i.tag.name}}</td>
+                                <td>{{i.tag.price}}</td>
                                 <td>{{i.wallet.name}}</td>
                             </tr>
                         </tbody>
@@ -110,30 +123,5 @@
 
     </div>
 </body>
-<script>
-    f = async () => {
-        let response = await fetch("/");
-
-        if (response.ok) { // если HTTP-статус в диапазоне 200-299
-            // получаем тело ответа (см. про этот метод ниже)
-            let json = await response.json();
-            console.log(response.url);
-        } else {
-            alert("Ошибка HTTP: " + response.status);
-        }
-    }
-</script>
-
-<!--<script type="text/javascript">-->
-<!--    // let authorizedLogin = @{request.ge} ;-->
-<!--    if (authorizedLogin !== 'null') {-->
-<!--        setAuthorizedUser(authorizedLogin);-->
-<!--    }-->
-<!--    setAuthorizedUser = (user) => {-->
-<!--        document.querySelector('#header-login-first').setAttribute('style', 'display: none;');-->
-<!--        document.querySelector('#header-login-second').setAttribute('style', 'display: block;');-->
-<!--        document.querySelector('#authorizedLogin').innerHTML = user;-->
-<!--    }-->
-<!--</script>-->
 
 </html>

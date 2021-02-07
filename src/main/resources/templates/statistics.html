@@ -14,6 +14,8 @@
     <link rel="stylesheet" th:href="@{/resources/reset.css}"/>
     <link rel="stylesheet" th:href="@{/resources/general.css}"/>
 
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
 </head>
 
 <body>
@@ -54,7 +56,7 @@
         <section class="section4" ng-app="get_form" ng-controller="GetController">
 
             <div class="page_width page_head">
-                <h2>Statistics</h2>
+                <h2>Transaction:</h2>
             </div>
 
             <div id="stat_block" class="page_width">
@@ -67,8 +69,8 @@
                             <th columns="2" onclick="tableSort(this, 'table')">Type</th>
                             <th columns="3" onclick="tableSort(this, 'table')">Category</th>
                             <th columns="4" onclick="tableSort(this, 'table')">Tag</th>
-                            <th columns="5" onclick="tableSort(this, 'table')">Wallet</th>
-                            <th columns="6" onclick="tableSort(this, 'table')">Price</th>
+                            <th columns="5" onclick="tableSort(this, 'table')">Price, $</th>
+                            <th columns="6" onclick="tableSort(this, 'table')">Wallet</th>
                         </tr>
                         <tr ng-repeat="i in items" class="rows" checked=false>
                             <td>{{i.id}}</td>
@@ -76,8 +78,29 @@
                             <td>{{i.type}}</td>
                             <td>{{i.category.name}}</td>
                             <td>{{i.tag.name}}</td>
-                            <td>{{i.wallet.name}}</td>
                             <td>{{i.tag.price}}</td>
+                            <td>{{i.wallet.name}}</td>
+                        </tr>
+                    </table>
+
+                    <div class="page_width page_head">
+                        <h2>Statistics for period</h2>
+                    </div>
+
+                    <table id="table2" ng-model="total">
+                        <tr>
+                            <th columns="0" onclick="tableSort(this, 'table')">Wallet</th>
+                            <th columns="1" onclick="tableSort(this, 'table')">Current balance</th>
+                            <th columns="2" onclick="tableSort(this, 'table')">Total income, $</th>
+                            <th columns="3" onclick="tableSort(this, 'table')">Total expense, $</th>
+                            <th columns="4" onclick="tableSort(this, 'table')">Total balance, $</th>
+                        </tr>
+                        <tr ng-repeat="t in total" class="rows" checked=false>
+                            <td>{{t.wallet.name}}</td>
+                            <td><span>{{t.wallet.balance}}</span> <span>{{t.wallet.currency.name}}</span></td>
+                            <td>{{t.totalIncomes}}</td>
+                            <td>{{t.totalExpenses}}</td>
+                            <td>{{t.totalBalance}}</td>
                         </tr>
                     </table>
                 </div>
@@ -86,16 +109,25 @@
             <div class="page_width page_head">
                 <p>Get custom statistic</p>
                 <div>
-                    <a class="button">Apply filters</a>
+                    <a class="button" href="#" onclick="replace()">Apply filters</a>
                 </div>
             </div>
 
             <div class="page_width page_head">
-                <div>
+                <div ng-model="wallets">
                     <!--                    <label for="addtransaction_wallet">By wallet: </label>-->
                     <select id="addtransaction_wallet" class="stat-styling">
-                        <option value="0">by wallets</option>
+                        <option>filter by wallets</option>
+                        <option value="0">all wallets</option>
+                        <option ng-repeat="w in wallets" value="{{w.id}}">{{w.name}}</option>
                     </select>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $("#addtransaction_wallet").change(function () {
+                                walletId = $('#addtransaction_wallet').val();
+                            });
+                        });
+                    </script>
 
 <!--                    &lt;!&ndash;                    <label for="addtransaction_category">By category: </label>&ndash;&gt;-->
 <!--                    <select id="addtransaction_category" class="stat-styling">-->
@@ -119,10 +151,11 @@
                         let date = document.getElementById('select_endTime');
                         date.max = date.value = today;
 
-                        let now = new Date()
-                        today = new Date(now.setDate(now.getDate() - 30)).toISOString().split("T")[0];
+                        let now = new Date();
+                        let monthAgo = new Date(now.setDate(now.getDate() - 30)).toISOString().split("T")[0];
                         date = document.getElementById('select_startTime');
-                        date.max = date.value = today;
+                        date.value = monthAgo;
+                        date.max = today;
                     </script>
 
                 </div>

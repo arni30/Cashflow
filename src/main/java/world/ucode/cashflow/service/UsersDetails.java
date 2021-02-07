@@ -1,5 +1,6 @@
 package world.ucode.cashflow.service;
 
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +8,8 @@ import world.ucode.cashflow.models.dao.Users;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+@Getter
 
 public class UsersDetails implements UserDetails {
     private Users user;

@@ -33,6 +33,7 @@ public class TagControllerApi {
 
     @PostMapping("/update")
     public void updateTag(@RequestBody Tag newTag, HttpServletResponse response) throws IOException {
+        log.info("UPDATE TAG");
         try {
             Tag tag = tagRepo.findById(newTag.getId());
             tag.setName(newTag.getName().equals("") ? tag.getName() : newTag.getName());
@@ -49,6 +50,7 @@ public class TagControllerApi {
 
     @PostMapping("/delete")
     public void deleteTag(@RequestBody Tag tag, HttpServletResponse response) throws IOException {
+        log.info("DELETE TAG");
         try {
             tagRepo.delete(tag);
         }

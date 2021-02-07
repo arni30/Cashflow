@@ -23,7 +23,8 @@ angular.module("get_form", [])
                     main.wallets = data.data.wallets;
                 },
                 function (error) {
-                    console.log("error")
+                    console.log(error);
+                    console.log("error");
                 }
             );
         }

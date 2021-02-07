@@ -1,5 +1,6 @@
 package world.ucode.cashflow.controllers.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/currency")
 public class CurrencyControllerApi {
@@ -53,6 +55,7 @@ public class CurrencyControllerApi {
 
     @PostMapping("/create")
     public void createTransaction(@RequestBody Currency currency, HttpServletResponse response) throws IOException {
+        log.info("CREATE CURRENCY");
         try {
             currencyRepo.save(currency);
         }
@@ -64,6 +67,7 @@ public class CurrencyControllerApi {
 
     @PostMapping("/update")
     public void updateTransaction(@RequestBody Currency newCurrency, HttpServletResponse response) throws IOException {
+        log.info("UPDATE CURRENCY");
         try {
             Currency currency = currencyRepo.findById(newCurrency.getId());
             currency.setName(newCurrency.getName().equals("") ? currency.getName() : newCurrency.getName());
@@ -78,6 +82,7 @@ public class CurrencyControllerApi {
 
     @PostMapping("/delete")
     public void deleteCurrency(@RequestBody Currency currency, HttpServletResponse response) throws IOException {
+        log.info("DELETE CURRENCY");
         try {
             currencyRepo.delete(currency);
         }

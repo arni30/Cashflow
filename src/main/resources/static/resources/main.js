@@ -54,6 +54,9 @@ let main = {
             td.innerHTML = item.tag.name;
             tr.appendChild(td);
             td = document.createElement('td');
+            td.innerHTML = item.tag.price;
+            tr.appendChild(td);
+            td = document.createElement('td');
             td.innerHTML = item.wallet.name;
             tr.appendChild(td);
         }

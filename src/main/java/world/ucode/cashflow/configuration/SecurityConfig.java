@@ -118,7 +118,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic();
         http.addFilterAt(new JsonAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
-          http      .authorizeRequests()
+
+        http    .authorizeRequests()
+
+//                .antMatchers("/login", "/sign_up", "/api/get/**", "/resources/**").permitAll()
+//                .anyRequest().authenticated()
+
                 .and()
                 .formLogin()
                 .loginPage("/login")

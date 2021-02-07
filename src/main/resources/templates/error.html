@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta charset="utf-8">
+    <meta name="description" content="cashflow">
+    <meta name="keywords" content="HTML, CSS, JS, Java, ucode, unitfactory, cbl, cblworld">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>cashflow</title>
+    <link rel="shortcut icon" th:href="@{/resources/go-green/favicon.ico}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/resources/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/general.css}"/>
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script th:src="@{/resources/general.js}"></script>
+    <script th:src="@{/resources/main_requests.js}"></script>
+    <script th:src="@{/resources/main.js}"></script>
+</head>
+
+<body style="text-align: center; font-family: 'Montserrat', sans-serif">
+
+<h1 style="color: darkred; position: relative; margin-top: 40vh">
+    <span th:text="${status}"></span> <span th:text="${error}"></span>
+</h1>
+<p>Path: <span th:text="${path}"></span></p>
+<p th:text="${message}"></p>
+
+</body>
+</html>

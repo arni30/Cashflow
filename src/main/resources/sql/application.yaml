@@ -1,7 +1,44 @@
 application:
   users:
-    - ['ubayforever0@gmail.com', 'Bilbo Baggins', 'burglar']
-    - ['trogalska2208@gmail.com', 'tr', 'pass']
-  wallets:
-    - []
-
+    - ['ubayforever0@gmail.com', 'admin', 'password']
+    - ['trogalska2208@gmail.com', 'ww', '1']
+  currency:
+    - id:
+      name: UAN
+      ticker: 30
+    - id:
+      name: USD
+      ticker: 1
+    - id:
+      name: EUR
+      ticker: 0.8
+  categories:
+    - id:
+      description: shop
+      name: small shop
+    - id:
+      description: pharmacy
+      name: pharmacy
+    - id:
+      description: auchan
+      name: supermarket
+    - id:
+      description: work
+      name: salary
+  tags:
+    - id:
+      description: food
+      name: apple
+      price: 0.99
+    - id:
+      description: food
+      name: meat
+      price: 9.98
+    - id:
+      description: salary
+      name: salary
+      price: 600
+    - id:
+      description: clothes
+      name: t-shirt
+      price: 04

@@ -1,14 +1,17 @@
 'use strict';
 
 let walletId = 0;
-let startDate = document.querySelector("#select_startTime").value;
-let endDate = document.querySelector("#select_endTime").value;
+let startDate;
+let endDate;
 
 let urlParams = new URLSearchParams(window.location.search);
 if (urlParams.has('walletId')) {
     walletId = urlParams.get('walletId');
-    startDate = urlParams.get('startTime');
-    endDate = urlParams.get('endTime');
+    startDate = urlParams.get('startDate');
+    endDate = urlParams.get('endDate');
+} else {
+    startDate = document.querySelector("#select_startTime").value;
+    endDate = document.querySelector("#select_endTime").value;
 }
 
 let stat = {
@@ -27,7 +30,7 @@ angular.module("get_form", [])
         $scope.getItems = function () {
             $http({
                 method: "GET",
-                url: "api/transaction/get30"
+                url: "api/stat/get30"
                     + '?walletId=' + walletId
                     + "&startDate=" + startDate
                     + "&endDate=" + endDate,
@@ -40,6 +43,8 @@ angular.module("get_form", [])
                     console.log(data.data);
 
                     $scope.items = data.data.transactions;
+                    $scope.total = data.data.total;
+                    $scope.wallets = data.data.wallets;
 
                     stat.items = data.data.transactions;
                     stat.wallets = data.data.wallets;
@@ -48,35 +53,46 @@ angular.module("get_form", [])
                 },
                 function (error) {
                     console.log("error")
+                    alert("Wrong request parameters for getting info from server");
                 }
             );
         }
 
-        $scope.filters = function () {
-            $http({
-                method: "POST",
-                cache: 'no-cache',
-                url: "api/stat/filters",
-                headers: {
-                    "Content-Type": "application/json",
-                    'X-CSRF-TOKEN': token
-                },
-                processData: false,
-                body: jsonString
-            }).then(
-                function (data) {
-                    console.log(data.data);
-
-                    // tmp.transactions = data.data;
-                    // $scope.items = data.data;
-                },
-                function (error) {
-                    console.log("error")
-                }
-            );
-        }
+        // $scope.filters = function () {
+        //     $http({
+        //         method: "POST",
+        //         cache: 'no-cache',
+        //         url: "api/stat/filters",
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //             'X-CSRF-TOKEN': token
+        //         },
+        //         processData: false,
+        //         body: jsonString
+        //     }).then(
+        //         function (data) {
+        //             console.log(data.data);
+        //
+        //             // tmp.transactions = data.data;
+        //             // $scope.items = data.data;
+        //         },
+        //         function (error) {
+        //             console.log("error")
+        //         }
+        //     );
+        // }
 
     }]);
+
+let replace = () => {
+    startDate = document.querySelector("#select_startTime").value;
+    endDate = document.querySelector("#select_endTime").value;
+    location.replace(
+        '/statistics?walletId=' + walletId
+        + "&startDate=" + startDate
+        + "&endDate=" + endDate
+    );
+}
 
 let formData = new FormData();
 // formData.append('id', elem.id);
@@ -90,7 +106,7 @@ console.log(jsonString);
 
 
 let init = () => {
-    addItemsToSelect('#addtransaction_wallet', stat.wallets);
+    // addItemsToSelect('#addtransaction_wallet', stat.wallets);
     // addItemsToSelect('#addtransaction_category', stat.categories);
     // addItemsToSelect('#addtransaction_tag', stat.tags);
 
