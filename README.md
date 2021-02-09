@@ -38,6 +38,12 @@ Ucode project: develop the app for financial accounting.
 6. open in browser website: http://localhost:8080/cashflow
 
 ### View:
-![view game](https://raw.githubusercontent.com/arni30/Ubay/main/src/main/resources/01.png)
-
-
+![view game](https://raw.githubusercontent.com/arni30/Cashflow/main/pictures/cashflow-7.png)
+![view game](https://raw.githubusercontent.com/arni30/Cashflow/main/pictures/cashflow-8.png)
+![view game](https://raw.githubusercontent.com/arni30/Cashflow/main/pictures/cashflow-3.png)
+![view game](https://raw.githubusercontent.com/arni30/Cashflow/main/pictures/cashflow-4.png)
+![view game](https://raw.githubusercontent.com/arni30/Cashflow/main/pictures/cashflow-2.png)
+![view game](https://raw.githubusercontent.com/arni30/Cashflow/main/pictures/cashflow-1.png)
+![view game](https://raw.githubusercontent.com/arni30/Cashflow/main/pictures/cashflow-5.png)
+![view game](https://raw.githubusercontent.com/arni30/Cashflow/main/pictures/cashflow-6.png)
+![view game](https://raw.githubusercontent.com/arni30/Cashflow/main/pictures/cashflow-9.png)
