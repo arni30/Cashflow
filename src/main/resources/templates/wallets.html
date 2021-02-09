@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -26,7 +27,7 @@
     <div class="body-block shadow-large">
 
         <section class="section1">
-            <a id="authorizedLogin">Authorized login</a>
+            <a id="authorizedLogin" sec:authorize="isAuthenticated()" sec:authentication="name"></a>
             <a class="abutton" href="/logout">Sign out</a>
         </section>
         

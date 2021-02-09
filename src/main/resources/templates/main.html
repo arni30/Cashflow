@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -24,11 +25,8 @@
 <body>
     <div class="backcolor"></div>
     <div class="body-block shadow-large">
-<!--        "${#authentication.getPrincipal().getUsername()}"-->
         <section class="section1">
             <a id="authorizedLogin" sec:authorize="isAuthenticated()" sec:authentication="name"></a>
-            <a class="abutton" href="/login">Sign in</a>
-            <a class="abutton" href="/sign_up">Sign up</a>
             <a class="abutton" href="/logout" th:method="Post">Sign out</a>
         </section>
 

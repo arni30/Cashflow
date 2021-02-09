@@ -75,7 +75,8 @@ let getJsonForSendingTransaction = (elem, elemId) => {
     }
 
     if (elemId === null) {
-        if (!description || !date) {
+        if (!description || !date
+            || isNaN(category_id) || isNaN(tag_id) || isNaN(wallet_id)) {
             alert('all fields must be filled!');
             return undefined;
         }

@@ -22,9 +22,7 @@ Ucode project: develop the app for financial accounting.
 
     2.1. You have to install PostgreSQL.
 
-    2.2. Run postgresql server: ```????????```
-
-    2.3. Create user and databases: 
+    2.2. Create user and databases: 
         ``` psql postgres; 
             CREATE USER root WITH PASSWORD 'qwerty';
             CREATE DATABASE [your login];
@@ -35,7 +33,7 @@ Ucode project: develop the app for financial accounting.
 
 4. write postgresql username and password in hibernate config file if its different from 2.3. (Ubay/src/main/resources/hibernate.cfg.xml)
 
-5. run server: ```./mvnw springboot:run```
+5. run app: ```./mvnw springboot:run```
 
 6. open in browser website: http://localhost:8080/cashflow
 
