@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import world.ucode.cashflow.models.Role;
 import world.ucode.cashflow.models.dao.Users;
 import world.ucode.cashflow.repositories.UserRepo;
@@ -45,15 +47,17 @@ public class RegistrationController {
         return "registration";
     }
     @GetMapping("confirmation{token}")
-    public String confirmation(@RequestParam("token") String token){
+    public RedirectView confirmation(@RequestParam("token") String token){
+        RedirectView redirectView = null;
         Users user = userRepo.findByToken(token).get(0);
         if (user != null) {
-            System.out.println("hallo");
             user.setValidationStatus(1);
             userRepo.save(user);
-            return "main";
+            redirectView = new RedirectView("/login");
+            return redirectView;
         }
-        return "error";
+        redirectView = new RedirectView("error");
+        return redirectView;
     }
 } 
 

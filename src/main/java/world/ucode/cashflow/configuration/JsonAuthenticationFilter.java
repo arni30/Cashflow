@@ -9,18 +9,14 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import world.ucode.cashflow.models.Role;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 public class JsonAuthenticationFilter   extends UsernamePasswordAuthenticationFilter {
     protected AuthenticationManager authenticationManager;
@@ -39,21 +35,15 @@ public class JsonAuthenticationFilter   extends UsernamePasswordAuthenticationFi
         }
         else if (request.getHeader("Content-Type").equals(MediaType.APPLICATION_JSON.toString())) {
         UsernamePasswordAuthenticationToken authRequest = getUsernamePasswordToken(request);
+            System.out.println(authRequest.getAuthorities());
         // Allow subclasses to set the "details" property
         setDetails(request, authRequest);
         this.setAuthenticationManager(authenticationManager);
-//        try {
             authentication = this.getAuthenticationManager().authenticate(authRequest);
-//            authentication = this.getAuthenticationManager().authenticate(request);
-//            response.sendRedirect("/");
-//        }
-//            catch (Exception e) {
-//            response.sendError(401,"INVALID LOGIN OR PASSWORD");
-//            }
+            response.setStatus(200);
         } else {
             authentication = super.attemptAuthentication(request, response);
         }
-
         return authentication;
     }
 
@@ -64,9 +54,6 @@ public class JsonAuthenticationFilter   extends UsernamePasswordAuthenticationFi
         JsonNode jsonObj = mapper.readTree(request.getInputStream());
         String username = jsonObj.get("login").asText();
         String password = jsonObj.get("password").asText();
-
-        System.out.println(username);
-        System.out.println(password);
         return new UsernamePasswordAuthenticationToken(
                 username, password);
     }

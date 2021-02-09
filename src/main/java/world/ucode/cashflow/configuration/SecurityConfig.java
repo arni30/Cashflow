@@ -101,38 +101,27 @@ import java.security.AuthProvider;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.requiresChannel().anyRequest().requiresSecure();
         http
-                .cors().disable().csrf().ignoringAntMatchers("/api/wallets/create","/swagger-ui/",
-                                                             "/api/wallets/update",
-                                                             "/api/transaction/create",
-                                                             "/api/transaction/delete");//delete later! it is for unable csrf checking
-//                .csrf().disable();
-        http.authorizeRequests().antMatchers("/login", "/sign_up").permitAll();
-//        http.authorizeRequests().antMatchers().permitAll()
-//        ;
-        http
-//                .antMatcher("/swagger-ui/")
-                .authorizeRequests()
-//                .anyRequest().hasAnyRole("SWAGGER")
-                .and()
-                .httpBasic();
-        http.addFilterAt(new JsonAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
+                .cors().disable();
+        http.authorizeRequests().antMatchers("/login", "/sign_up").anonymous();
+        http.authorizeRequests().antMatchers("/api/**").authenticated();
+        http.authorizeRequests().antMatchers("/",
+                                                "/exportCSV/**",
+                                                "/wallets/**",
+                                                "/transactions/**",
+                                                "/categories/**",
+                                                "/statistics/**",
+                                                "/swagger-ui/**"
+                                            ).authenticated();
+        http.addFilterBefore(new JsonAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
 
         http    .authorizeRequests()
-
-//                .antMatchers("/login", "/sign_up", "/api/get/**", "/resources/**").permitAll()
-//                .anyRequest().authenticated()
 
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/aaaa")
-                .failureUrl("/error")
-                .failureHandler(new AuthExceptions())
-                .usernameParameter("login")
-                .passwordParameter("password").permitAll();
+                .failureHandler(new AuthExceptions());
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 // Config for Logout Page
