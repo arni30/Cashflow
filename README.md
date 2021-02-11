@@ -33,7 +33,7 @@ Ucode project: develop the app for financial accounting.
 
 4. write postgresql username and password in hibernate config file if its different from 2.3. (Ubay/src/main/resources/hibernate.cfg.xml)
 
-5. run app: ```./mvnw springboot:run```
+5. run app: ```./mvnw spring-boot:run```
 
 6. open in browser website: http://localhost:8080/cashflow
 
